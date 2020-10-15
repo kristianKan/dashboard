@@ -9,7 +9,7 @@ export function* fetchData() {
 }
 
 export async function requestData() {
-  const data = await csv('../../data.csv')
+  const data = await csv(`${process.env.PUBLIC_URL}/data.csv`)
 
   return data
 }

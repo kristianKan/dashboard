@@ -10,7 +10,6 @@ class GraphicsContainer extends React.Component {
 	}
 
   render() {
-    console.log(this.props.data);
     const isData = Object.entries(this.props.data.data).length > 0
     return (isData ? <GraphicsComponent {...this.props} /> : false)
   }

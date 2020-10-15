@@ -1,13 +1,10 @@
 import * as React from 'react'
 import * as d3 from 'd3'
+import Grid from '@material-ui/core/Grid'
 
 const gridStyle = {
   height: '100vh',
   fontSize: '18px'
-}
-
-const gridColumnStyle = {
-  background: '#06062f'
 }
 
 export class Graphics extends React.Component {
@@ -22,37 +19,35 @@ export class Graphics extends React.Component {
     this.height = 0
 		this.margin = { top: 20, right: 20, bottom: 30, left: 40 }
     this.duration = 1200
-    this.xKey = ``
-    this.yKey = ``
+    this.xKey = `Strength of government response`
+    this.yKey = `Prevalence`
 	}
 
   componentDidMount() {
     const data = this.props.data.data
-    //this.draw(data)
+    this.draw(data)
 	}
 
   componentDidUpdate() {
     const data = this.props.data.data
-    //this.redraw(data)
+    this.redraw(data)
 	}
 
   draw(data) {
     const parent = this.ref.current.parentElement
     const container = parent.getBoundingClientRect()
-    const dropdown = parent.querySelector('.selection.dropdown')
     const { paddingLeft, paddingRight } = parent.currentStyle ||
       window.getComputedStyle(parent)
 
     this.width = container.width - this.margin.left - this.margin.right -
       (parseInt(paddingLeft) + parseInt(paddingRight))
-    this.height = container.height - this.margin.top - this.margin.bottom -
-      dropdown.offsetHeight
+    this.height = container.height - this.margin.top - this.margin.bottom
 
 		this.yScale = this.yScale
 			.domain([0, d3.max(data, d => +d[this.yKey])])
       .range([this.height, 0])
 		this.xScale = this.xScale
-			.domain([0, 1])
+			.domain([0, d3.max(data, d => +d[this.xKey])])
 			.range([0, this.width])
 
 		this.yAxis = this.yAxis.scale(this.yScale)
@@ -156,7 +151,9 @@ export class Graphics extends React.Component {
 
   render() {
     return (
-      <span>👹</span>
+      <Grid container style={gridStyle}>
+          <svg ref={this.ref}/>
+      </Grid>
     )
   }
 }

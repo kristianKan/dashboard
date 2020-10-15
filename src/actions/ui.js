@@ -1,7 +1,7 @@
 import * as types from '../constants/actionTypes'
 
-export const setRegion = region => ({
-  type: types.SET_REGION,
-  region
+export const setSelection = selection => ({
+  type: types.SET_SELECTION,
+  selection
 })
 

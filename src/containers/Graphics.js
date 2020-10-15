@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-import { fetchDataRequest, setRegion } from '../actions'
+import { fetchDataRequest, setSelection } from '../actions'
 import { Graphics as GraphicsComponent } from '../components/Graphics'
 
 class GraphicsContainer extends React.Component {
@@ -10,8 +10,8 @@ class GraphicsContainer extends React.Component {
 	}
 
   render() {
+    console.log(this.props.data);
     const isData = Object.entries(this.props.data.data).length > 0
-			&& this.props.selectedRegion
     return (isData ? <GraphicsComponent {...this.props} /> : false)
   }
 }
@@ -19,12 +19,12 @@ class GraphicsContainer extends React.Component {
 const mapStateToProps = state => ({
   data: state.data,
   means: state.means,
-	selectedRegion: state.ui.selectedRegion
+	selectedItem: state.ui.selectedItem
 })
 
 const mapDispatchToProps = dispatch => ({
   getData: () => dispatch(fetchDataRequest()),
-	setRegion: region => dispatch(setRegion(region))
+	setSelection: selection => dispatch(setSelection(selection))
 })
 
 export const Graphics = connect(

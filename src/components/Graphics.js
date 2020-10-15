@@ -22,18 +22,18 @@ export class Graphics extends React.Component {
     this.height = 0
 		this.margin = { top: 20, right: 20, bottom: 30, left: 40 }
     this.duration = 1200
-    this.xKey = `4Yr Graduation Rate (Within 150% Of Normal Time)`
-    this.yKey = `Average net price for students awarded grants or scholarship aid`
+    this.xKey = ``
+    this.yKey = ``
 	}
 
   componentDidMount() {
-    const data = this.props.data.data[this.props.selectedRegion]
-    this.draw(data)
+    const data = this.props.data.data
+    //this.draw(data)
 	}
 
   componentDidUpdate() {
-    const data = this.props.data.data[this.props.selectedRegion]
-    this.redraw(data)
+    const data = this.props.data.data
+    //this.redraw(data)
 	}
 
   draw(data) {

@@ -1,10 +1,13 @@
 import React from 'react'
+import Container from '@material-ui/core/Container'
 
 import { Graphics } from './containers/Graphics'
 
 function App() {
   return (
-    <Graphics />
+    <Container maxWidth="sm">
+      <Graphics />
+    </Container>
   )
 }
 

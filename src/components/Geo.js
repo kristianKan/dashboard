@@ -21,6 +21,8 @@ export class Geo extends React.Component {
     this.projection = d3.geoEqualEarth()
     this.path = d3.geoPath().projection(this.projection)
     this.outline = ({type: 'Sphere'})
+    this.rScale = d3.scaleLinear()
+    this.rKey = 'Prevalence'
 	}
 
   componentDidMount() {
@@ -42,6 +44,15 @@ export class Geo extends React.Component {
     this.width = container.width - this.margin.left - this.margin.right -
       (parseInt(paddingLeft) + parseInt(paddingRight))
     this.height = this.getHeight()
+
+		this.rScale = this.rScale
+			.domain(
+        [
+          d3.min(data.rights, d => +d[this.rKey]),
+          d3.max(data.rights, d => +d[this.rKey])
+        ]
+      )
+      .range([2, 20])
 
     d3.select(this.ref.current)
       .call(this.drawContainer())
@@ -68,12 +79,13 @@ export class Geo extends React.Component {
   }
 
   drawCircles(data) {
-    const { path } = this
+    const { path, rScale } = this
 
 		return node => {
       const centroids = data.geo.features.map(feature => {
         const centroid = path.centroid(feature)
-        const value = data.rights.find(d => d['ISO-3'] === feature.id)
+        const country = data.rights.find(d => d['ISO-3'] === feature.id)
+        const value = country ? country[this.rKey] : 0
 
         return { centroid, value }
       })
@@ -100,7 +112,7 @@ export class Geo extends React.Component {
 				.attr('cy', d => d.centroid[1])
 				.merge(circles)
 				.transition().duration(this.duration)
-        .attr('r', 5)
+        .attr('r', d => rScale(d.value))
     }
 	}
 

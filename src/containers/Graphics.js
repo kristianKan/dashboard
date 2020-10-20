@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { fetchDataRequest, setSelection } from '../actions'
 import { Graphics as GraphicsComponent } from '../components/Graphics'
+import { Geo as GeoComponent } from '../components/Geo'
 
 class GraphicsContainer extends React.Component {
   componentDidMount() {
@@ -10,8 +11,9 @@ class GraphicsContainer extends React.Component {
 	}
 
   render() {
-    const isData = Object.entries(this.props.data.data).length > 0
-    return (isData ? <GraphicsComponent {...this.props} /> : false)
+    const isData = Object.entries(this.props.data.rights).length > 0 &&
+      Object.entries(this.props.data.geo).length > 0
+    return (isData ? <GeoComponent {...this.props} /> : false)
   }
 }
 

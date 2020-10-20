@@ -24,7 +24,7 @@ export class Graphics extends React.Component {
 	}
 
   componentDidMount() {
-    const data = this.props.data.data
+    const data = this.props.data.rights
     this.draw(data)
 	}
 
@@ -44,10 +44,19 @@ export class Graphics extends React.Component {
     this.height = container.height - this.margin.top - this.margin.bottom
 
 		this.yScale = this.yScale
-			.domain([0, d3.max(data, d => +d[this.yKey])])
+			.domain(
+        [
+          d3.min(data, d => +d[this.yKey]),
+          d3.max(data, d => +d[this.yKey])
+        ])
       .range([this.height, 0])
 		this.xScale = this.xScale
-			.domain([0, d3.max(data, d => +d[this.xKey])])
+			.domain(
+        [
+          d3.min(data, d => +d[this.xKey]),
+          d3.max(data, d => +d[this.xKey])
+        ]
+      )
 			.range([0, this.width])
 
 		this.yAxis = this.yAxis.scale(this.yScale)
@@ -90,7 +99,7 @@ export class Graphics extends React.Component {
 			circles.enter()
 				.append('circle')
 				.attr('class', 'circle')
-				.attr('fill', 'white')
+				.attr('fill', 'black')
         .attr('opacity', 1)
 				.attr('stroke', 'none')
 				.attr('cx', d => xScale(d[xKey]))
@@ -129,7 +138,6 @@ export class Graphics extends React.Component {
 
       x.enter().append('g')
         .attr('class','x axis')
-        .attr('stroke', 'white')
         .attr('transform', `translate(0, ${height})`)
         .merge(x)
 				.transition().duration(this.duration)
@@ -137,7 +145,6 @@ export class Graphics extends React.Component {
 
       y.enter().append('g')
         .attr('class','y axis')
-        .attr('stroke', 'white')
         .merge(y)
 				.transition().duration(this.duration)
         .call(yAxis)

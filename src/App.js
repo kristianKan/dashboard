@@ -1,9 +1,10 @@
 import React from 'react'
-import Container from '@material-ui/core/Container'
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 
 import theme from "./lib/theme";
 import { Graphics } from './containers/Graphics'
+import { DrawerMenu } from './components/DrawerMenu'
 
 const useStyles = makeStyles(() => ({
   "@global": {
@@ -23,6 +24,8 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <DrawerMenu />
       <Graphics />
     </ThemeProvider>
   )

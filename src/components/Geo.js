@@ -1,17 +1,8 @@
 import * as React from 'react'
 import * as d3 from 'd3'
-import Grid from '@material-ui/core/Grid'
-
-const gridStyle = {
-  height: '100vh'
-}
-
-const gridItem = {
-  'align-self': 'center'
-}
 
 export class Geo extends React.Component {
-  constructor(props) {
+ constructor(props) {
   	super(props)
     this.ref = React.createRef()
     this.width = 0
@@ -36,6 +27,7 @@ export class Geo extends React.Component {
 	}
 
   draw(data) {
+    console.log(data.rights)
     const parent = this.ref.current.parentElement
     const container = parent.getBoundingClientRect()
     const { paddingLeft, paddingRight } = parent.currentStyle ||
@@ -127,8 +119,8 @@ export class Geo extends React.Component {
         .enter()
         .append('path')
       	.attr('d', path)
-      	.attr('fill', 'transparent')
-      	.attr('stroke', 'black')
+      	.attr('fill', 'lightgrey')
+      	.attr('stroke', 'lightgrey')
     }
 	}
 
@@ -152,11 +144,7 @@ export class Geo extends React.Component {
 
   render() {
     return (
-      <Grid container style={gridStyle}>
-       <Grid item xs={12} style={gridItem}>
-          <svg ref={this.ref}/>
-        </Grid>
-      </Grid>
+      <svg ref={this.ref}/>
     )
   }
 }

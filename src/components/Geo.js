@@ -27,7 +27,6 @@ export class Geo extends React.Component {
 	}
 
   draw(data) {
-    console.log(data.rights)
     const parent = this.ref.current.parentElement
     const container = parent.getBoundingClientRect()
     const { paddingLeft, paddingRight } = parent.currentStyle ||

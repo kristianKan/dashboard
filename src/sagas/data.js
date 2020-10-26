@@ -14,8 +14,34 @@ export async function requestData() {
   const rights = await csv(`${process.env.PUBLIC_URL}/data.csv`)
   const map = await json(`${process.env.PUBLIC_URL}/countries-110m.json`)
   const codes = await csv(`${process.env.PUBLIC_URL}/iso-codes.csv`)
+  const supplier = await mockSupplierData()
 
-  return { rights, map, codes }
+  return { rights, map, codes, supplier }
+}
+
+function mockSupplierData() {
+
+  function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  const emptyArray = new Array(20).fill('')
+
+  return emptyArray.map(_ => {
+    const name = Math.random().toString(36).substring(7)
+    const geographicRisk = getRandom(10, 20)
+    const industryRisk = getRandom(20, 40)
+    const productRisk = getRandom(40, 60)
+    const employmentModeRisk = getRandom(60, 90)
+
+    return {
+      name,
+      geographicRisk,
+      industryRisk,
+      productRisk,
+      employmentModeRisk
+    }
+  })
 }
 
 function processData(data) {
@@ -26,7 +52,7 @@ function processData(data) {
     return d
   })
 
-  return [ rights, mesh ]
+  return [ rights, mesh, data.supplier ]
 }
 
 export const dataSaga = [

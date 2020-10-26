@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
+import { Bar } from '../components/Bar'
 import { Geo } from '../components/Geo'
 
 const useStyles = makeStyles(() => ({
@@ -21,7 +22,7 @@ export function Graphics(props) {
       <Grid container spacing={3}>
         <Grid item sm={12}>
           <Paper>
-            <Geo {...props} />
+            <Bar {...props} />
           </Paper>
         </Grid>
         <Grid item sm={6}>

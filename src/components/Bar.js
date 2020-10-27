@@ -14,7 +14,7 @@ export class Bar extends React.Component {
 		this.xScale = d3.scaleLinear()
     this.yScale = d3.scaleBand()
 		this.xAxis = d3.axisBottom()
-    this.yAxis = d3.axisLeft()
+    this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0])
     this.width = 0
     this.height = 0
 		this.margin = { top: 20, right: 20, bottom: 30, left: 60 }
@@ -66,10 +66,12 @@ export class Bar extends React.Component {
 		this.yScale = this.yScale
       .domain(data.map(d => d.name))
       .range([this.height, 0])
+      .padding(1.2)
 
 		this.xScale = this.xScale
 			.domain([0, d3.max(processedData, d => +d.value)])
 			.range([0, this.width])
+      .nice()
 
     this.color = this.color
       .domain(processedData.map(d => d.key))
@@ -91,7 +93,7 @@ export class Bar extends React.Component {
 
   drawBars(data) {
     const { xScale, yScale, color, duration } = this
-    const barHeight = 10
+    const barHeight = 12
 
 		return node => {
       const g = node.select('g.container')
@@ -114,7 +116,7 @@ export class Bar extends React.Component {
 				.attr('stroke', 'none')
         .attr('height', barHeight)
 				.attr('x', 0)
-				.attr('y', d => yScale(d.name) + barHeight / 2)
+				.attr('y', d => yScale(d.name) - barHeight / 2)
 				.merge(bars)
 				.transition().duration(duration)
 				.attr('width', d => xScale(d.value))
@@ -157,7 +159,16 @@ export class Bar extends React.Component {
         .merge(y)
 				.transition().duration(duration)
         .call(yAxis)
+        .call(n => n.select('.domain').remove())
 
+      g.selectAll('.domain')
+        .attr('stroke', '#CCCCCC')
+
+      g.selectAll('.tick line')
+        .attr('stroke', '#CCCCCC')
+
+      g.selectAll('.y.axis text')
+        .attr('transform', `translate(${-15}, 0)`)
     }
 	}
 

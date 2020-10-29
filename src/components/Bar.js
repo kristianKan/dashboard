@@ -11,30 +11,52 @@ export class Bar extends React.Component {
   constructor(props) {
   	super(props)
     this.ref = React.createRef()
-		this.xScale = d3.scaleLinear()
-    this.yScale = d3.scaleBand()
+		this.margin = { top: 20, right: 20, bottom: 30, left: 60 }
 		this.xAxis = d3.axisBottom()
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0])
-    this.width = 0
-    this.height = 0
-		this.margin = { top: 20, right: 20, bottom: 30, left: 60 }
-    this.duration = 1200
-    this.color = d3.scaleOrdinal().range(barColors)
 	}
 
   componentDidMount() {
-    const data = this.props.data.supplier
-    this.draw(data)
+    const { ref, margin } = this
+    const { getContainerWidth, getContainerHeight, data } = this.props
+
+    const processedData = this.processData(data.supplier)
+    const containerHeight = getContainerHeight(ref, margin)
+    const dataHeight = this.getDataHeight(data.supplier, margin)
+
+    this.height = containerHeight > dataHeight ? containerHeight : dataHeight
+    this.width = getContainerWidth(ref, margin)
+
+		this.yScale = d3.scaleBand()
+      .domain(data.supplier.map(d => d.name))
+      .range([this.height, 0])
+      .padding(1.2)
+
+		this.xScale = d3.scaleLinear()
+			.domain([0, d3.max(processedData, d => +d.value)])
+			.range([0, this.width])
+      .nice()
+
+    this.color = d3.scaleOrdinal()
+      .domain(processedData.map(d => d.key))
+      .range(barColors)
+
+		this.yAxis = this.yAxis.scale(this.yScale)
+    this.xAxis = this.xAxis.scale(this.xScale)
+
+    this.draw(processedData)
 	}
 
   componentDidUpdate() {
     const data = this.props.data.supplier
+
     this.redraw(data)
 	}
 
-  getContainerHeight(data) {
-    const { margin } = this
-    this.height = data.length * 20 - margin.top - margin.bottom
+  getDataHeight(data, margin) {
+    const barHeight = 20
+
+    return data.length * barHeight - margin.top - margin.bottom
   }
 
   processData(data) {
@@ -47,52 +69,27 @@ export class Bar extends React.Component {
     }, [])
   }
 
-  getContainerWidth(data) {
-    const { margin, ref } = this
-    const parent = ref.current.parentElement
-    const container = parent.getBoundingClientRect()
-    const { paddingLeft, paddingRight } = parent.currentStyle ||
-      window.getComputedStyle(parent)
-
-    this.width = container.width - margin.left - margin.right -
-      (parseInt(paddingLeft) + parseInt(paddingRight))
-  }
-
   draw(data) {
-    const processedData = this.processData(data)
-    this.getContainerWidth()
-    this.getContainerHeight(data)
+    const { ref, margin, width, height } = this
+    const { drawContainer } = this.props
 
-		this.yScale = this.yScale
-      .domain(data.map(d => d.name))
-      .range([this.height, 0])
-      .padding(1.2)
-
-		this.xScale = this.xScale
-			.domain([0, d3.max(processedData, d => +d.value)])
-			.range([0, this.width])
-      .nice()
-
-    this.color = this.color
-      .domain(processedData.map(d => d.key))
-
-		this.yAxis = this.yAxis.scale(this.yScale)
-    this.xAxis = this.xAxis.scale(this.xScale)
-
-    d3.select(this.ref.current)
-      .call(this.drawContainer())
-      .call(this.drawBars(processedData))
+    d3.select(ref.current)
+      .call(drawContainer({ width, height, margin }))
+      .call(this.drawBars(data))
       .call(this.drawAxes())
 	}
 
   redraw(data) {
-    d3.select(this.ref.current)
+    const { ref } = this
+
+    d3.select(ref.current)
       .call(this.drawBars(data))
       .call(this.drawAxes())
 	}
 
   drawBars(data) {
-    const { xScale, yScale, color, duration } = this
+    const { xScale, yScale, color } = this
+    const { duration } = this.props
     const barHeight = 12
 
 		return node => {
@@ -123,22 +120,9 @@ export class Bar extends React.Component {
     }
 	}
 
-  drawContainer() {
-    const { width, height, margin } = this
-
-    return node => {
-			const svg = node
-				.attr('width', width + margin.left + margin.right)
-				.attr('height', height + margin.top + margin.bottom)
-
-			svg.append('g')
-				.attr('transform', `translate(${margin.left}, ${margin.top})`)
-				.attr('class', 'container')
-			}
-  }
-
   drawAxes() {
-    const { height, xAxis, yAxis, duration } = this
+    const { height, xAxis, yAxis } = this
+    const { duration } = this.props
 
     return node => {
       const g = node.select('g.container')

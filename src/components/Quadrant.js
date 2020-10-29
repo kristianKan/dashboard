@@ -5,84 +5,73 @@ export class Quadrant extends React.Component {
  constructor(props) {
   	super(props)
     this.ref = React.createRef()
-		this.xScale = d3.scaleLinear()
-    this.yScale = d3.scaleLinear()
+		this.margin = { top: 20, right: 10, bottom: 30, left: 10 }
 		this.xAxis = d3.axisBottom().ticks(0).tickSize([0, 0])
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0])
-    this.color = d3.scaleLinear()
-    this.width = 0
-    this.height = 0
-		this.margin = { top: 20, right: 10, bottom: 30, left: 10 }
-    this.duration = 1200
     this.xKey = 'Prevalence'
     this.yKey = 'Strength of government response'
 	}
 
   componentDidMount() {
-    const data = this.props.data.rights
-    this.draw(data)
-	}
+    const { ref, margin, xKey, yKey } = this
+    const {
+      getContainerWidth,
+      getContainerHeight,
+      getColorScale,
+      getLinearScale,
+      data
+    } = this.props
 
-  componentDidUpdate() {
-    const data = this.props.data.rights
-    this.redraw(data)
-	}
+    this.height = getContainerHeight(ref, margin)
+    this.width = getContainerWidth(ref, margin)
 
-  draw(data) {
-    const parent = this.ref.current.parentElement
-    const container = parent.getBoundingClientRect()
-    const { paddingLeft, paddingRight } = parent.currentStyle ||
-      window.getComputedStyle(parent)
+    this.xScale = getLinearScale({
+      data: data.rights,
+      key: xKey,
+      range: [0, this.width]
+    })
 
-    this.width = container.width - this.margin.left - this.margin.right -
-      (parseInt(paddingLeft) + parseInt(paddingRight))
-    this.height = container.height - this.margin.top - this.margin.bottom
+    this.yScale = getLinearScale({
+      data: data.rights,
+      key: yKey,
+      range: [this.height, 0]
+    })
 
-		this.xScale = this.xScale
-			.domain(
-        [
-          d3.min(data, d => +d[this.xKey]),
-          d3.max(data, d => +d[this.xKey])
-        ]
-      )
-			.range([0, this.width])
-
-		this.yScale = this.yScale
-			.domain(
-        [
-          d3.min(data, d => +d[this.yKey]),
-          d3.max(data, d => +d[this.yKey])
-        ]
-      )
-      .range([this.height, 0])
-
-    this.color = this.color
-      .domain(
-        [
-          d3.min(data, d => +d[this.xKey] + +d[this.yKey]),
-          d3.max(data, d => +d[this.xKey] + +d[this.yKey])
-        ]
-      )
-      .range(['#F4D166', '#DF452D'])
-      .interpolate(d3.interpolateRgb)
+    this.colorScale = getColorScale({ data: data.rights, xKey, yKey })
 
 		this.yAxis = this.yAxis.scale(this.yScale)
     this.xAxis = this.xAxis.scale(this.xScale)
 
-    d3.select(this.ref.current)
-      .call(this.drawContainer())
+    this.draw(data.rights)
+	}
+
+  componentDidUpdate() {
+    const { data } = this.props
+
+    this.redraw(data.rights)
+	}
+
+  draw(data) {
+    const { ref, margin, width, height } = this
+    const { drawContainer } = this.props
+
+    d3.select(ref.current)
+      .call(drawContainer({ width, height, margin }))
       .call(this.drawAxes())
       .call(this.drawQuads())
       .call(this.drawCircles(data))
 	}
 
   redraw(data) {
-    d3.select(this.ref.current)
+    const { ref } = this
+
+    d3.select(ref.current)
       .call(this.drawCircles(data))
 	}
 
   drawCircles(data) {
-    const { xScale, yScale, xKey, yKey, color, duration } = this
+    const { xScale, yScale, xKey, yKey, colorScale } = this
+    const { duration } = this.props
 
 		return node => {
       const g = node.select('g.container')
@@ -100,7 +89,7 @@ export class Quadrant extends React.Component {
 			circles.enter()
 				.append('circle')
 				.attr('class', 'circle')
-				.attr('fill', d => color(+d[xKey] + +d[yKey]))
+				.attr('fill', d => colorScale(+d[xKey] + +d[yKey]))
         .attr('opacity', 1)
 				.attr('stroke', 'none')
 				.attr('cx', d => xScale(d[xKey]))
@@ -110,20 +99,6 @@ export class Quadrant extends React.Component {
         .attr('r', 5)
     }
 	}
-
-  drawContainer() {
-    const { width, height, margin } = this
-
-    return node => {
-			const svg = node
-				.attr('width', width + margin.left + margin.right)
-				.attr('height', height + margin.top + margin.bottom)
-
-			svg.append('g')
-				.attr('transform', `translate(${margin.left}, ${margin.top})`)
-				.attr('class', 'container')
-			}
-  }
 
   drawQuads() {
     const { xScale, yScale } = this

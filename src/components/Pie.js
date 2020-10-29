@@ -1,0 +1,172 @@
+import * as React from 'react'
+import * as d3 from 'd3'
+
+export class Geo extends React.Component {
+ constructor(props) {
+  	super(props)
+    this.ref = React.createRef()
+    this.width = 0
+    this.height = 0
+		this.margin = { top: 0, right: 0, bottom: 0, left: 0 }
+    this.duration = 1200
+    this.projection = d3.geoNaturalEarth1()
+    this.path = d3.geoPath().projection(this.projection)
+    this.outline = ({type: 'Sphere'})
+    this.rScale = d3.scaleLinear()
+    this.color = d3.scaleLinear()
+    this.rKey = 'Prevalence'
+    this.xKey = 'Prevalence'
+    this.yKey = 'Strength of government response'
+	}
+
+  componentDidMount() {
+    const data = this.props.data
+    this.draw(data)
+	}
+
+  componentDidUpdate() {
+    const data = this.props.data.geo
+    this.redraw(data)
+	}
+
+  draw(data) {
+    const parent = this.ref.current.parentElement
+    const container = parent.getBoundingClientRect()
+    const { paddingLeft, paddingRight } = parent.currentStyle ||
+      window.getComputedStyle(parent)
+
+    this.width = container.width - this.margin.left - this.margin.right -
+      (parseInt(paddingLeft) + parseInt(paddingRight))
+    const mapHeight = this.getHeight()
+    const containerHeight = container.height - this.margin.top - this.margin.bottom
+
+    this.height = mapHeight > containerHeight ? mapHeight : containerHeight
+
+		this.rScale = this.rScale
+			.domain(
+        [
+          d3.min(data.rights, d => +d[this.rKey]),
+          d3.max(data.rights, d => +d[this.rKey])
+        ]
+      )
+      .range([2, 10])
+
+    this.color = this.color
+      .domain(
+        [
+          d3.min(data.rights, d => +d[this.xKey] + +d[this.yKey]),
+          d3.max(data.rights, d => +d[this.xKey] + +d[this.yKey])
+        ]
+      )
+      .range(['#F4D166', '#DF452D'])
+      .interpolate(d3.interpolateRgb)
+
+    d3.select(this.ref.current)
+      .call(this.drawContainer())
+      .call(this.drawMap(data.geo))
+      .call(this.drawCircles(data))
+	}
+
+  redraw(data) {
+    d3.select(this.ref.current)
+      .call(this.drawCircles(data))
+	}
+
+  getHeight() {
+    const [[x0, y0], [x1, y1]] = d3.geoPath(
+      this.projection.fitWidth(this.width, this.outline)
+    ).bounds(this.outline)
+
+    const dy = Math.ceil(y1 - y0)
+    const l = Math.min(Math.ceil(x1 - x0), dy)
+
+    this.projection
+      .scale(this.projection.scale() * (l - 1) / l)
+      .precision(0.2)
+
+    return dy
+  }
+
+  drawCircles(data) {
+    const { path, rScale, xKey, yKey, rKey, color } = this
+
+		return node => {
+      const centroids = data.geo.features.reduce((acc, feature) => {
+        const centroid = path.centroid(feature)
+        const country = data.rights.find(d => d['ISO-3'] === feature.id)
+
+        return country ? [
+          ...acc,
+          {
+            centroid,
+            country
+          }
+        ] : acc
+      }, [])
+
+      const g = node.select('g.container')
+
+    	const circles = g.selectAll('.circle')
+				.data(centroids)
+				.attr('class', 'circle')
+
+			circles.exit()
+				.transition().duration(this.duration)
+        .attr('opacity', 0)
+        .attr('r', 0)
+        .remove()
+
+			circles.enter()
+				.append('circle')
+				.attr('class', 'circle')
+				.attr('fill', d => color(+d.country[xKey] + +d.country[yKey]))
+        .attr('opacity', 1)
+				.attr('stroke', 'none')
+				.attr('cx', d => d.centroid[0])
+				.attr('cy', d => d.centroid[1])
+				.merge(circles)
+				.transition().duration(this.duration)
+        .attr('r', d => rScale(d.country[rKey]))
+    }
+	}
+
+  drawMap(geoData) {
+    const { path } = this
+
+    return node => {
+      const g = node.select('g.container')
+
+      g.selectAll('path')
+        .data(geoData.features)
+        .enter()
+        .append('path')
+      	.attr('d', path)
+      	.attr('fill', 'lightgrey')
+      	.attr('stroke', 'lightgrey')
+    }
+	}
+
+  drawContainer() {
+    const { width, height, margin } = this
+
+    return node => {
+			const svg = node
+				.attr('width', width + margin.left + margin.right)
+				.attr('height', height + margin.top + margin.bottom)
+
+			svg.append('g')
+				.attr('transform', `translate(${margin.left}, ${margin.top})`)
+				.attr('class', 'container')
+			}
+  }
+
+  handleChange(_, { value }) {
+		this.props.setSelection(value)
+	}
+
+  render() {
+    return (
+      <svg ref={this.ref}/>
+    )
+  }
+}

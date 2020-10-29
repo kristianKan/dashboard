@@ -6,6 +6,15 @@ import Paper from '@material-ui/core/Paper'
 import { Bar } from '../components/Bar'
 import { Geo } from '../components/Geo'
 import { Quadrant } from '../components/Quadrant'
+import { Treemap } from '../components/Treemap'
+
+import {
+  drawContainer,
+  getContainerHeight,
+  getContainerWidth,
+  getColorScale,
+  getLinearScale,
+} from './utils'
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -17,6 +26,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+const duration = 1200
+
 export function Graphics(props) {
   const classes = useStyles();
 
@@ -27,19 +38,41 @@ export function Graphics(props) {
         <Grid item sm={12}>
           <Paper className={classes.paper}>
             <h3>Supplier Risk Summary</h3>
-            <Bar {...props} />
+            <Bar
+              drawContainer={drawContainer}
+              getContainerHeight={getContainerHeight}
+              getContainerWidth={getContainerWidth}
+              duration={duration}
+              {...props}
+            />
           </Paper>
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
             <h3>Geographic Risk Map</h3>
-            <Geo {...props} />
+            <Geo
+              drawContainer={drawContainer}
+              getContainerHeight={getContainerHeight}
+              getContainerWidth={getContainerWidth}
+              getColorScale={getColorScale}
+              getLinearScale={getLinearScale}
+              duration={duration}
+              {...props}
+            />
           </Paper>
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
             <h3>Geographic Risk Quadrant</h3>
-            <Quadrant {...props} />
+            <Quadrant
+              drawContainer={drawContainer}
+              getContainerHeight={getContainerHeight}
+              getContainerWidth={getContainerWidth}
+              getColorScale={getColorScale}
+              getLinearScale={getLinearScale}
+              duration={duration}
+              {...props}
+            />
           </Paper>
         </Grid>
       </Grid>

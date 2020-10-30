@@ -1,4 +1,4 @@
-import * as types from '../constants/actionTypes'
+import * as types from "../constants/actionTypes";
 
 const initialState = {
   rights: {},
@@ -6,27 +6,28 @@ const initialState = {
   supplier: [],
   error: null,
   fetching: false,
-}
+};
 
 const data = (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_DATA_REQUEST:
-      return { ...state, fetching: true, error: null }
+      return { ...state, fetching: true, error: null };
 
     case types.FETCH_DATA_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         fetching: false,
         rights: action.data[0],
         geo: action.data[1],
         supplier: action.data[2],
-      }
+      };
 
     case types.FETCH_DATA_FAILURE:
-      return { ...state, fetching: false, error: action.error }
+      return { ...state, fetching: false, error: action.error };
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default data
+export default data;

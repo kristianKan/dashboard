@@ -1,12 +1,12 @@
-import * as React from 'react'
+import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
-import { Bar } from '../components/Bar'
-import { Geo } from '../components/Geo'
-import { Quadrant } from '../components/Quadrant'
-import { Treemap } from '../components/Treemap'
+import Bar from "./Bar";
+import Geo from "./Geo";
+import Quadrant from "./Quadrant";
+import Treemap from "./Treemap";
 
 import {
   drawContainer,
@@ -14,19 +14,19 @@ import {
   getContainerWidth,
   getColorScale,
   getLinearScale,
-} from './utils'
+} from "./utils";
 
 const useStyles = makeStyles(() => ({
   box: {
-    margin: '64px 0 0 64px',
-    paddingTop: '20px',
+    margin: "64px 0 0 64px",
+    paddingTop: "20px",
   },
   paper: {
-    padding: '20px'
-  }
+    padding: "20px",
+  },
 }));
 
-const duration = 1200
+const duration = 1200;
 
 export function Graphics(props) {
   const classes = useStyles();
@@ -77,5 +77,5 @@ export function Graphics(props) {
         </Grid>
       </Grid>
     </div>
-  )
+  );
 }

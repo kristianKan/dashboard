@@ -1,17 +1,17 @@
-import * as types from '../constants/actionTypes'
+import * as types from "../constants/actionTypes";
 
 const initialState = {
-  selectedItem: null
-}
+  selectedItem: null,
+};
 
 const ui = (state = initialState, action) => {
   switch (action.type) {
     case types.SET_SELECTION:
-      return { ...state, selectedItem: action.selection }
+      return { ...state, selectedItem: action.selection };
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default ui
+export default ui;

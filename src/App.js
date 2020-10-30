@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 
 import theme from "./lib/theme";
-import { Graphics } from './containers/Graphics'
-import { DrawerMenu } from './components/DrawerMenu'
+import { Graphics } from "./containers/Graphics";
+import { DrawerMenu } from "./components/DrawerMenu";
 
 const useStyles = makeStyles(() => ({
   "@global": {
@@ -14,13 +14,13 @@ const useStyles = makeStyles(() => ({
       left: "410px",
       width: "900px",
       height: "433px",
-      margin: "0 auto"
-    }
-  }
+      margin: "0 auto",
+    },
+  },
 }));
 
 function App() {
-  useStyles()
+  useStyles();
 
   return (
     <ThemeProvider theme={theme}>
@@ -28,7 +28,7 @@ function App() {
       <DrawerMenu />
       <Graphics />
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

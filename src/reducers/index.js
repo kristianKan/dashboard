@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux'
-import data from './data'
-import ui from './ui'
+import { combineReducers } from "redux";
+import data from "./data";
+import ui from "./ui";
 
 const reducers = combineReducers({
   data,
-  ui
-})
+  ui,
+});
 
-export default reducers
+export default reducers;

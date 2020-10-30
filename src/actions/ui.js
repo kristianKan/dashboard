@@ -1,7 +1,6 @@
-import * as types from '../constants/actionTypes'
+import * as types from "../constants/actionTypes";
 
-export const setSelection = selection => ({
+export const setSelection = (selection) => ({
   type: types.SET_SELECTION,
-  selection
-})
-
+  selection,
+});

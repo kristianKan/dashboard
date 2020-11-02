@@ -99,7 +99,7 @@ class Bar extends React.Component {
         .transition()
         .duration(duration)
         .attr("opacity", 0)
-        .attr("r", 0)
+        .attr("width", 0)
         .remove();
 
       bars
@@ -167,4 +167,4 @@ class Bar extends React.Component {
   }
 }
 
-export default Bar
+export default Bar;

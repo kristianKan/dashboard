@@ -4,19 +4,15 @@ import * as topojson from "topojson-client";
 
 import * as types from "../constants/actionTypes";
 
-export function* fetchData() {
-  const data = yield call(requestData);
-  const processedData = processData(data);
-  yield put({ type: types.FETCH_DATA_SUCCESS, data: processedData });
-}
+function processData(data) {
+  const mesh = topojson.feature(data.map, data.map.objects.countries);
+  const rights = data.rights.map((d) => {
+    const isoCode =
+      data.codes.find((code) => code["alpha-3"] === d["ISO-3"]) || d["ISO-3"];
+    return { ...d, "ISO-3": isoCode };
+  });
 
-export async function requestData() {
-  const rights = await csv(`${process.env.PUBLIC_URL}/data.csv`);
-  const map = await json(`${process.env.PUBLIC_URL}/countries-110m.json`);
-  const codes = await csv(`${process.env.PUBLIC_URL}/iso-codes.csv`);
-  const supplier = await mockSupplierData();
-
-  return { rights, map, codes, supplier };
+  return [rights, mesh, data.supplier];
 }
 
 function mockSupplierData() {
@@ -26,7 +22,7 @@ function mockSupplierData() {
 
   const emptyArray = new Array(20).fill("");
 
-  return emptyArray.map((_) => {
+  return emptyArray.map(() => {
     const name = Math.random().toString(36).substring(7);
     const geographicRisk = getRandom(10, 20);
     const industryRisk = getRandom(20, 40);
@@ -43,15 +39,19 @@ function mockSupplierData() {
   });
 }
 
-function processData(data) {
-  const mesh = topojson.feature(data.map, data.map.objects.countries);
-  const rights = data.rights.map((d) => {
-    const code = data.codes.find((code) => code["alpha-3"] === d["ISO-3"]);
-    d["ISO-3"] = code ? code["country-code"] : d["ISO-3"];
-    return d;
-  });
+export async function requestData() {
+  const rights = await csv(`${process.env.PUBLIC_URL}/data.csv`);
+  const map = await json(`${process.env.PUBLIC_URL}/countries-110m.json`);
+  const codes = await csv(`${process.env.PUBLIC_URL}/iso-codes.csv`);
+  const supplier = await mockSupplierData();
 
-  return [rights, mesh, data.supplier];
+  return { rights, map, codes, supplier };
+}
+
+export function* fetchData() {
+  const data = yield call(requestData);
+  const processedData = processData(data);
+  yield put({ type: types.FETCH_DATA_SUCCESS, data: processedData });
 }
 
 export const dataSaga = [takeLatest(types.FETCH_DATA_REQUEST, fetchData)];

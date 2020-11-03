@@ -145,7 +145,9 @@ class Geo extends React.Component {
   }
 
   handleChange(_, { value }) {
-    this.props.setSelection(value);
+    const { setSelection } = this.props;
+
+    setSelection(value);
   }
 
   render() {
@@ -153,4 +155,4 @@ class Geo extends React.Component {
   }
 }
 
-export default Geo
+export default Geo;

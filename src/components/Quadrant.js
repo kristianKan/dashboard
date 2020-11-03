@@ -190,6 +190,7 @@ class Quadrant extends React.Component {
 
   handleChange(_, { value }) {
     const { setSelection } = this.props;
+
     setSelection(value);
   }
 
@@ -198,4 +199,4 @@ class Quadrant extends React.Component {
   }
 }
 
-export default Quadrant
+export default Quadrant;

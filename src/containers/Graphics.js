@@ -2,18 +2,21 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { fetchDataRequest, setSelection } from "../actions";
-import { Graphics as GraphicsComponents } from "../components/Graphics";
+import Graphics from "../components/Graphics";
 
-class GraphicsContainer extends React.Component {
+class Container extends React.Component {
   componentDidMount() {
-    this.props.getData();
+    const { getData } = this.props;
+
+    getData();
   }
 
   render() {
+    const { data } = this.props;
     const isData =
-      Object.entries(this.props.data.rights).length > 0 &&
-      Object.entries(this.props.data.geo).length > 0;
-    return isData ? <GraphicsComponents {...this.props} /> : false;
+      Object.entries(data.rights).length > 0 &&
+      Object.entries(data.geo).length > 0;
+    return isData ? <Graphics {...this.props} /> : false;
   }
 }
 
@@ -28,7 +31,4 @@ const mapDispatchToProps = (dispatch) => ({
   setSelection: (selection) => dispatch(setSelection(selection)),
 });
 
-export const Graphics = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GraphicsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Container);

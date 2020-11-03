@@ -47,9 +47,9 @@ class Bar extends React.Component {
   }
 
   componentDidUpdate() {
-    const data = this.props.data.supplier;
+    const { data } = this.props;
 
-    this.redraw(data);
+    this.redraw(data.supplier);
   }
 
   getDataHeight(data, margin) {
@@ -155,7 +155,9 @@ class Bar extends React.Component {
   }
 
   handleChange(_, { value }) {
-    this.props.setRegion(value);
+    const { setSelection } = this.props;
+
+    setSelection(value);
   }
 
   render() {

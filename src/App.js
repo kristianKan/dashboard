@@ -3,7 +3,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 
 import theme from "./lib/theme";
-import { Graphics } from "./containers/Graphics";
+import Graphics from "./containers/Graphics";
 
 const useStyles = makeStyles(() => ({
   "@global": {

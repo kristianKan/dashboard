@@ -75,7 +75,9 @@ class Treemap extends React.Component {
   }
 
   handleChange(_, { value }) {
-    this.props.setSelection(value);
+    const { setSelection } = this.props;
+
+    setSelection(value);
   }
 
   render() {
@@ -83,4 +85,4 @@ class Treemap extends React.Component {
   }
 }
 
-export default Treemap
+export default Treemap;

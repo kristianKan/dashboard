@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
 
 const duration = 1200;
 
-export function Graphics(props) {
+export default function Graphics(props) {
   const classes = useStyles();
 
   return (

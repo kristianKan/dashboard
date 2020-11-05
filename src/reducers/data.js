@@ -1,9 +1,9 @@
 import * as types from "../constants/actionTypes";
 
 const initialState = {
-  rights: {},
+  suppliers: [],
+  countries: {},
   geo: {},
-  supplier: [],
   error: null,
   fetching: false,
 };
@@ -17,9 +17,9 @@ const data = (state = initialState, action) => {
       return {
         ...state,
         fetching: false,
-        rights: action.data[0],
-        geo: action.data[1],
-        supplier: action.data[2],
+        suppliers: action.data.suppliers,
+        countries: action.data.countries,
+        geo: action.data.geo,
       };
 
     case types.FETCH_DATA_FAILURE:

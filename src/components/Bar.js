@@ -16,40 +16,40 @@ class Bar extends React.Component {
     const { ref, margin } = this;
     const { getContainerWidth, getContainerHeight, data } = this.props;
 
-    const processedData = this.processData(data.supplier);
+    const flatData = this.flattenData(data.suppliers);
     const containerHeight = getContainerHeight(ref, margin);
-    const dataHeight = this.getDataHeight(data.supplier, margin);
+    const dataHeight = this.getDataHeight(data.suppliers, margin);
 
     this.height = containerHeight > dataHeight ? containerHeight : dataHeight;
     this.width = getContainerWidth(ref, margin);
 
     this.yScale = d3
       .scaleBand()
-      .domain(data.supplier.map((d) => d.name))
+      .domain(data.suppliers.map((d) => d.name))
       .range([this.height, 0])
       .padding(1.2);
 
     this.xScale = d3
       .scaleLinear()
-      .domain([0, d3.max(processedData, (d) => +d.value)])
+      .domain([0, d3.max(flatData, (d) => +d.value)])
       .range([0, this.width])
       .nice();
 
     this.color = d3
       .scaleOrdinal()
-      .domain(processedData.map((d) => d.key))
+      .domain(flatData.map((d) => d.key))
       .range(barColors);
 
     this.yAxis = this.yAxis.scale(this.yScale);
     this.xAxis = this.xAxis.scale(this.xScale);
 
-    this.draw(processedData);
+    this.draw(flatData);
   }
 
   componentDidUpdate() {
     const { data } = this.props;
 
-    this.redraw(data.supplier);
+    this.redraw(data.suppliers);
   }
 
   getDataHeight(data, margin) {
@@ -58,10 +58,30 @@ class Bar extends React.Component {
     return data.length * barHeight - margin.top - margin.bottom;
   }
 
-  processData(data) {
+  flattenData(data) {
+    const riskKeys = [
+      "rs_ms_geographic",
+      "rs_ms_industry",
+      "rs_ms_product",
+      "rs_ms_employment",
+    ];
+
     return data.reduce((acc, d) => {
-      const values = Object.entries(d)
-        .map(([key, value]) => ({ name: d.name, key, value }))
+      const values = Object.entries(d.risks)
+        .reduce((acc2, [key, value]) => {
+          const isRiskKey = riskKeys.includes(key);
+
+          return isRiskKey
+            ? [
+                ...acc2,
+                {
+                  name: d.name,
+                  key,
+                  value,
+                },
+              ]
+            : acc2;
+        }, [])
         .sort((a, b) => b.value - a.value);
 
       return [...acc, ...values];

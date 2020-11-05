@@ -9,13 +9,12 @@ class Geo extends React.Component {
     this.projection = d3.geoNaturalEarth1();
     this.path = d3.geoPath().projection(this.projection);
     this.outline = { type: "Sphere" };
-    this.rKey = "Prevalence";
-    this.xKey = "Prevalence";
-    this.yKey = "Strength of government response";
+    this.rKey = "prevalence";
+    this.cKey = "risk";
   }
 
   componentDidMount() {
-    const { ref, margin, rKey, xKey, yKey, projection, outline } = this;
+    const { ref, margin, rKey, cKey, projection, outline } = this;
     const {
       getContainerWidth,
       getContainerHeight,
@@ -32,12 +31,12 @@ class Geo extends React.Component {
     this.width = width;
 
     this.rScale = getLinearScale({
-      data: data.rights,
+      data: data.countries,
       key: rKey,
       range: [2, 10],
     });
 
-    this.colorScale = getColorScale({ data: data.rights, xKey, yKey });
+    this.colorScale = getColorScale({ data: data.countries, key: cKey });
 
     this.draw(data);
   }
@@ -61,6 +60,25 @@ class Geo extends React.Component {
     return dy;
   }
 
+  getCentroids(data) {
+    const { path } = this;
+
+    return data.geo.features.reduce((acc, feature) => {
+      const centroid = path.centroid(feature);
+      const country = data.countries.find((d) => d.iso_code_num === feature.id);
+
+      return country
+        ? [
+            ...acc,
+            {
+              ...country,
+              centroid,
+            },
+          ]
+        : acc;
+    }, []);
+  }
+
   draw(data) {
     const { ref, margin, width, height } = this;
     const { drawContainer } = this.props;
@@ -78,23 +96,10 @@ class Geo extends React.Component {
   }
 
   drawCircles(data) {
-    const { path, rScale, xKey, yKey, rKey, colorScale } = this;
+    const { rScale, cKey, rKey, colorScale } = this;
     const { duration } = this.props;
-
-    const centroids = data.geo.features.reduce((acc, feature) => {
-      const centroid = path.centroid(feature);
-      const country = data.rights.find((d) => d["ISO-3"] === feature.id);
-
-      return country
-        ? [
-            ...acc,
-            {
-              centroid,
-              country,
-            },
-          ]
-        : acc;
-    }, []);
+    const centroids = this.getCentroids(data);
+    console.log(centroids);
 
     return (node) => {
       const g = node.select("g.container");
@@ -116,7 +121,7 @@ class Geo extends React.Component {
         .enter()
         .append("circle")
         .attr("class", "circle")
-        .attr("fill", (d) => colorScale(+d.country[xKey] + +d.country[yKey]))
+        .attr("fill", (d) => colorScale(+d[cKey]))
         .attr("opacity", 1)
         .attr("stroke", "none")
         .attr("cx", (d) => d.centroid[0])
@@ -124,18 +129,18 @@ class Geo extends React.Component {
         .merge(circles)
         .transition()
         .duration(duration)
-        .attr("r", (d) => rScale(d.country[rKey]));
+        .attr("r", (d) => rScale(+d[rKey]));
     };
   }
 
-  drawMap(geoData) {
+  drawMap(geo) {
     const { path } = this;
 
     return (node) => {
       const g = node.select("g.container");
 
       g.selectAll("path")
-        .data(geoData.features)
+        .data(geo.features)
         .enter()
         .append("path")
         .attr("d", path)

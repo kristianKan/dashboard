@@ -4,54 +4,110 @@ import * as topojson from "topojson-client";
 
 import * as types from "../constants/actionTypes";
 
-function processData(data) {
-  const mesh = topojson.feature(data.map, data.map.objects.countries);
-  const rights = data.rights.map((d) => {
-    const isoCode =
-      data.codes.find((code) => code["alpha-3"] === d["ISO-3"]) || d["ISO-3"];
-    return { ...d, "ISO-3": isoCode };
-  });
-
-  return [rights, mesh, data.supplier];
+function getRandomInt(min, max) {
+  const minCeil = Math.ceil(min);
+  const maxFloor = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil;
 }
 
-function mockSupplierData() {
-  function getRandom(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
+function mockSuppliersData(codes) {
   const emptyArray = new Array(20).fill("");
+  const products = ["clothes", "electronics", "fruit"];
 
   return emptyArray.map(() => {
     const name = Math.random().toString(36).substring(7);
-    const geographicRisk = getRandom(10, 20);
-    const industryRisk = getRandom(20, 40);
-    const productRisk = getRandom(40, 60);
-    const employmentModeRisk = getRandom(60, 90);
+    const product = Math.floor(Math.random() * products.length);
+    const tier = getRandomInt(0, 4);
+    const rsGeographic = getRandomInt(10, 20);
+    const rsIndustry = getRandomInt(20, 40);
+    const rsProduct = getRandomInt(40, 60);
+    const rsEmployment = getRandomInt(60, 90);
+    const rsGovernance = getRandomInt(1, 30);
+
+    const risks = {
+      rs_ms_geographic: rsGeographic,
+      rs_ms_industry: rsIndustry,
+      rs_ms_product: rsProduct,
+      rs_ms_employment: rsEmployment,
+      rs_ms_governance: rsGovernance,
+      rs_ms_total:
+        rsGeographic + rsIndustry + rsProduct + rsEmployment + rsGovernance,
+    };
+
+    const emptyCountries = new Array(getRandomInt(0, 4)).fill("");
+    const countries = emptyCountries.map(
+      () => codes[Math.floor(Math.random() * codes.length)]["country-code"]
+    );
 
     return {
       name,
-      geographicRisk,
-      industryRisk,
-      productRisk,
-      employmentModeRisk,
+      countries,
+      product,
+      risks,
+      tier,
     };
   });
 }
 
-export async function requestData() {
-  const rights = await csv(`${process.env.PUBLIC_URL}/data.csv`);
+function mockCountriesData(codes) {
+  return codes.reduce((acc, code) => {
+    const countryCode = code["country-code"];
+
+    return {
+      ...acc,
+      [countryCode]: {
+        name: code.name,
+        iso_code: code["alpha-3"],
+        iso_code_num: countryCode,
+        prevalence: getRandomInt(1, 30),
+        regulation: getRandomInt(1, 30),
+      },
+    };
+  }, {});
+}
+
+function getCountrySuppliers(suppliers, countries) {
+  const uniqueCountries = suppliers.reduce((acc, d) => {
+    const supplierCountries = d.countries.reduce((unique, country) => {
+      return acc.includes(country) ? unique : [...unique, country];
+    }, []);
+
+    return supplierCountries.length > 0 ? [...acc, ...supplierCountries] : acc;
+  }, []);
+
+  return uniqueCountries.map((code) => {
+    const countrySuppliers = suppliers.filter((d) => {
+      return d.countries.includes(code);
+    });
+    const country = countries[code];
+    const risk = countrySuppliers.reduce((acc, d) => {
+      return d.risks.rs_ms_total + acc;
+    }, 0);
+
+    return {
+      ...country,
+      risk,
+      suppliers: countrySuppliers,
+    };
+  });
+}
+
+export async function requestMetaData() {
   const map = await json(`${process.env.PUBLIC_URL}/countries-110m.json`);
   const codes = await csv(`${process.env.PUBLIC_URL}/iso-codes.csv`);
-  const supplier = await mockSupplierData();
 
-  return { rights, map, codes, supplier };
+  const suppliers = mockSuppliersData(codes);
+  const countries = mockCountriesData(codes);
+  const uniqueCountries = getCountrySuppliers(suppliers, countries);
+  const geo = topojson.feature(map, map.objects.countries);
+
+  return { geo, suppliers, countries: uniqueCountries };
 }
 
 export function* fetchData() {
-  const data = yield call(requestData);
-  const processedData = processData(data);
-  yield put({ type: types.FETCH_DATA_SUCCESS, data: processedData });
+  const data = yield call(requestMetaData);
+
+  yield put({ type: types.FETCH_DATA_SUCCESS, data });
 }
 
 export const dataSaga = [takeLatest(types.FETCH_DATA_REQUEST, fetchData)];

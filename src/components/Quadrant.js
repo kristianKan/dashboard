@@ -8,12 +8,13 @@ class Quadrant extends React.Component {
     this.margin = { top: 20, right: 10, bottom: 30, left: 10 };
     this.xAxis = d3.axisBottom().ticks(0).tickSize([0, 0]);
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
-    this.xKey = "Prevalence";
-    this.yKey = "Strength of government response";
+    this.xKey = "prevalence";
+    this.yKey = "regulation";
+    this.cKey = "risk";
   }
 
   componentDidMount() {
-    const { ref, margin, xKey, yKey } = this;
+    const { ref, margin, xKey, yKey, cKey } = this;
     const {
       getContainerWidth,
       getContainerHeight,
@@ -26,29 +27,29 @@ class Quadrant extends React.Component {
     this.width = getContainerWidth(ref, margin);
 
     this.xScale = getLinearScale({
-      data: data.rights,
+      data: data.countries,
       key: xKey,
       range: [0, this.width],
     });
 
     this.yScale = getLinearScale({
-      data: data.rights,
+      data: data.countries,
       key: yKey,
       range: [this.height, 0],
     });
 
-    this.colorScale = getColorScale({ data: data.rights, xKey, yKey });
+    this.colorScale = getColorScale({ data: data.countries, key: cKey });
 
     this.yAxis = this.yAxis.scale(this.yScale);
     this.xAxis = this.xAxis.scale(this.xScale);
 
-    this.draw(data.rights);
+    this.draw(data.countries);
   }
 
   componentDidUpdate() {
     const { data } = this.props;
 
-    this.redraw(data.rights);
+    this.redraw(data.countries);
   }
 
   draw(data) {
@@ -69,7 +70,7 @@ class Quadrant extends React.Component {
   }
 
   drawCircles(data) {
-    const { xScale, yScale, xKey, yKey, colorScale } = this;
+    const { xScale, yScale, xKey, yKey, cKey, colorScale } = this;
     const { duration } = this.props;
 
     return (node) => {
@@ -89,7 +90,7 @@ class Quadrant extends React.Component {
         .enter()
         .append("circle")
         .attr("class", "circle")
-        .attr("fill", (d) => colorScale(+d[xKey] + +d[yKey]))
+        .attr("fill", (d) => colorScale(+d[cKey]))
         .attr("opacity", 1)
         .attr("stroke", "none")
         .attr("cx", (d) => xScale(d[xKey]))

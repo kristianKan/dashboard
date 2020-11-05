@@ -42,13 +42,10 @@ export function getLinearScale({ data, key, range }) {
     .range(range);
 }
 
-export function getColorScale({ data, xKey, yKey }) {
+export function getColorScale({ data, key }) {
   return d3
     .scaleLinear()
-    .domain([
-      d3.min(data, (d) => +d[xKey] + +d[yKey]),
-      d3.max(data, (d) => +d[xKey] + +d[yKey]),
-    ])
+    .domain([d3.min(data, (d) => +d[key]), d3.max(data, (d) => +d[key])])
     .range(["#F4D166", "#DF452D"])
     .interpolate(d3.interpolateRgb);
 }

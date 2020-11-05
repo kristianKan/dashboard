@@ -14,7 +14,8 @@ class Container extends React.Component {
   render() {
     const { data } = this.props;
     const isData =
-      Object.entries(data.rights).length > 0 &&
+      Object.entries(data.suppliers).length > 0 &&
+      Object.entries(data.countries).length > 0 &&
       Object.entries(data.geo).length > 0;
     return isData ? <Graphics {...this.props} /> : false;
   }

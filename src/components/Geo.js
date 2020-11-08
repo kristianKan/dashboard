@@ -99,7 +99,6 @@ class Geo extends React.Component {
     const { rScale, cKey, rKey, colorScale } = this;
     const { duration } = this.props;
     const centroids = this.getCentroids(data);
-    console.log(centroids);
 
     return (node) => {
       const g = node.select("g.container");

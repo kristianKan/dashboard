@@ -14,7 +14,8 @@ function mockSuppliersData(codes) {
   const emptyArray = new Array(20).fill("");
   const products = ["clothes", "electronics", "fruit"];
 
-  return emptyArray.map(() => {
+  return emptyArray.map((_, i) => {
+    const id = new Date().getTime().toString() + i;
     const name = Math.random().toString(36).substring(7);
     const product = Math.floor(Math.random() * products.length);
     const tier = getRandomInt(0, 4);
@@ -40,6 +41,7 @@ function mockSuppliersData(codes) {
     );
 
     return {
+      id,
       name,
       countries,
       product,

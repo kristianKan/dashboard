@@ -75,6 +75,20 @@ export default function Graphics(props) {
             />
           </Paper>
         </Grid>
+        <Grid item sm={6}>
+          <Paper className={classes.paper}>
+            <h3>Geographic Risk Quadrant</h3>
+            <Treemap
+              drawContainer={drawContainer}
+              getContainerHeight={getContainerHeight}
+              getContainerWidth={getContainerWidth}
+              getColorScale={getColorScale}
+              getLinearScale={getLinearScale}
+              duration={duration}
+              {...props}
+            />
+          </Paper>
+        </Grid>
       </Grid>
     </div>
   );

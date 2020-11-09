@@ -6,11 +6,10 @@ class Treemap extends React.Component {
     super(props);
     this.ref = React.createRef();
     this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
-    this.cKey = "tier";
   }
 
   componentDidMount() {
-    const { ref, margin, cKey } = this;
+    const { ref, margin } = this;
     const {
       getContainerHeight,
       getContainerWidth,
@@ -33,7 +32,7 @@ class Treemap extends React.Component {
 
     d3.treemap().size([this.width, this.height]).padding(0)(root);
 
-    this.colorScale = getColorScale({ data: data.suppliers, key: cKey });
+    this.colorScale = getColorScale({ data: root.children, key: "value" });
 
     this.draw(root);
   }
@@ -79,7 +78,7 @@ class Treemap extends React.Component {
 
       leaf
         .append("rect")
-        .attr("fill", (d) => colorScale(+d.data[0]))
+        .attr("fill", (d) => colorScale(+d.value))
         .attr("opacity", 0)
         .attr("stroke", "none")
         .attr("width", (d) => d.x1 - d.x0)
@@ -89,14 +88,13 @@ class Treemap extends React.Component {
         .duration(duration)
         .attr("opacity", 1);
 
+      const riskLevel = ["Highest", "High", "Medium", "Low", "Lowest"];
       leaf
         .append("text")
-        .attr("x", 4)
-        .attr("y", 14)
-        .attr("fill-opacity", (d, i, nodes) =>
-          i === nodes.length - 1 ? 0.7 : null
-        )
-        .text((d) => `Tier ${d.data[0]}`);
+        .attr("x", 6)
+        .attr("y", 18)
+        .attr("fill", "white")
+        .text((d, i) => `Tier ${d.data[0]} - ${riskLevel[i]}`);
     };
   }
 

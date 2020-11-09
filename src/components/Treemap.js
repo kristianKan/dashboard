@@ -6,7 +6,7 @@ class Treemap extends React.Component {
     super(props);
     this.ref = React.createRef();
     this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
-    this.cKey = "risk";
+    this.cKey = "tier";
   }
 
   componentDidMount() {
@@ -21,22 +21,19 @@ class Treemap extends React.Component {
     this.height = getContainerHeight(ref, margin);
     this.width = getContainerWidth(ref, margin);
 
-    this.colorScale = getColorScale({ data: data.countries, key: cKey });
+    const reduceFn = (iterable) =>
+      d3.sum(iterable, (d) => d.risks.rs_ms_product);
+    const dataRollup = d3.rollup(data.suppliers, reduceFn, (d) => d.tier);
 
-    const stratify = d3
-      .stratify()
-      .id((d) => d.id)
-      .parentId((d) => d.tier);
+    const childrenAccessorFn = ([, value]) => value.size && Array.from(value);
+    const root = d3
+      .hierarchy([null, dataRollup], childrenAccessorFn)
+      .sum(([, value]) => value)
+      .sort((a, b) => b.value - a.value);
 
-    const parents = new Array(6)
-      .fill({})
-      .map((_, i) => (i < 5 ? { tier: -1, id: i } : { tier: "", id: -1 }));
+    d3.treemap().size([this.width, this.height]).padding(0)(root);
 
-    const root = stratify([...data.suppliers, ...parents]);
-
-    this.treemap = d3.treemap().size([this.width, this.height]).padding(4)(
-      root
-    );
+    this.colorScale = getColorScale({ data: data.suppliers, key: cKey });
 
     this.draw(root);
   }
@@ -64,31 +61,42 @@ class Treemap extends React.Component {
   }
 
   drawRects(data) {
-    const { cKey, colorScale } = this;
+    const { colorScale } = this;
     const { duration } = this.props;
 
     return (node) => {
       const g = node.select("g.container");
 
-      const rects = g.selectAll(".rect").data(data).attr("class", "rect");
+      const rects = g.selectAll(".leaf").data(data).attr("class", "leaf");
 
       rects.exit().transition().duration(duration).attr("opacity", 0).remove();
 
-      rects
+      const leaf = rects
         .enter()
+        .append("g")
+        .attr("class", "leaf")
+        .attr("transform", (d) => `translate(${d.x0}, ${d.y0})`);
+
+      leaf
         .append("rect")
-        .attr("class", "rect")
-        .attr("fill", (d) => colorScale(+d.data[cKey]))
+        .attr("fill", (d) => colorScale(+d.data[0]))
         .attr("opacity", 0)
         .attr("stroke", "none")
-        .attr("x", (d) => d.x0)
-        .attr("y", (d) => d.y0)
         .attr("width", (d) => d.x1 - d.x0)
         .attr("height", (d) => d.y1 - d.y0)
         .merge(rects)
         .transition()
         .duration(duration)
         .attr("opacity", 1);
+
+      leaf
+        .append("text")
+        .attr("x", 4)
+        .attr("y", 14)
+        .attr("fill-opacity", (d, i, nodes) =>
+          i === nodes.length - 1 ? 0.7 : null
+        )
+        .text((d) => `Tier ${d.data[0]}`);
     };
   }
 

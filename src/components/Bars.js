@@ -1,9 +1,19 @@
 import * as React from "react";
 import * as d3 from "d3";
 
-const barColors = ["#DEEBF7", "#4292C6", "#9ECAE1", "#C6DBEF"];
+function getDataHeight(data, margin) {
+  const barHeight = 50;
 
-class Bar extends React.Component {
+  return data.length * barHeight - margin.top - margin.bottom;
+}
+
+function flattenData(data) {
+  const dataByTier = d3.group(data, (d) => d.tier);
+
+  return Array.from(dataByTier).sort((a, b) => a[1].length - b[1].length);
+}
+
+class Bars extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
@@ -14,31 +24,36 @@ class Bar extends React.Component {
 
   componentDidMount() {
     const { ref, margin } = this;
-    const { getContainerWidth, getContainerHeight, data } = this.props;
+    const {
+      getContainerWidth,
+      getContainerHeight,
+      getColorScale,
+      data,
+    } = this.props;
 
-    const flatData = this.flattenData(data.suppliers);
+    const flatData = flattenData(data.suppliers);
     const containerHeight = getContainerHeight(ref, margin);
-    const dataHeight = this.getDataHeight(data.suppliers, margin);
+    const dataHeight = getDataHeight(flatData, margin);
 
     this.height = containerHeight > dataHeight ? containerHeight : dataHeight;
     this.width = getContainerWidth(ref, margin);
 
     this.yScale = d3
       .scaleBand()
-      .domain(data.suppliers.map((d) => d.name))
+      .domain(flatData.map((d) => d[0]))
       .range([this.height, 0])
-      .padding(1.2);
+      .padding(0.2);
 
     this.xScale = d3
       .scaleLinear()
-      .domain([0, d3.max(flatData, (d) => +d.value)])
+      .domain([0, d3.max(flatData, (d) => d[1].length)])
       .range([0, this.width])
       .nice();
 
-    this.color = d3
-      .scaleOrdinal()
-      .domain(flatData.map((d) => d.key))
-      .range(barColors);
+    this.colorScale = getColorScale({ data: flatData, key: "1.length" });
+
+    const xAxisTicks = this.xScale.ticks().filter(Number.isInteger);
+    this.xAxis = this.xAxis.tickValues(xAxisTicks).tickFormat(d3.format("d"));
 
     this.yAxis = this.yAxis.scale(this.yScale);
     this.xAxis = this.xAxis.scale(this.xScale);
@@ -50,42 +65,6 @@ class Bar extends React.Component {
     const { data } = this.props;
 
     this.redraw(data.suppliers);
-  }
-
-  getDataHeight(data, margin) {
-    const barHeight = 20;
-
-    return data.length * barHeight - margin.top - margin.bottom;
-  }
-
-  flattenData(data) {
-    const riskKeys = [
-      "rs_ms_geographic",
-      "rs_ms_industry",
-      "rs_ms_product",
-      "rs_ms_employment",
-    ];
-
-    return data.reduce((acc, d) => {
-      const values = Object.entries(d.risks)
-        .reduce((acc2, [key, value]) => {
-          const isRiskKey = riskKeys.includes(key);
-
-          return isRiskKey
-            ? [
-                ...acc2,
-                {
-                  name: d.name,
-                  key,
-                  value,
-                },
-              ]
-            : acc2;
-        }, [])
-        .sort((a, b) => b.value - a.value);
-
-      return [...acc, ...values];
-    }, []);
   }
 
   draw(data) {
@@ -105,9 +84,8 @@ class Bar extends React.Component {
   }
 
   drawBars(data) {
-    const { xScale, yScale, color } = this;
+    const { xScale, yScale, colorScale } = this;
     const { duration } = this.props;
-    const barHeight = 12;
 
     return (node) => {
       const g = node.select("g.container");
@@ -126,16 +104,16 @@ class Bar extends React.Component {
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("fill", (d) => color(d.key))
+        .attr("fill", (d) => colorScale(d[1].length))
         .attr("opacity", 1)
         .attr("stroke", "none")
-        .attr("height", barHeight)
+        .attr("height", yScale.bandwidth())
         .attr("x", 0)
-        .attr("y", (d) => yScale(d.name) - barHeight / 2)
+        .attr("y", (d) => yScale(d[0]))
         .merge(bars)
         .transition()
         .duration(duration)
-        .attr("width", (d) => xScale(d.value));
+        .attr("width", (d) => xScale(d[1].length));
     };
   }
 
@@ -189,4 +167,4 @@ class Bar extends React.Component {
   }
 }
 
-export default Bar;
+export default Bars;

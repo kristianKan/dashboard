@@ -3,10 +3,11 @@ import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
-import Bar from "./Bar";
+import StackedBars from "./StackedBars";
 import Geo from "./Geo";
 import Quadrant from "./Quadrant";
 import Treemap from "./Treemap";
+import Bars from "./Bars";
 
 import {
   drawContainer,
@@ -38,7 +39,7 @@ export default function Graphics(props) {
         <Grid item sm={12}>
           <Paper className={classes.paper}>
             <h3>Supplier Risk Summary</h3>
-            <Bar
+            <StackedBars
               drawContainer={drawContainer}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
@@ -84,6 +85,19 @@ export default function Graphics(props) {
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}
               getLinearScale={getLinearScale}
+              duration={duration}
+              {...props}
+            />
+          </Paper>
+        </Grid>
+        <Grid item sm={6}>
+          <Paper className={classes.paper}>
+            <h3>Employment Mode Risk</h3>
+            <Bars
+              drawContainer={drawContainer}
+              getContainerHeight={getContainerHeight}
+              getContainerWidth={getContainerWidth}
+              getColorScale={getColorScale}
               duration={duration}
               {...props}
             />

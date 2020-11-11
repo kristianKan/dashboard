@@ -7,14 +7,14 @@ const suppliers = [
     name: "Apple",
     product: "fruit",
     countries: ["156", "840"],
+    governance: 1,
     tier: 4,
     risks: {
-      rs_ms_geographic: 10,
-      rs_ms_industry: 10,
-      rs_ms_product: 10,
-      rs_ms_employment: 10,
-      rs_ms_governance: 10,
-      rs_ms_total: 50,
+      rs_rm_geographic: 10,
+      rs_rm_industry: 10,
+      rs_rm_product: 10,
+      rs_rm_employment: 10,
+      rs_rm_total: 40,
     },
   },
 ];
@@ -23,7 +23,6 @@ const countries = {
   156: {
     name: "China",
     iso_code: "CHN",
-    governance: 10,
     prevalance: 10,
     regulation: 10,
   },

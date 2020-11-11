@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { csv, json } from "d3";
+import axios from "axios";
 import * as topojson from "topojson-client";
 
 import * as types from "../constants/actionTypes";
@@ -19,20 +20,18 @@ function mockSuppliersData(codes) {
     const name = Math.random().toString(36).substring(7);
     const product = Math.floor(Math.random() * products.length);
     const tier = getRandomInt(0, 4);
-    const rsGeographic = getRandomInt(10, 20);
-    const rsIndustry = getRandomInt(20, 40);
-    const rsProduct = getRandomInt(40, 60);
-    const rsEmployment = getRandomInt(60, 90);
-    const rsGovernance = getRandomInt(1, 30);
+    const governance = getRandomInt(0, 3);
+    const geographicRisk = getRandomInt(10, 20);
+    const industryRisk = getRandomInt(20, 40);
+    const productRisk = getRandomInt(40, 60);
+    const employmentRisk = getRandomInt(60, 90);
 
     const risks = {
-      rs_ms_geographic: rsGeographic,
-      rs_ms_industry: rsIndustry,
-      rs_ms_product: rsProduct,
-      rs_ms_employment: rsEmployment,
-      rs_ms_governance: rsGovernance,
-      rs_ms_total:
-        rsGeographic + rsIndustry + rsProduct + rsEmployment + rsGovernance,
+      rs_rm_geographic: geographicRisk,
+      rs_rm_industry: industryRisk,
+      rs_rm_product: productRisk,
+      rs_rm_employment: employmentRisk,
+      rs_rm_total: geographicRisk + industryRisk + productRisk + employmentRisk,
     };
 
     const emptyCountries = new Array(getRandomInt(0, 4)).fill("");
@@ -45,6 +44,7 @@ function mockSuppliersData(codes) {
       name,
       countries,
       product,
+      governance,
       risks,
       tier,
     };
@@ -83,7 +83,7 @@ function getCountrySuppliers(suppliers, countries) {
     });
     const country = countries[code];
     const risk = countrySuppliers.reduce((acc, d) => {
-      return d.risks.rs_ms_total + acc;
+      return d.risks.rs_rm_total + acc;
     }, 0);
 
     return {
@@ -106,10 +106,22 @@ export async function requestMetaData() {
   return { geo, suppliers, countries: uniqueCountries };
 }
 
-export function* fetchData() {
-  const data = yield call(requestMetaData);
+export function requestData() {
+  return axios.request({
+    method: "GET",
+    url: "https://rdd-be001.appspot.com/client/api/supplier-dashboard/",
+  });
+}
 
-  yield put({ type: types.FETCH_DATA_SUCCESS, data });
+export function* fetchData() {
+  try {
+    const metaData = yield call(requestMetaData);
+    const { data } = yield call(requestData);
+    console.log(data);
+    yield put({ type: types.FETCH_DATA_SUCCESS, data: metaData });
+  } catch (error) {
+    yield put({ type: types.FETCH_DATA_FAILURE, error });
+  }
 }
 
 export const dataSaga = [takeLatest(types.FETCH_DATA_REQUEST, fetchData)];

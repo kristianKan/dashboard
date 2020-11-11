@@ -21,7 +21,7 @@ class Treemap extends React.Component {
     this.width = getContainerWidth(ref, margin);
 
     const reduceFn = (iterable) =>
-      d3.sum(iterable, (d) => d.risks.rs_ms_product);
+      d3.sum(iterable, (d) => d.risks.rs_rm_product);
     const dataRollup = d3.rollup(data.suppliers, reduceFn, (d) => d.tier);
 
     const childrenAccessorFn = ([, value]) => value.size && Array.from(value);

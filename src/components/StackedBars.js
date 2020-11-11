@@ -11,10 +11,10 @@ function getDataHeight(data, margin) {
 
 function flattenData(data) {
   const riskKeys = [
-    "rs_ms_geographic",
-    "rs_ms_industry",
-    "rs_ms_product",
-    "rs_ms_employment",
+    "rs_rm_geographic",
+    "rs_rm_industry",
+    "rs_rm_product",
+    "rs_rm_employment",
   ];
 
   return data.reduce((acc, d) => {

@@ -8,6 +8,7 @@ import Geo from "./Geo";
 import Quadrant from "./Quadrant";
 import Treemap from "./Treemap";
 import Bars from "./Bars";
+import Pie from "./Pie";
 
 import {
   drawContainer,
@@ -94,6 +95,19 @@ export default function Graphics(props) {
           <Paper className={classes.paper}>
             <h3>Employment Mode Risk</h3>
             <Bars
+              drawContainer={drawContainer}
+              getContainerHeight={getContainerHeight}
+              getContainerWidth={getContainerWidth}
+              getColorScale={getColorScale}
+              duration={duration}
+              {...props}
+            />
+          </Paper>
+        </Grid>
+        <Grid item sm={6}>
+          <Paper className={classes.paper}>
+            <h3>Employment Mode Risk</h3>
+            <Pie
               drawContainer={drawContainer}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}

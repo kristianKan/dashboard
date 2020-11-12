@@ -21,17 +21,20 @@ function mockSuppliersData(codes) {
     const product = Math.floor(Math.random() * products.length);
     const tier = getRandomInt(0, 4);
     const governance = getRandomInt(0, 3);
-    const geographicRisk = getRandomInt(10, 20);
-    const industryRisk = getRandomInt(20, 40);
-    const productRisk = getRandomInt(40, 60);
-    const employmentRisk = getRandomInt(60, 90);
+    const governanceMs = getRandomInt(10, 30);
+    const geographicRs = getRandomInt(10, 20);
+    const industryRs = getRandomInt(20, 40);
+    const productRs = getRandomInt(40, 60);
+    const employmentRs = getRandomInt(60, 90);
 
-    const risks = {
-      rs_rm_geographic: geographicRisk,
-      rs_rm_industry: industryRisk,
-      rs_rm_product: productRisk,
-      rs_rm_employment: employmentRisk,
-      rs_rm_total: geographicRisk + industryRisk + productRisk + employmentRisk,
+    const rm = {
+      governance: governanceMs,
+    };
+    const rs = {
+      geographic: geographicRs,
+      industry: industryRs,
+      product: productRs,
+      employment: employmentRs,
     };
 
     const emptyCountries = new Array(getRandomInt(0, 4)).fill("");
@@ -45,7 +48,8 @@ function mockSuppliersData(codes) {
       countries,
       product,
       governance,
-      risks,
+      rs,
+      rm,
       tier,
     };
   });
@@ -83,7 +87,8 @@ function getCountrySuppliers(suppliers, countries) {
     });
     const country = countries[code];
     const risk = countrySuppliers.reduce((acc, d) => {
-      return d.risks.rs_rm_total + acc;
+      const total = Object.values(d.rs).reduce((sum, v) => v + sum, 0);
+      return total + acc;
     }, 0);
 
     return {
@@ -117,7 +122,7 @@ export function* fetchData() {
   try {
     const metaData = yield call(requestMetaData);
     const { data } = yield call(requestData);
-    console.log(data);
+    console.log(data, metaData);
     yield put({ type: types.FETCH_DATA_SUCCESS, data: metaData });
   } catch (error) {
     yield put({ type: types.FETCH_DATA_FAILURE, error });

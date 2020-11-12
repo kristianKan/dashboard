@@ -12,6 +12,7 @@ import Pie from "./Pie";
 
 import {
   drawContainer,
+  drawLegend,
   getContainerHeight,
   getContainerWidth,
   getColorScale,
@@ -42,6 +43,7 @@ export default function Graphics(props) {
             <h3>Supplier Risk Summary</h3>
             <StackedBars
               drawContainer={drawContainer}
+              drawLegend={drawLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               duration={duration}

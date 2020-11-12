@@ -10,29 +10,15 @@ function getDataHeight(data, margin) {
 }
 
 function flattenData(data) {
-  const riskKeys = [
-    "rs_rm_geographic",
-    "rs_rm_industry",
-    "rs_rm_product",
-    "rs_rm_employment",
-  ];
-
   return data.reduce((acc, d) => {
-    const values = Object.entries(d.risks)
-      .reduce((acc2, [key, value]) => {
-        const isRiskKey = riskKeys.includes(key);
-
-        return isRiskKey
-          ? [
-              ...acc2,
-              {
-                name: d.name,
-                key,
-                value,
-              },
-            ]
-          : acc2;
-      }, [])
+    const values = Object.entries(d.rs)
+      .map(([key, value]) => {
+        return {
+          name: d.name,
+          key,
+          value,
+        };
+      })
       .sort((a, b) => b.value - a.value);
 
     return [...acc, ...values];
@@ -43,7 +29,7 @@ class StackedBars extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
-    this.margin = { top: 20, right: 20, bottom: 30, left: 60 };
+    this.margin = { top: 20, right: 20, bottom: 60, left: 60 };
     this.xAxis = d3.axisBottom();
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
   }
@@ -53,6 +39,7 @@ class StackedBars extends React.Component {
     const { getContainerWidth, getContainerHeight, data } = this.props;
 
     const flatData = flattenData(data.suppliers);
+
     const containerHeight = getContainerHeight(ref, margin);
     const dataHeight = getDataHeight(data.suppliers, margin);
 
@@ -71,7 +58,7 @@ class StackedBars extends React.Component {
       .range([0, this.width])
       .nice();
 
-    this.color = d3
+    this.cScale = d3
       .scaleOrdinal()
       .domain(flatData.map((d) => d.key))
       .range(barColors);
@@ -79,7 +66,14 @@ class StackedBars extends React.Component {
     this.yAxis = this.yAxis.scale(this.yScale);
     this.xAxis = this.xAxis.scale(this.xScale);
 
-    this.draw(flatData);
+    const legendData = Object.keys(data.suppliers[0].rs).map((key) => {
+      return {
+        name: `${key.charAt(0).toUpperCase() + key.slice(1)} Risk`,
+        color: this.cScale(key),
+      };
+    });
+
+    this.draw(flatData, legendData);
   }
 
   componentDidUpdate() {
@@ -88,14 +82,15 @@ class StackedBars extends React.Component {
     this.redraw(data.suppliers);
   }
 
-  draw(data) {
+  draw(data, legendData) {
     const { ref, margin, width, height } = this;
-    const { drawContainer } = this.props;
+    const { drawContainer, drawLegend } = this.props;
 
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
       .call(this.drawBars(data))
-      .call(this.drawAxes());
+      .call(this.drawAxes())
+      .call(drawLegend({ data: legendData, width, height, margin }));
   }
 
   redraw(data) {
@@ -105,14 +100,14 @@ class StackedBars extends React.Component {
   }
 
   drawBars(data) {
-    const { xScale, yScale, color } = this;
+    const { xScale, yScale, cScale } = this;
     const { duration } = this.props;
     const barHeight = 12;
 
     return (node) => {
       const g = node.select("g.container");
 
-      const bars = g.selectAll(".bar").data(data).attr("class", "bar");
+      const bars = g.selectAll(".bar").data(data);
 
       bars
         .exit()
@@ -126,7 +121,7 @@ class StackedBars extends React.Component {
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("fill", (d) => color(d.key))
+        .attr("fill", (d) => cScale(d.key))
         .attr("opacity", 1)
         .attr("stroke", "none")
         .attr("height", barHeight)

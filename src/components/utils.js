@@ -36,6 +36,52 @@ export function getContainerHeight(ref, margin) {
   return container.height - margin.top - margin.bottom;
 }
 
+export function drawLegend({ height, margin, data }) {
+  return (node) => {
+    const rectHeight = 20;
+    const paddedHeight = height + margin.bottom - rectHeight;
+
+    const g = node
+      .select("g.container")
+      .append("g")
+      .attr("transform", `translate-y(${paddedHeight})`);
+
+    const legends = g.selectAll(".legend").data(data);
+
+    legends.exit().remove();
+
+    const legend = legends.enter().append("g").attr("class", "legend");
+
+    legend
+      .append("rect")
+      .attr("fill", (d) => d.color)
+      .attr("width", rectHeight)
+      .attr("height", rectHeight);
+
+    legend
+      .append("text")
+      .attr("x", rectHeight + 10)
+      .attr("font-size", 10)
+      .text((d) => d.name);
+
+    let x = 0;
+
+    legend.each(function () {
+      const thisNode = d3.select(this);
+      const legendWidth = thisNode.node().getBBox().width;
+
+      const textNode = thisNode.select("text");
+      const textHeight = textNode.node().getBBox().height;
+
+      textNode.attr("y", rectHeight / 2 + textHeight / 4);
+
+      thisNode.attr("transform", `translate(${x}, ${paddedHeight})`);
+
+      x += legendWidth + 20;
+    });
+  };
+}
+
 export function getLinearScale({ data, key, range }) {
   return d3
     .scaleLinear()

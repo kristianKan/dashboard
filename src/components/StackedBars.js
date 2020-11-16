@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as d3 from "d3";
 
-const barColors = ["#DEEBF7", "#4292C6", "#9ECAE1", "#C6DBEF"];
+const barColors = ["#4292C6", "#9ECAE1", "#C6DBEF", "#DEEBF7"];
 
 function getDataHeight(data, margin) {
   const barHeight = 20;
@@ -90,7 +90,7 @@ class StackedBars extends React.Component {
       .call(drawContainer({ width, height, margin }))
       .call(this.drawBars(data))
       .call(this.drawAxes())
-      .call(drawLegend({ data: legendData, width, height, margin }));
+      .call(drawLegend({ data: legendData, height, margin }));
   }
 
   redraw(data) {

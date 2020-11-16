@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as d3 from "d3";
 
+const labelFormat = ["Lowest", "Low", "Medium", "High", "Highest"];
+
 function getDataHeight(data, margin) {
   const barHeight = 50;
 
@@ -17,7 +19,7 @@ class Bars extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
-    this.margin = { top: 20, right: 20, bottom: 30, left: 60 };
+    this.margin = { top: 20, right: 20, bottom: 50, left: 40 };
     this.xAxis = d3.axisBottom();
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
   }
@@ -40,7 +42,7 @@ class Bars extends React.Component {
 
     this.yScale = d3
       .scaleBand()
-      .domain(flatData.map((d) => d[0]))
+      .domain(flatData.map((d) => `Tier ${d[0]}`))
       .range([this.height, 0])
       .padding(0.2);
 
@@ -50,7 +52,7 @@ class Bars extends React.Component {
       .range([0, this.width])
       .nice();
 
-    this.colorScale = getColorScale({ data: flatData, key: "1.length" });
+    this.cScale = getColorScale({ data: flatData, key: "1.length" });
 
     const xAxisTicks = this.xScale.ticks().filter(Number.isInteger);
     this.xAxis = this.xAxis.tickValues(xAxisTicks).tickFormat(d3.format("d"));
@@ -58,7 +60,14 @@ class Bars extends React.Component {
     this.yAxis = this.yAxis.scale(this.yScale);
     this.xAxis = this.xAxis.scale(this.xScale);
 
-    this.draw(flatData);
+    const legendData = flatData.map((d, i) => {
+      return {
+        name: labelFormat[i],
+        color: this.cScale(d[1].length),
+      };
+    });
+
+    this.draw(flatData, legendData);
   }
 
   componentDidUpdate() {
@@ -67,14 +76,15 @@ class Bars extends React.Component {
     this.redraw(data.suppliers);
   }
 
-  draw(data) {
+  draw(data, legendData) {
     const { ref, margin, width, height } = this;
-    const { drawContainer } = this.props;
+    const { drawContainer, drawLegend } = this.props;
 
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
       .call(this.drawBars(data))
-      .call(this.drawAxes());
+      .call(this.drawAxes())
+      .call(drawLegend({ data: legendData, height, margin }));
   }
 
   redraw(data) {
@@ -84,7 +94,7 @@ class Bars extends React.Component {
   }
 
   drawBars(data) {
-    const { xScale, yScale, colorScale } = this;
+    const { xScale, yScale, cScale } = this;
     const { duration } = this.props;
 
     return (node) => {
@@ -104,12 +114,12 @@ class Bars extends React.Component {
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("fill", (d) => colorScale(d[1].length))
+        .attr("fill", (d) => cScale(d[1].length))
         .attr("opacity", 1)
         .attr("stroke", "none")
         .attr("height", yScale.bandwidth())
         .attr("x", 0)
-        .attr("y", (d) => yScale(d[0]))
+        .attr("y", (d) => yScale(`Tier ${d[0]}`))
         .merge(bars)
         .transition()
         .duration(duration)
@@ -148,7 +158,7 @@ class Bars extends React.Component {
 
       g.selectAll(".tick line").attr("stroke", "#CCCCCC");
 
-      g.selectAll(".y.axis text").attr("transform", `translate(${-15}, 0)`);
+      g.selectAll(".y.axis text").attr("transform", `translate(${-10}, 0)`);
     };
   }
 

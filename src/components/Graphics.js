@@ -98,6 +98,7 @@ export default function Graphics(props) {
             <h3>Employment Mode Risk</h3>
             <Bars
               drawContainer={drawContainer}
+              drawLegend={drawLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}
@@ -108,9 +109,10 @@ export default function Graphics(props) {
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
-            <h3>Employment Mode Risk</h3>
+            <h3>Governance Performance</h3>
             <Pie
               drawContainer={drawContainer}
+              drawLegend={drawLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}

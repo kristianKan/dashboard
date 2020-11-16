@@ -39,12 +39,11 @@ export function getContainerHeight(ref, margin) {
 export function drawLegend({ height, margin, data }) {
   return (node) => {
     const rectHeight = 20;
-    const paddedHeight = height + margin.bottom - rectHeight;
+    const paddedHeight = height + margin.bottom;
 
     const g = node
-      .select("g.container")
       .append("g")
-      .attr("transform", `translate-y(${paddedHeight})`);
+      .attr("transform", `translate(${margin.left}, ${paddedHeight})`);
 
     const legends = g.selectAll(".legend").data(data);
 
@@ -60,7 +59,7 @@ export function drawLegend({ height, margin, data }) {
 
     legend
       .append("text")
-      .attr("x", rectHeight + 10)
+      .attr("x", rectHeight + 5)
       .attr("font-size", 10)
       .text((d) => d.name);
 
@@ -75,9 +74,9 @@ export function drawLegend({ height, margin, data }) {
 
       textNode.attr("y", rectHeight / 2 + textHeight / 4);
 
-      thisNode.attr("transform", `translate(${x}, ${paddedHeight})`);
+      thisNode.attr("transform", `translate(${x}, ${0})`);
 
-      x += legendWidth + 20;
+      x += legendWidth + 10;
     });
   };
 }

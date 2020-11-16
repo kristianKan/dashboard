@@ -1,40 +1,48 @@
 import * as React from "react";
 import * as d3 from "d3";
 
+const colors = ["#DEEBF7", "#C6DBEF", "#9ECAE1", "#4292C6"];
+const labelFormat = ["No Data", "Low", "Medium", "High"];
+
 class Pie extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
-    this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
+    this.margin = { top: 0, right: 0, bottom: 30, left: 0 };
   }
 
   componentDidMount() {
     const { ref, margin } = this;
-    const {
-      getContainerHeight,
-      getContainerWidth,
-      getColorScale,
-      data,
-    } = this.props;
+    const { getContainerHeight, getContainerWidth, data } = this.props;
 
     this.height = getContainerHeight(ref, margin);
     this.width = getContainerWidth(ref, margin);
 
     const groupedData = d3.group(data.suppliers, (d) => d.governance);
-    const root = Array.from(groupedData);
+    const root = Array.from(groupedData).sort((a, b) => a[0] - b[0]);
 
     const radius = Math.min(this.width, this.height) / 2;
 
     this.pie = d3
       .pie()
       .value((d) => d[1].length)
-      .sort(null);
+      .sort((a, b) => a[0] - b[0]);
 
     this.arc = d3.arc().innerRadius(0).outerRadius(radius);
 
-    this.colorScale = getColorScale({ data: root, key: "1.length" });
+    this.cScale = d3
+      .scaleOrdinal()
+      .domain(root.map((d) => d[0]))
+      .range(colors);
 
-    this.draw(root, data.suppliers.length);
+    const legendData = root.map((d) => {
+      return {
+        name: labelFormat[d[0]],
+        color: this.cScale(d[0]),
+      };
+    });
+
+    this.draw(root, data.suppliers.length, legendData);
   }
 
   componentDidUpdate() {
@@ -44,13 +52,20 @@ class Pie extends React.Component {
     this.redraw(data);
   }
 
-  draw(data, dataLength) {
+  draw(data, dataLength, legendData) {
     const { ref, margin, width, height } = this;
-    const { drawContainer } = this.props;
+    const { drawContainer, drawLegend } = this.props;
 
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
-      .call(this.drawPie(data, dataLength));
+      .call(this.drawPie(data, dataLength))
+      .call(
+        drawLegend({
+          data: legendData,
+          height,
+          margin: { left: 0, bottom: 10 },
+        })
+      );
   }
 
   redraw(data) {
@@ -60,7 +75,7 @@ class Pie extends React.Component {
   }
 
   drawPie(data, dataLength) {
-    const { pie, arc, colorScale, width, height } = this;
+    const { pie, arc, cScale, width, height } = this;
     const { duration } = this.props;
 
     return (node) => {
@@ -78,7 +93,7 @@ class Pie extends React.Component {
         .append("path")
         .attr("class", "arc")
         .attr("d", arc)
-        .attr("fill", (d) => colorScale(+d.value))
+        .attr("fill", (d) => cScale(d.index))
         .attr("stroke", "none")
         .merge(paths)
         .transition()

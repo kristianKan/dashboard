@@ -88,12 +88,13 @@ export function getLinearScale({ data, key, range }) {
     .range(range);
 }
 
-export function getColorScale({ data, key }) {
+export function getColorScale({ data, key, range }) {
+  const colorRange = range || ["#F4D166", "#DF452D"];
   const valueAccessorFn = (d) => get(d, key);
 
   return d3
     .scaleLinear()
     .domain([d3.min(data, valueAccessorFn), d3.max(data, valueAccessorFn)])
-    .range(["#F4D166", "#DF452D"])
+    .range(colorRange)
     .interpolate(d3.interpolateRgb);
 }

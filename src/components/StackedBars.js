@@ -11,7 +11,7 @@ function getDataHeight(data, margin) {
 
 function flattenData(data) {
   return data.reduce((acc, d) => {
-    const values = Object.entries(d.rs)
+    const values = Object.entries(d.risks.scores)
       .map(([key, value]) => {
         return {
           name: d.name,
@@ -29,7 +29,7 @@ class StackedBars extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
-    this.margin = { top: 20, right: 20, bottom: 60, left: 60 };
+    this.margin = { top: 20, right: 20, bottom: 60, left: 100 };
     this.xAxis = d3.axisBottom();
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
   }
@@ -39,6 +39,7 @@ class StackedBars extends React.Component {
     const { getContainerWidth, getContainerHeight, data } = this.props;
 
     const flatData = flattenData(data.suppliers);
+    console.log(flatData);
 
     const containerHeight = getContainerHeight(ref, margin);
     const dataHeight = getDataHeight(data.suppliers, margin);
@@ -54,7 +55,7 @@ class StackedBars extends React.Component {
 
     this.xScale = d3
       .scaleLinear()
-      .domain([0, d3.max(flatData, (d) => +d.value)])
+      .domain([0, d3.max(flatData, (d) => d.value)])
       .range([0, this.width])
       .nice();
 
@@ -66,12 +67,14 @@ class StackedBars extends React.Component {
     this.yAxis = this.yAxis.scale(this.yScale);
     this.xAxis = this.xAxis.scale(this.xScale);
 
-    const legendData = Object.keys(data.suppliers[0].rs).map((key) => {
-      return {
-        name: `${key.charAt(0).toUpperCase() + key.slice(1)} Risk`,
-        color: this.cScale(key),
-      };
-    });
+    const legendData = Object.keys(data.suppliers[0].risks.scores).map(
+      (key) => {
+        return {
+          name: `${key} Risk`,
+          color: this.cScale(key),
+        };
+      }
+    );
 
     this.draw(flatData, legendData);
   }

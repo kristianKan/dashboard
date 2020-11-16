@@ -2,6 +2,7 @@ import * as React from "react";
 import * as d3 from "d3";
 
 const colors = ["#DEEBF7", "#C6DBEF", "#9ECAE1", "#4292C6"];
+const colorRange = ["#DEEBF7", "#4292C6"];
 const labelFormat = ["No Data", "Low", "Medium", "High"];
 
 class Pie extends React.Component {
@@ -13,12 +14,17 @@ class Pie extends React.Component {
 
   componentDidMount() {
     const { ref, margin } = this;
-    const { getContainerHeight, getContainerWidth, data } = this.props;
+    const {
+      getContainerHeight,
+      getContainerWidth,
+      getColorScale,
+      data,
+    } = this.props;
 
     this.height = getContainerHeight(ref, margin);
     this.width = getContainerWidth(ref, margin);
 
-    const groupedData = d3.group(data.suppliers, (d) => d.governance);
+    const groupedData = d3.group(data.suppliers, (d) => d.tier.ms_governance);
     const root = Array.from(groupedData).sort((a, b) => a[0] - b[0]);
 
     const radius = Math.min(this.width, this.height) / 2;
@@ -30,10 +36,7 @@ class Pie extends React.Component {
 
     this.arc = d3.arc().innerRadius(0).outerRadius(radius);
 
-    this.cScale = d3
-      .scaleOrdinal()
-      .domain(root.map((d) => d[0]))
-      .range(colors);
+    this.cScale = getColorScale({ data: root, key: 0, range: colorRange });
 
     const legendData = root.map((d) => {
       return {
@@ -103,7 +106,7 @@ class Pie extends React.Component {
       arcG
         .append("text")
         .attr("transform", (d) => `translate(${arc.centroid(d)})`)
-        .attr("x", 0)
+        .attr("x", -10)
         .attr("y", 0)
         .attr("fill", "white")
         .text((d) => `${(100 / dataLength) * d.value}%`);

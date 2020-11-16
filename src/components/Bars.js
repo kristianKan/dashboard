@@ -10,7 +10,7 @@ function getDataHeight(data, margin) {
 }
 
 function flattenData(data) {
-  const dataByTier = d3.group(data, (d) => d.tier);
+  const dataByTier = d3.group(data, (d) => d.tier.ms_employment);
 
   return Array.from(dataByTier).sort((a, b) => a[1].length - b[1].length);
 }

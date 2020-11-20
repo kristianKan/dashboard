@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as d3 from "d3";
 
-const colors = ["#DEEBF7", "#C6DBEF", "#9ECAE1", "#4292C6"];
 const colorRange = ["#DEEBF7", "#4292C6"];
 const labelFormat = ["No Data", "Low", "Medium", "High"];
 
@@ -49,10 +48,12 @@ class Pie extends React.Component {
   }
 
   componentDidUpdate() {
-    const { props } = this;
-    const data = props.data.rights;
+    const { data } = this.props;
 
-    this.redraw(data);
+    const groupedData = d3.group(data.suppliers, (d) => d.tier.ms_governance);
+    const root = Array.from(groupedData).sort((a, b) => a[0] - b[0]);
+
+    this.redraw(root, data.suppliers.length);
   }
 
   draw(data, dataLength, legendData) {
@@ -71,10 +72,10 @@ class Pie extends React.Component {
       );
   }
 
-  redraw(data) {
+  redraw(data, dataLength) {
     const { ref } = this;
 
-    d3.select(ref.current).call(this.drawPie(data));
+    d3.select(ref.current).call(this.drawPie(data, dataLength));
   }
 
   drawPie(data, dataLength) {
@@ -111,12 +112,6 @@ class Pie extends React.Component {
         .attr("fill", "white")
         .text((d) => `${(100 / dataLength) * d.value}%`);
     };
-  }
-
-  handleChange(_, { value }) {
-    const { setSelection } = this.props;
-
-    setSelection(value);
   }
 
   render() {

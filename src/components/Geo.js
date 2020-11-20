@@ -148,12 +148,6 @@ class Geo extends React.Component {
     };
   }
 
-  handleChange(_, { value }) {
-    const { setSelection } = this.props;
-
-    setSelection(value);
-  }
-
   render() {
     return <svg ref={this.ref} />;
   }

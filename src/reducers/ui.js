@@ -1,7 +1,7 @@
 import * as types from "../constants/actionTypes";
 
 const initialState = {
-  selectedItem: null,
+  selectedItem: "total",
 };
 
 const ui = (state = initialState, action) => {

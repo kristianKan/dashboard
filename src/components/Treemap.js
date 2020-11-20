@@ -42,10 +42,25 @@ class Treemap extends React.Component {
   }
 
   componentDidUpdate() {
-    const { props } = this;
-    const data = props.data.rights;
+    const { data } = this.props;
 
-    this.redraw(data);
+    const reduceFn = (iterable) =>
+      d3.sum(iterable, (d) => d.risks.scores.ms_product);
+    const dataRollup = d3.rollup(
+      data.suppliers,
+      reduceFn,
+      (d) => d.tier.ms_employment
+    );
+
+    const childrenAccessorFn = ([, value]) => value.size && Array.from(value);
+    const root = d3
+      .hierarchy([null, dataRollup], childrenAccessorFn)
+      .sum(([, value]) => value)
+      .sort((a, b) => b.value - a.value);
+
+    d3.treemap().size([this.width, this.height]).padding(0)(root);
+
+    this.redraw(root);
   }
 
   draw(root) {
@@ -57,10 +72,10 @@ class Treemap extends React.Component {
       .call(this.drawRects(root.leaves()));
   }
 
-  redraw(data) {
+  redraw(root) {
     const { ref } = this;
 
-    d3.select(ref.current).call(this.drawRects(data));
+    d3.select(ref.current).call(this.drawRects(root.leaves()));
   }
 
   drawRects(data) {
@@ -100,12 +115,6 @@ class Treemap extends React.Component {
         .attr("fill", "white")
         .text((d, i) => `Tier ${d.data[0]} - ${riskLevel[i]}`);
     };
-  }
-
-  handleChange(_, { value }) {
-    const { setSelection } = this.props;
-
-    setSelection(value);
   }
 
   render() {

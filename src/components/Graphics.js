@@ -2,6 +2,8 @@ import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 import StackedBars from "./StackedBars";
 import Geo from "./Geo";
@@ -33,6 +35,7 @@ const duration = 1200;
 
 export default function Graphics(props) {
   const classes = useStyles();
+  const { setSelection, selectedItem, ...rest } = props;
 
   return (
     <div className={classes.box}>
@@ -41,13 +44,20 @@ export default function Graphics(props) {
         <Grid item sm={12}>
           <Paper className={classes.paper}>
             <h3>Supplier Risk Summary</h3>
+            <Select value={selectedItem} onChange={setSelection}>
+              <MenuItem value="total">Total Risk</MenuItem>
+              <MenuItem value="geographic">Geographic Risk</MenuItem>
+              <MenuItem value="industry">Industry Risk</MenuItem>
+              <MenuItem value="product">Product/Service Risk</MenuItem>
+              <MenuItem value="employment">Employment Risk</MenuItem>
+            </Select>
             <StackedBars
               drawContainer={drawContainer}
               drawLegend={drawLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               duration={duration}
-              {...props}
+              {...rest}
             />
           </Paper>
         </Grid>
@@ -61,7 +71,7 @@ export default function Graphics(props) {
               getColorScale={getColorScale}
               getLinearScale={getLinearScale}
               duration={duration}
-              {...props}
+              {...rest}
             />
           </Paper>
         </Grid>
@@ -75,7 +85,7 @@ export default function Graphics(props) {
               getColorScale={getColorScale}
               getLinearScale={getLinearScale}
               duration={duration}
-              {...props}
+              {...rest}
             />
           </Paper>
         </Grid>
@@ -89,7 +99,7 @@ export default function Graphics(props) {
               getColorScale={getColorScale}
               getLinearScale={getLinearScale}
               duration={duration}
-              {...props}
+              {...rest}
             />
           </Paper>
         </Grid>
@@ -103,7 +113,7 @@ export default function Graphics(props) {
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}
               duration={duration}
-              {...props}
+              {...rest}
             />
           </Paper>
         </Grid>
@@ -117,7 +127,7 @@ export default function Graphics(props) {
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}
               duration={duration}
-              {...props}
+              {...rest}
             />
           </Paper>
         </Grid>

@@ -39,7 +39,6 @@ class StackedBars extends React.Component {
     const { getContainerWidth, getContainerHeight, data } = this.props;
 
     const flatData = flattenData(data.suppliers);
-    console.log(flatData);
 
     const containerHeight = getContainerHeight(ref, margin);
     const dataHeight = getDataHeight(data.suppliers, margin);
@@ -81,8 +80,9 @@ class StackedBars extends React.Component {
 
   componentDidUpdate() {
     const { data } = this.props;
+    const flatData = flattenData(data.suppliers);
 
-    this.redraw(data.suppliers);
+    this.redraw(flatData);
   }
 
   draw(data, legendData) {
@@ -110,7 +110,7 @@ class StackedBars extends React.Component {
     return (node) => {
       const g = node.select("g.container");
 
-      const bars = g.selectAll(".bar").data(data);
+      const bars = g.selectAll(".bar").data(data, (d) => d.id);
 
       bars
         .exit()
@@ -170,12 +170,6 @@ class StackedBars extends React.Component {
 
       g.selectAll(".y.axis text").attr("transform", `translate(${-15}, 0)`);
     };
-  }
-
-  handleChange(_, { value }) {
-    const { setSelection } = this.props;
-
-    setSelection(value);
   }
 
   render() {

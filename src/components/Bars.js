@@ -72,8 +72,9 @@ class Bars extends React.Component {
 
   componentDidUpdate() {
     const { data } = this.props;
+    const flatData = flattenData(data.suppliers);
 
-    this.redraw(data.suppliers);
+    this.redraw(flatData);
   }
 
   draw(data, legendData) {
@@ -160,12 +161,6 @@ class Bars extends React.Component {
 
       g.selectAll(".y.axis text").attr("transform", `translate(${-10}, 0)`);
     };
-  }
-
-  handleChange(_, { value }) {
-    const { setSelection } = this.props;
-
-    setSelection(value);
   }
 
   render() {

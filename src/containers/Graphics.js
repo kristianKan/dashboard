@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getData: () => dispatch(fetchDataRequest()),
-  setSelection: (selection) => dispatch(setSelection(selection)),
+  setSelection: (selection) => dispatch(setSelection(selection.target.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

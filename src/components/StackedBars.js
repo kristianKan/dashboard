@@ -1,28 +1,12 @@
 import * as React from "react";
 import * as d3 from "d3";
 
-const barColors = ["#4292C6", "#9ECAE1", "#C6DBEF", "#DEEBF7"];
+const barColors = ["#DEEBF7", "#C6DBEF", "#9ECAE1", "#4292C6"];
 
 function getDataHeight(data, margin) {
   const barHeight = 20;
 
   return data.length * barHeight - margin.top - margin.bottom;
-}
-
-function flattenData(data) {
-  return data.reduce((acc, d) => {
-    const values = Object.entries(d.risks.scores)
-      .map(([key, value]) => {
-        return {
-          name: d.name,
-          key,
-          value,
-        };
-      })
-      .sort((a, b) => b.value - a.value);
-
-    return [...acc, ...values];
-  }, []);
 }
 
 class StackedBars extends React.Component {
@@ -38,7 +22,12 @@ class StackedBars extends React.Component {
     const { ref, margin } = this;
     const { getContainerWidth, getContainerHeight, data } = this.props;
 
-    const flatData = flattenData(data.suppliers);
+    const series = d3
+      .stack()
+      .keys(Object.keys(data.suppliers[0].risks.scores))(
+        data.suppliers.map((d) => ({ ...d.risks.scores, name: d.name }))
+      )
+      .map((d) => (d.forEach((v) => ({ ...v, key: d.key })), d));
 
     const containerHeight = getContainerHeight(ref, margin);
     const dataHeight = getDataHeight(data.suppliers, margin);
@@ -54,13 +43,13 @@ class StackedBars extends React.Component {
 
     this.xScale = d3
       .scaleLinear()
-      .domain([0, d3.max(flatData, (d) => d.value)])
+      .domain([0, d3.max(series, (d) => d3.max(d, (v) => v[1]))])
       .range([0, this.width])
       .nice();
 
     this.cScale = d3
       .scaleOrdinal()
-      .domain(flatData.map((d) => d.key))
+      .domain(series.map((d) => d.key))
       .range(barColors);
 
     this.yAxis = this.yAxis.scale(this.yScale);
@@ -75,14 +64,27 @@ class StackedBars extends React.Component {
       }
     );
 
-    this.draw(flatData, legendData);
+    this.draw(series, legendData);
   }
 
   componentDidUpdate() {
     const { data } = this.props;
-    const flatData = flattenData(data.suppliers);
 
-    this.redraw(flatData);
+    const series = d3
+      .stack()
+      .keys(Object.keys(data.suppliers[0].risks.scores))(
+        data.suppliers.map((d) => ({ ...d.risks.scores, name: d.name }))
+      )
+      .map((d) => (d.forEach((v) => ({ ...v, key: d.key })), d));
+
+    this.xScale = this.xScale.domain([
+      0,
+      d3.max(series, (d) => d3.max(d, (v) => v[1])),
+    ]);
+
+    this.xAxis = this.xAxis.scale(this.xScale);
+
+    this.redraw(series);
   }
 
   draw(data, legendData) {
@@ -110,30 +112,76 @@ class StackedBars extends React.Component {
     return (node) => {
       const g = node.select("g.container");
 
-      const bars = g.selectAll(".bar").data(data, (d) => d.id);
+      /*
+      const series = g.append("g")
+        .selectAll("g")
+        .data(data, d => d.key)
+        .join(
+          enter => enter.append("g"),
+          update => update,
+          exit => exit
+            .transition()
+            .duration(duration)
+            .attr("opacity", "0")
+            .remove()
+        )
+        .attr("fill", d => cScale(d.key))
+
+      const bars = series
+        .selectAll("rect")
+        .data(d => d)
 
       bars
-        .exit()
+        .join(
+          enter => enter.append("rect")
+            .attr("y", (d) => yScale(d.data.name))
+            .attr("height", barHeight),
+          update => update
+            .merge(bars),
+          exit => exit
+            .transition()
+            .duration(duration)
+            .attr("x", 0)
+            .attr("width", 0)
+            .remove()
+        )
         .transition()
         .duration(duration)
-        .attr("opacity", 0)
-        .attr("width", 0)
-        .remove();
+        .attr("x", d => xScale(d[0]))
+        .attr("width", d => xScale(d[1]) - xScale(d[0]));
+      */
+
+      const series = g.selectAll("g.series").data(data, (d) => d.key);
+
+      series
+        .enter()
+        .append("g")
+        .attr("class", "series")
+        .attr("fill", (d) => cScale(d.key));
+
+      series.exit().remove();
+
+      const bars = series.selectAll("rect.bar").data((d) => d);
 
       bars
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("fill", (d) => cScale(d.key))
-        .attr("opacity", 1)
-        .attr("stroke", "none")
+        .attr("y", (d) => yScale(d.data.name))
         .attr("height", barHeight)
-        .attr("x", 0)
-        .attr("y", (d) => yScale(d.name) - barHeight / 2)
         .merge(bars)
         .transition()
         .duration(duration)
-        .attr("width", (d) => xScale(d.value));
+        .attr("x", (d) => xScale(d[0]))
+        .attr("width", (d) => xScale(d[1]) - xScale(d[0]));
+
+      bars
+        .exit()
+        .transition()
+        .duration(duration)
+        .attr("x", 0)
+        .attr("width", 0)
+        .remove();
     };
   }
 

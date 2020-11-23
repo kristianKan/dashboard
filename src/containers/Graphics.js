@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
+import { getSelectedRiskScore } from "../selectors";
 import { fetchDataRequest, setSelection } from "../actions";
 import Graphics from "../components/Graphics";
 
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => ({
   data: state.data,
   means: state.means,
   selectedItem: state.ui.selectedItem,
+  selectedRiskScore: getSelectedRiskScore(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

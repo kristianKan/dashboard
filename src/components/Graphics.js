@@ -35,7 +35,13 @@ const duration = 1200;
 
 export default function Graphics(props) {
   const classes = useStyles();
-  const { setSelection, selectedItem, ...rest } = props;
+  const {
+    setSelection,
+    selectedItem,
+    selectedRiskScore,
+    data,
+    ...rest
+  } = props;
 
   return (
     <div className={classes.box}>
@@ -57,6 +63,7 @@ export default function Graphics(props) {
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               duration={duration}
+              data={{ ...data, suppliers: selectedRiskScore }}
               {...rest}
             />
           </Paper>
@@ -71,7 +78,7 @@ export default function Graphics(props) {
               getColorScale={getColorScale}
               getLinearScale={getLinearScale}
               duration={duration}
-              {...rest}
+              {...props}
             />
           </Paper>
         </Grid>
@@ -85,7 +92,7 @@ export default function Graphics(props) {
               getColorScale={getColorScale}
               getLinearScale={getLinearScale}
               duration={duration}
-              {...rest}
+              {...props}
             />
           </Paper>
         </Grid>
@@ -99,7 +106,7 @@ export default function Graphics(props) {
               getColorScale={getColorScale}
               getLinearScale={getLinearScale}
               duration={duration}
-              {...rest}
+              {...props}
             />
           </Paper>
         </Grid>
@@ -113,7 +120,7 @@ export default function Graphics(props) {
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}
               duration={duration}
-              {...rest}
+              {...props}
             />
           </Paper>
         </Grid>
@@ -127,7 +134,7 @@ export default function Graphics(props) {
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}
               duration={duration}
-              {...rest}
+              {...props}
             />
           </Paper>
         </Grid>

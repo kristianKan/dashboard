@@ -22,12 +22,7 @@ class StackedBars extends React.Component {
     const { ref, margin } = this;
     const { getContainerWidth, getContainerHeight, data } = this.props;
 
-    const series = d3
-      .stack()
-      .keys(Object.keys(data.suppliers[0].risks.scores))(
-        data.suppliers.map((d) => ({ ...d.risks.scores, name: d.name }))
-      )
-      .map((d) => (d.forEach((v) => ({ ...v, key: d.key })), d));
+    const series = this.getDataSeries(data);
 
     const containerHeight = getContainerHeight(ref, margin);
     const dataHeight = getDataHeight(data.suppliers, margin);
@@ -69,22 +64,28 @@ class StackedBars extends React.Component {
 
   componentDidUpdate() {
     const { data } = this.props;
-
-    const series = d3
-      .stack()
-      .keys(Object.keys(data.suppliers[0].risks.scores))(
-        data.suppliers.map((d) => ({ ...d.risks.scores, name: d.name }))
-      )
-      .map((d) => (d.forEach((v) => ({ ...v, key: d.key })), d));
+    const series = this.getDataSeries(data);
 
     this.xScale = this.xScale.domain([
       0,
       d3.max(series, (d) => d3.max(d, (v) => v[1])),
     ]);
 
+    this.yScale = this.yScale.domain(data.suppliers.map((d) => d.name));
+
     this.xAxis = this.xAxis.scale(this.xScale);
+    this.yAxis = this.yAxis.scale(this.yScale);
 
     this.redraw(series);
+  }
+
+  getDataSeries(data) {
+    return d3
+      .stack()
+      .keys(Object.keys(data.suppliers[0].risks.scores))(
+        data.suppliers.map((d) => ({ ...d.risks.scores, name: d.name }))
+      )
+      .map((d) => (d.forEach((v) => ({ ...v, key: d.key })), d));
   }
 
   draw(data, legendData) {
@@ -146,6 +147,7 @@ class StackedBars extends React.Component {
         .transition()
         .duration(duration)
         .attr("x", (d) => xScale(d[0]))
+        .attr("y", (d) => yScale(d.data.name))
         .attr("width", (d) => xScale(d[1]) - xScale(d[0]));
 
       bars

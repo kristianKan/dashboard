@@ -93,7 +93,8 @@ class StackedBars extends React.Component {
 
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
-      .call(this.drawBars(data))
+      .call(this.drawSeries(data))
+      .call(this.drawBars())
       .call(this.drawAxes())
       .call(drawLegend({ data: legendData, height, margin }));
   }
@@ -101,57 +102,18 @@ class StackedBars extends React.Component {
   redraw(data) {
     const { ref } = this;
 
-    d3.select(ref.current).call(this.drawBars(data)).call(this.drawAxes());
+    d3.select(ref.current)
+      .call(this.drawSeries(data))
+      .call(this.drawBars())
+      .call(this.drawAxes());
   }
 
-  drawBars(data) {
-    const { xScale, yScale, cScale } = this;
-    const { duration } = this.props;
-    const barHeight = 12;
+  drawSeries(data) {
+    const { cScale } = this;
 
     return (node) => {
       const g = node.select("g.container");
-
-      /*
-      const series = g.append("g")
-        .selectAll("g")
-        .data(data, d => d.key)
-        .join(
-          enter => enter.append("g"),
-          update => update,
-          exit => exit
-            .transition()
-            .duration(duration)
-            .attr("opacity", "0")
-            .remove()
-        )
-        .attr("fill", d => cScale(d.key))
-
-      const bars = series
-        .selectAll("rect")
-        .data(d => d)
-
-      bars
-        .join(
-          enter => enter.append("rect")
-            .attr("y", (d) => yScale(d.data.name))
-            .attr("height", barHeight),
-          update => update
-            .merge(bars),
-          exit => exit
-            .transition()
-            .duration(duration)
-            .attr("x", 0)
-            .attr("width", 0)
-            .remove()
-        )
-        .transition()
-        .duration(duration)
-        .attr("x", d => xScale(d[0]))
-        .attr("width", d => xScale(d[1]) - xScale(d[0]));
-      */
-
-      const series = g.selectAll("g.series").data(data, (d) => d.key);
+      const series = g.selectAll("g.series").data(data);
 
       series
         .enter()
@@ -160,16 +122,27 @@ class StackedBars extends React.Component {
         .attr("fill", (d) => cScale(d.key));
 
       series.exit().remove();
+    };
+  }
 
+  drawBars() {
+    const { xScale, yScale } = this;
+    const { duration } = this.props;
+    const barHeight = 12;
+
+    return (node) => {
+      const series = node.selectAll("g.series");
       const bars = series.selectAll("rect.bar").data((d) => d);
 
-      bars
+      const barsEnter = bars
         .enter()
         .append("rect")
         .attr("class", "bar")
         .attr("y", (d) => yScale(d.data.name))
-        .attr("height", barHeight)
-        .merge(bars)
+        .attr("height", barHeight);
+
+      bars
+        .merge(barsEnter)
         .transition()
         .duration(duration)
         .attr("x", (d) => xScale(d[0]))

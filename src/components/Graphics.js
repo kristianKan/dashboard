@@ -49,14 +49,20 @@ export default function Graphics(props) {
       <Grid container spacing={3}>
         <Grid item sm={12}>
           <Paper className={classes.paper}>
-            <h3>Supplier Risk Summary</h3>
-            <Select value={selectedItem} onChange={setSelection}>
-              <MenuItem value="total">Total Risk</MenuItem>
-              <MenuItem value="geographic">Geographic Risk</MenuItem>
-              <MenuItem value="industry">Industry Risk</MenuItem>
-              <MenuItem value="product">Product/Service Risk</MenuItem>
-              <MenuItem value="employment">Employment Risk</MenuItem>
-            </Select>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3>Supplier Risk Summary</h3>
+              <Select
+                style={{ width: "180px" }}
+                value={selectedItem}
+                onChange={setSelection}
+              >
+                <MenuItem value="total">Total Risk</MenuItem>
+                <MenuItem value="geographic">Geographic Risk</MenuItem>
+                <MenuItem value="industry">Industry Risk</MenuItem>
+                <MenuItem value="product">Product/Service Risk</MenuItem>
+                <MenuItem value="employment">Employment Risk</MenuItem>
+              </Select>
+            </div>
             <StackedBars
               drawContainer={drawContainer}
               drawLegend={drawLegend}

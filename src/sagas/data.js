@@ -155,7 +155,8 @@ export function* fetchData() {
   try {
     const { geo, codes } = yield call(requestMetaData);
     // const { data } = yield call(requestSuppliersData);
-    // const suppliers = processSuppliersData(data).slice(0, 20);
+    // const suppliers = processSuppliersData(data)
+    //   .sort((a, b) => a.risks.total - b.risks.total);
     const data = mockSuppliersData(codes);
     const suppliers = processSuppliersData(data);
     const mockCountries = mockCountriesData(codes);

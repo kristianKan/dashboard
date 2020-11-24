@@ -6,7 +6,7 @@ const getSuppliers = (state) => state.data.suppliers;
 export const getSelectedRiskScore = createSelector(
   [getSelectedRisk, getSuppliers],
   (selectedRisk, suppliers) => {
-    const sortedSuppliers = suppliers.sort((a, b) => {
+    const sortedSuppliers = suppliers.slice(0, 20).sort((a, b) => {
       return selectedRisk === "total"
         ? a.risks.total - b.risks.total
         : a.risks.scores[`ms_${selectedRisk}`] -

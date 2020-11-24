@@ -53,9 +53,11 @@ export function drawLegend({ height, margin, data }) {
 
     legend
       .append("rect")
-      .attr("fill", (d) => d.color)
-      .attr("width", rectHeight)
-      .attr("height", rectHeight);
+      .attr("fill", (d) => (d.name === "Mean" ? "transparent" : d.color))
+      .attr("stroke", (d) => d.name === "Mean" && d.color)
+      .attr("stroke-dasharray", "3, 3")
+      .attr("width", (d) => (d.name === "Mean" ? rectHeight - 2 : rectHeight))
+      .attr("height", (d) => (d.name === "Mean" ? rectHeight - 2 : rectHeight));
 
     legend
       .append("text")

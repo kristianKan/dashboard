@@ -9,6 +9,27 @@ function getDataHeight(data, margin) {
   return data.length * barHeight - margin.top - margin.bottom;
 }
 
+function getDataSeries(data) {
+  return d3
+    .stack()
+    .keys(Object.keys(data.suppliers[0].risks.scores))(
+      data.suppliers.map((d) => ({ ...d.risks.scores, name: d.name }))
+    )
+    .map((d) => (d.forEach((v) => ({ ...v, key: d.key })), d));
+}
+
+function getDataMean(data) {
+  return (
+    data.suppliers.reduce((acc, d) => {
+      const total = Object.values(d.risks.scores).reduce(
+        (sum, v) => sum + v,
+        0
+      );
+      return acc + total;
+    }, 0) / data.suppliers.length
+  );
+}
+
 class StackedBars extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +43,8 @@ class StackedBars extends React.Component {
     const { ref, margin } = this;
     const { getContainerWidth, getContainerHeight, data } = this.props;
 
-    const series = this.getDataSeries(data);
+    const series = getDataSeries(data);
+    const mean = getDataMean(data);
 
     const containerHeight = getContainerHeight(ref, margin);
     const dataHeight = getDataHeight(data.suppliers, margin);
@@ -34,7 +56,7 @@ class StackedBars extends React.Component {
       .scaleBand()
       .domain(data.suppliers.map((d) => d.name))
       .range([this.height, 0])
-      .padding(1.2);
+      .padding(0.2);
 
     this.xScale = d3
       .scaleLinear()
@@ -50,21 +72,15 @@ class StackedBars extends React.Component {
     this.yAxis = this.yAxis.scale(this.yScale);
     this.xAxis = this.xAxis.scale(this.xScale);
 
-    const legendData = Object.keys(data.suppliers[0].risks.scores).map(
-      (key) => {
-        return {
-          name: `${key} Risk`,
-          color: this.cScale(key),
-        };
-      }
-    );
+    const legend = this.getLegendData(data);
 
-    this.draw(series, legendData);
+    this.draw(series, mean, legend);
   }
 
   componentDidUpdate() {
     const { data } = this.props;
-    const series = this.getDataSeries(data);
+    const series = getDataSeries(data);
+    const mean = getDataMean(data);
 
     this.xScale = this.xScale.domain([
       0,
@@ -76,36 +92,46 @@ class StackedBars extends React.Component {
     this.xAxis = this.xAxis.scale(this.xScale);
     this.yAxis = this.yAxis.scale(this.yScale);
 
-    this.redraw(series);
+    this.redraw(series, mean);
   }
 
-  getDataSeries(data) {
-    return d3
-      .stack()
-      .keys(Object.keys(data.suppliers[0].risks.scores))(
-        data.suppliers.map((d) => ({ ...d.risks.scores, name: d.name }))
-      )
-      .map((d) => (d.forEach((v) => ({ ...v, key: d.key })), d));
+  getLegendData(data) {
+    const legend = Object.keys(data.suppliers[0].risks.scores).map((key) => {
+      return {
+        name: `${key} Risk`,
+        color: this.cScale(key),
+      };
+    });
+
+    return [
+      ...legend,
+      {
+        name: "Mean",
+        color: "red",
+      },
+    ];
   }
 
-  draw(data, legendData) {
+  draw(series, mean, legend) {
     const { ref, margin, width, height } = this;
     const { drawContainer, drawLegend } = this.props;
 
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
-      .call(this.drawSeries(data))
+      .call(this.drawSeries(series))
       .call(this.drawBars())
+      .call(this.drawMean(mean))
       .call(this.drawAxes())
-      .call(drawLegend({ data: legendData, height, margin }));
+      .call(drawLegend({ data: legend, height, margin }));
   }
 
-  redraw(data) {
+  redraw(series, mean) {
     const { ref } = this;
 
     d3.select(ref.current)
-      .call(this.drawSeries(data))
+      .call(this.drawSeries(series))
       .call(this.drawBars())
+      .call(this.drawMean(mean))
       .call(this.drawAxes());
   }
 
@@ -129,7 +155,6 @@ class StackedBars extends React.Component {
   drawBars() {
     const { xScale, yScale } = this;
     const { duration } = this.props;
-    const barHeight = 12;
 
     return (node) => {
       const series = node.selectAll("g.series");
@@ -140,7 +165,7 @@ class StackedBars extends React.Component {
         .append("rect")
         .attr("class", "bar")
         .attr("y", (d) => yScale(d.data.name))
-        .attr("height", barHeight);
+        .attr("height", yScale.bandwidth());
 
       bars
         .merge(barsEnter)
@@ -148,7 +173,8 @@ class StackedBars extends React.Component {
         .duration(duration)
         .attr("x", (d) => xScale(d[0]))
         .attr("y", (d) => yScale(d.data.name))
-        .attr("width", (d) => xScale(d[1]) - xScale(d[0]));
+        .attr("width", (d) => xScale(d[1]) - xScale(d[0]))
+        .attr("height", yScale.bandwidth());
 
       bars
         .exit()
@@ -192,6 +218,35 @@ class StackedBars extends React.Component {
       g.selectAll(".tick line").attr("stroke", "#CCCCCC");
 
       g.selectAll(".y.axis text").attr("transform", `translate(${-15}, 0)`);
+    };
+  }
+
+  drawMean(mean) {
+    const { xScale, yScale } = this;
+    const { duration } = this.props;
+
+    return (node) => {
+      const g = node.select("g.container");
+
+      const lines = g.selectAll(".mean").data([mean]);
+
+      lines
+        .enter()
+        .append("line")
+        .attr("class", "mean")
+        .attr("x1", 0)
+        .attr("x2", 0)
+        .attr("y1", yScale.range()[0])
+        .attr("y2", yScale.range()[1])
+        .attr("stroke", "red")
+        .attr("stroke-dasharray", "3, 3")
+        .merge(lines)
+        .transition()
+        .duration(duration)
+        .attr("x1", (d) => xScale(d))
+        .attr("x2", (d) => xScale(d));
+
+      lines.exit().remove();
     };
   }
 

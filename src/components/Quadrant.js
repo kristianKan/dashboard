@@ -5,6 +5,7 @@ class Quadrant extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
+    this.tooltipRef = React.createRef();
     this.margin = { top: 20, right: 10, bottom: 30, left: 10 };
     this.xAxis = d3.axisBottom().ticks(0).tickSize([0, 0]);
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
@@ -53,8 +54,10 @@ class Quadrant extends React.Component {
   }
 
   draw(data) {
-    const { ref, margin, width, height } = this;
-    const { drawContainer } = this.props;
+    const { ref, tooltipRef, margin, width, height } = this;
+    const { drawContainer, drawTooltip } = this.props;
+
+    d3.select(tooltipRef.current).call(drawTooltip());
 
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
@@ -86,7 +89,7 @@ class Quadrant extends React.Component {
         .attr("r", 0)
         .remove();
 
-      circles
+      const enterCircles = circles
         .enter()
         .append("circle")
         .attr("class", "circle")
@@ -94,11 +97,13 @@ class Quadrant extends React.Component {
         .attr("opacity", 1)
         .attr("stroke", "none")
         .attr("cx", (d) => xScale(d[xKey]))
-        .attr("cy", (d) => yScale(d[yKey]))
-        .merge(circles)
-        .transition()
-        .duration(duration)
-        .attr("r", 5);
+        .attr("cy", (d) => yScale(d[yKey]));
+
+      circles.merge(enterCircles).transition().duration(duration).attr("r", 5);
+
+      enterCircles
+        .on("mouseover", this.mouseover())
+        .on("mouseleave", this.mouseleave());
     };
   }
 
@@ -189,8 +194,53 @@ class Quadrant extends React.Component {
     };
   }
 
+  mouseover() {
+    const { tooltipRef } = this;
+    const tooltip = d3.select(tooltipRef.current);
+
+    return function (event, d) {
+      tooltip.style("opacity", 1).html(`
+          <span style="font-size: 14px">${d.name}</span>
+          </br>
+          <span style="font-size: 9px">Strength of governance: ${d.regulation}</span>
+        `);
+
+      const node = d3.select(this);
+      const { width } = tooltip.node().getBoundingClientRect();
+      const parentWidth = tooltip.node().parentNode.getBoundingClientRect()
+        .width;
+      const margin = 2;
+      const r = +node.attr("r");
+      const x = +node.attr("cx");
+      const y = +node.attr("cy") - r;
+      const isLeft = x + width > parentWidth;
+
+      tooltip
+        .style("left", `${isLeft ? x - width + margin : x + r * 3 + margin}px`)
+        .style("top", `${y}px`);
+
+      node.style("stroke", "black").style("opacity", 1);
+    };
+  }
+
+  mouseleave() {
+    const { tooltipRef } = this;
+    const tooltip = d3.select(tooltipRef.current);
+
+    return function () {
+      tooltip.style("opacity", 0);
+
+      d3.select(this).style("stroke", "none").style("opacity", 0.8);
+    };
+  }
+
   render() {
-    return <svg ref={this.ref} />;
+    return (
+      <div style={{ position: "relative" }}>
+        <div ref={this.tooltipRef} />
+        <svg ref={this.ref} />
+      </div>
+    );
   }
 }
 

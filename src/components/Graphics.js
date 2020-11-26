@@ -15,6 +15,7 @@ import Pie from "./Pie";
 import {
   drawContainer,
   drawLegend,
+  drawTooltip,
   getContainerHeight,
   getContainerWidth,
   getColorScale,
@@ -78,6 +79,7 @@ export default function Graphics(props) {
           <Paper className={classes.paper}>
             <h3>Geographic Risk Map</h3>
             <Geo
+              drawTooltip={drawTooltip}
               drawContainer={drawContainer}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
@@ -92,6 +94,7 @@ export default function Graphics(props) {
           <Paper className={classes.paper}>
             <h3>Geographic Risk Quadrant</h3>
             <Quadrant
+              drawTooltip={drawTooltip}
               drawContainer={drawContainer}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
@@ -106,6 +109,7 @@ export default function Graphics(props) {
           <Paper className={classes.paper}>
             <h3>Product and Service Risk Treemap</h3>
             <Treemap
+              drawTooltip={drawTooltip}
               drawContainer={drawContainer}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}

@@ -32,8 +32,7 @@ export function getContainerHeight(ref, margin) {
   const parent = ref.current.parentElement;
   const container = parent.getBoundingClientRect();
 
-  // Return the height with padding
-  return container.height - margin.top - margin.bottom;
+  return container.height;
 }
 
 export function drawLegend({ height, margin, data }) {
@@ -80,6 +79,19 @@ export function drawLegend({ height, margin, data }) {
 
       x += legendWidth + 10;
     });
+  };
+}
+
+export function drawTooltip() {
+  return (node) => {
+    node
+      .attr("class", "tooltip")
+      .style("opacity", 0)
+      .style("background-color", "black")
+      .style("border-radius", "7px")
+      .style("padding", "5px")
+      .style("position", "absolute")
+      .style("color", "white");
   };
 }
 

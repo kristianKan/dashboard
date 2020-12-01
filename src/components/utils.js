@@ -29,10 +29,11 @@ export function getContainerWidth(ref, margin) {
 }
 
 export function getContainerHeight(ref, margin) {
-  const parent = ref.current.parentElement;
+  const parent = ref.current.closest(".MuiPaper-root");
+  const header = parent.querySelector("h3").getBoundingClientRect();
   const container = parent.getBoundingClientRect();
 
-  return container.height;
+  return container.height - header.height;
 }
 
 export function drawLegend({ height, margin, data }) {

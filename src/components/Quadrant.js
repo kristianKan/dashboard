@@ -199,7 +199,7 @@ class Quadrant extends React.Component {
     const tooltip = d3.select(tooltipRef.current);
 
     return function (event, d) {
-      tooltip.style("opacity", 1).html(`
+      tooltip.html(`
           <span style="font-size: 14px">${d.name}</span>
           </br>
           <span style="font-size: 9px">Strength of governance: ${d.regulation}</span>
@@ -217,9 +217,11 @@ class Quadrant extends React.Component {
 
       tooltip
         .style("left", `${isLeft ? x - width + margin : x + r * 3 + margin}px`)
-        .style("top", `${y}px`);
+        .style("top", `${y}px`)
+        .style("opacity", 1)
+        .style("z-index", 1);
 
-      node.style("stroke", "black").style("opacity", 1);
+      node.style("stroke", "black");
     };
   }
 
@@ -228,9 +230,9 @@ class Quadrant extends React.Component {
     const tooltip = d3.select(tooltipRef.current);
 
     return function () {
-      tooltip.style("opacity", 0);
+      tooltip.style("opacity", 0).style("z-index", -1);
 
-      d3.select(this).style("stroke", "none").style("opacity", 0.8);
+      d3.select(this).style("stroke", "none");
     };
   }
 

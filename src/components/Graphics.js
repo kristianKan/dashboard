@@ -11,6 +11,7 @@ import Quadrant from "./Quadrant";
 import Treemap from "./Treemap";
 import Bars from "./Bars";
 import Pie from "./Pie";
+import Table from "./Table";
 
 import {
   drawContainer,
@@ -103,6 +104,12 @@ export default function Graphics(props) {
               duration={duration}
               {...props}
             />
+          </Paper>
+        </Grid>
+        <Grid item sm={6}>
+          <Paper className={classes.paper}>
+            <h3>Product and Service Risk</h3>
+            <Table {...props} />
           </Paper>
         </Grid>
         <Grid item sm={6}>

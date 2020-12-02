@@ -88,7 +88,7 @@ function mockCountriesData(codes) {
   }, {});
 }
 
-function getCountrySuppliers(suppliers, countries) {
+function getUniqueCountries(suppliers, countries) {
   const uniqueCountries = suppliers.reduce((acc, d) => {
     const supplierCountries = d.countries.reduce((acc2, country) => {
       return acc.includes(country) ? acc2 : [...acc2, country];
@@ -113,13 +113,45 @@ function getCountrySuppliers(suppliers, countries) {
   });
 }
 
+function getUniqueProducts(suppliers, products) {
+  const uniqueProducts = suppliers.reduce((acc, d) => {
+    const supplierProducts = d.products.reduce((acc2, product) => {
+      const { name } = products.find((v) => v.value === product.id);
+      return acc.find((v) => v.id === product.id)
+        ? acc2
+        : [...acc2, { ...product, name }];
+    }, []);
+    return [...acc, ...supplierProducts];
+  }, []);
+
+  return uniqueProducts.map((product) => {
+    const productSuppliers = suppliers.filter((d) => {
+      return d.products.find((v) => v.id === product.id);
+    });
+
+    const countries = productSuppliers.reduce((acc, d) => {
+      const supplierCountries = d.countries.reduce((acc2, country) => {
+        return acc.includes(country) ? acc2 : [...acc2, country];
+      }, []);
+      return [...acc, ...supplierCountries];
+    }, []);
+
+    return {
+      ...product,
+      countries,
+      suppliers: productSuppliers,
+    };
+  });
+}
+
 export async function requestMetaData() {
-  const map = await json(`${process.env.PUBLIC_URL}/countries-110m.json`);
-  const codes = await csv(`${process.env.PUBLIC_URL}/iso-codes.csv`);
+  const world = await json(`${process.env.PUBLIC_URL}/countries-110m.json`);
+  const isoCodeIndex = await csv(`${process.env.PUBLIC_URL}/iso-codes.csv`);
+  const productIndex = await json(`${process.env.PUBLIC_URL}/products.json`);
 
-  const geo = topojson.feature(map, map.objects.countries);
+  const geo = topojson.feature(world, world.objects.countries);
 
-  return { geo, codes };
+  return { geo, isoCodeIndex, productIndex };
 }
 
 export function processSuppliersData(data) {
@@ -147,24 +179,31 @@ export function processSuppliersData(data) {
 export function requestSuppliersData() {
   return axios.request({
     method: "GET",
-    url: "https://rdd-be001.appspot.com/client/api/supplier-dashboard/",
+    url:
+      "https://test-app-dot-rdd-be001.appspot.com/client/api/supplier-dashboard/",
   });
 }
 
 export function* fetchData() {
   try {
-    const { geo, codes } = yield call(requestMetaData);
-    // const { data } = yield call(requestSuppliersData);
-    // const suppliers = processSuppliersData(data)
-    //   .sort((a, b) => a.risks.total - b.risks.total);
-    const data = mockSuppliersData(codes);
-    const suppliers = processSuppliersData(data);
-    const mockCountries = mockCountriesData(codes);
-    const countries = getCountrySuppliers(suppliers, mockCountries);
+    const { geo, isoCodeIndex, productIndex } = yield call(requestMetaData);
+    const { data } = yield call(requestSuppliersData);
+
+    const suppliers = processSuppliersData(data).sort(
+      (a, b) => a.risks.total - b.risks.total
+    );
+
+    // const data = mockSuppliersData(isoCodeIndex);
+    // const suppliers = processSuppliersData(data);
+
+    const mockCountries = mockCountriesData(isoCodeIndex);
+    const countries = getUniqueCountries(suppliers, mockCountries);
+    const products = getUniqueProducts(suppliers, productIndex);
+    console.log(products);
 
     yield put({
       type: types.FETCH_DATA_SUCCESS,
-      data: { geo, suppliers, countries },
+      data: { geo, suppliers, countries, products },
     });
   } catch (error) {
     yield put({ type: types.FETCH_DATA_FAILURE, error });

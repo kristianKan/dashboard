@@ -2,7 +2,8 @@ import * as types from "../constants/actionTypes";
 
 const initialState = {
   suppliers: [],
-  countries: {},
+  countries: [],
+  products: [],
   geo: {},
   error: null,
   fetching: false,
@@ -19,6 +20,7 @@ const data = (state = initialState, action) => {
         fetching: false,
         suppliers: action.data.suppliers,
         countries: action.data.countries,
+        products: action.data.products,
         geo: action.data.geo,
       };
 

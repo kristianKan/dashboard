@@ -1,0 +1,1676 @@
+[
+  {
+    "country_code": "AF",
+    "country_name": "Afghanistan",
+    "ms_prevalence_score": 22.19212583,
+    "ms_government_response": 4.208269258242897,
+    "ms_prevalence_score_C": 5.143002530072808,
+    "ms_government_response_C": -4.208269258242897,
+    "coordinates": [65, 33]
+  },
+  {
+    "country_code": "AL",
+    "country_name": "Albania",
+    "ms_prevalence_score": 6.870871921,
+    "ms_government_response": 59.88095238,
+    "ms_prevalence_score_C": 4.265327806500708,
+    "ms_government_response_C": -59.88095238,
+    "coordinates": [20, 41]
+  },
+  {
+    "country_code": "DZ",
+    "country_name": "Algeria",
+    "ms_prevalence_score": 2.654709123,
+    "ms_government_response": 36.25,
+    "ms_prevalence_score_C": 2.654709123,
+    "ms_government_response_C": -36.25,
+    "coordinates": [3, 28]
+  },
+  {
+    "country_code": "AO",
+    "country_name": "Angola",
+    "ms_prevalence_score": 7.151361332,
+    "ms_government_response": 29.46428571,
+    "ms_prevalence_score_C": 4.281395581875132,
+    "ms_government_response_C": -29.46428571,
+    "coordinates": [18.5, -12.5]
+  },
+  {
+    "country_code": "AG",
+    "country_name": "Antigua and Barbuda",
+    "ms_prevalence_score": 4.1187856929999995,
+    "ms_government_response": 47.46325404796125,
+    "ms_prevalence_score_C": 4.107675140879938,
+    "ms_government_response_C": -47.46325404796125,
+    "coordinates": [-61.8, 17.05]
+  },
+  {
+    "country_code": "AR",
+    "country_name": "Argentina",
+    "ms_prevalence_score": 1.261023471,
+    "ms_government_response": 62.61904762,
+    "ms_prevalence_score_C": 1.261023471,
+    "ms_government_response_C": -62.61904762,
+    "coordinates": [-64, -34]
+  },
+  {
+    "country_code": "AM",
+    "country_name": "Armenia",
+    "ms_prevalence_score": 5.340739596,
+    "ms_government_response": 53.21428571,
+    "ms_prevalence_score_C": 4.17767450649344,
+    "ms_government_response_C": -53.21428571,
+    "coordinates": [45, 40]
+  },
+  {
+    "country_code": "AU",
+    "country_name": "Australia",
+    "ms_prevalence_score": 0.648147281,
+    "ms_government_response": 63.75,
+    "ms_prevalence_score_C": 0.648147281,
+    "ms_government_response_C": -63.75,
+    "coordinates": [133, -27]
+  },
+  {
+    "country_code": "AT",
+    "country_name": "Austria",
+    "ms_prevalence_score": 1.738005713,
+    "ms_government_response": 63.0952381,
+    "ms_prevalence_score_C": 1.738005713,
+    "ms_government_response_C": -63.0952381,
+    "coordinates": [13.33333, 47.33333]
+  },
+  {
+    "country_code": "AZ",
+    "country_name": "Azerbaijan",
+    "ms_prevalence_score": 4.464912203,
+    "ms_government_response": 48.1547619,
+    "ms_prevalence_score_C": 4.127502923304899,
+    "ms_government_response_C": -48.1547619,
+    "coordinates": [47.5, 40.5]
+  },
+  {
+    "country_code": "BS",
+    "country_name": "Bahamas",
+    "ms_prevalence_score": 2.514092226,
+    "ms_government_response": 48.06582469624074,
+    "ms_prevalence_score_C": 2.514092226,
+    "ms_government_response_C": -48.06582469624074,
+    "coordinates": [-76, 24.25]
+  },
+  {
+    "country_code": "BH",
+    "country_name": "Bahrain",
+    "ms_prevalence_score": 1.875850464,
+    "ms_government_response": 32.55952381,
+    "ms_prevalence_score_C": 1.875850464,
+    "ms_government_response_C": -32.55952381,
+    "coordinates": [50.55, 26]
+  },
+  {
+    "country_code": "BD",
+    "country_name": "Bangladesh",
+    "ms_prevalence_score": 3.672788917,
+    "ms_government_response": 44.4047619,
+    "ms_prevalence_score_C": 3.672788917,
+    "ms_government_response_C": -44.4047619,
+    "coordinates": [90, 24]
+  },
+  {
+    "country_code": "BB",
+    "country_name": "Barbados",
+    "ms_prevalence_score": 2.745566745,
+    "ms_government_response": 39.4047619,
+    "ms_prevalence_score_C": 2.745566745,
+    "ms_government_response_C": -39.4047619,
+    "coordinates": [-59.533333, 13.166666]
+  },
+  {
+    "country_code": "BY",
+    "country_name": "Belarus",
+    "ms_prevalence_score": 10.87702427,
+    "ms_government_response": 40.11904762,
+    "ms_prevalence_score_C": 4.494819379212708,
+    "ms_government_response_C": -40.11904762,
+    "coordinates": [28, 53]
+  },
+  {
+    "country_code": "BE",
+    "country_name": "Belgium",
+    "ms_prevalence_score": 2.026892467,
+    "ms_government_response": 68.33333333,
+    "ms_prevalence_score_C": 2.026892467,
+    "ms_government_response_C": -68.33333333,
+    "coordinates": [4, 50.833333]
+  },
+  {
+    "country_code": "BZ",
+    "country_name": "Belize",
+    "ms_prevalence_score": 3.005070246666667,
+    "ms_government_response": 31.378908059781608,
+    "ms_prevalence_score_C": 3.005070246666667,
+    "ms_government_response_C": -31.378908059781608,
+    "coordinates": [-88.75, 17.25]
+  },
+  {
+    "country_code": "BJ",
+    "country_name": "Benin",
+    "ms_prevalence_score": 5.458588239,
+    "ms_government_response": 37.73809524,
+    "ms_prevalence_score_C": 4.184425440573817,
+    "ms_government_response_C": -37.73809524,
+    "coordinates": [2.25, 9.5]
+  },
+  {
+    "country_code": "BO",
+    "country_name": "Bolivia",
+    "ms_prevalence_score": 2.129272486,
+    "ms_government_response": 41.25,
+    "ms_prevalence_score_C": 2.129272486,
+    "ms_government_response_C": -41.25,
+    "coordinates": [-65, -17]
+  },
+  {
+    "country_code": "BA",
+    "country_name": "Bosnia and Herzegovina",
+    "ms_prevalence_score": 3.422193761,
+    "ms_government_response": 48.63095238,
+    "ms_prevalence_score_C": 3.422193761,
+    "ms_government_response_C": -48.63095238,
+    "coordinates": [18, 44]
+  },
+  {
+    "country_code": "BW",
+    "country_name": "Botswana",
+    "ms_prevalence_score": 3.43257359,
+    "ms_government_response": 33.21428571,
+    "ms_prevalence_score_C": 3.43257359,
+    "ms_government_response_C": -33.21428571,
+    "coordinates": [24, -22]
+  },
+  {
+    "country_code": "BR",
+    "country_name": "Brazil",
+    "ms_prevalence_score": 1.792374814,
+    "ms_government_response": 55.5952381,
+    "ms_prevalence_score_C": 1.792374814,
+    "ms_government_response_C": -55.5952381,
+    "coordinates": [-55, -10]
+  },
+  {
+    "country_code": "BN",
+    "country_name": "Brunei Darussalam",
+    "ms_prevalence_score": 10.92805253,
+    "ms_government_response": 20.5952381,
+    "ms_prevalence_score_C": 4.497742522073983,
+    "ms_government_response_C": -20.5952381,
+    "coordinates": [114.66666666, 4.5]
+  },
+  {
+    "country_code": "BG",
+    "country_name": "Bulgaria",
+    "ms_prevalence_score": 4.464942239,
+    "ms_government_response": 55.83333333,
+    "ms_prevalence_score_C": 4.127504643910677,
+    "ms_government_response_C": -55.83333333,
+    "coordinates": [25, 43]
+  },
+  {
+    "country_code": "BF",
+    "country_name": "Burkina Faso",
+    "ms_prevalence_score": 4.522911071,
+    "ms_government_response": 35.6547619,
+    "ms_prevalence_score_C": 4.130825375941069,
+    "ms_government_response_C": -35.6547619,
+    "coordinates": [-2, 13]
+  },
+  {
+    "country_code": "BI",
+    "country_name": "Burundi",
+    "ms_prevalence_score": 39.95421544,
+    "ms_government_response": 10.71428571,
+    "ms_prevalence_score_C": 6.160500000000001,
+    "ms_government_response_C": -10.71428571,
+    "coordinates": [30, -3.5]
+  },
+  {
+    "country_code": "KH",
+    "country_name": "Cambodia",
+    "ms_prevalence_score": 16.81024455,
+    "ms_government_response": 37.55952381,
+    "ms_prevalence_score_C": 4.834702622455771,
+    "ms_government_response_C": -37.55952381,
+    "coordinates": [105, 13]
+  },
+  {
+    "country_code": "CM",
+    "country_name": "Cameroon",
+    "ms_prevalence_score": 6.867205692,
+    "ms_government_response": 25.41666667,
+    "ms_prevalence_score_C": 4.265117787363682,
+    "ms_government_response_C": -25.41666667,
+    "coordinates": [12, 6]
+  },
+  {
+    "country_code": "CA",
+    "country_name": "Canada",
+    "ms_prevalence_score": 0.48165809,
+    "ms_government_response": 58.63095238,
+    "ms_prevalence_score_C": 0.48165809,
+    "ms_government_response_C": -58.63095238,
+    "coordinates": [-95, 60]
+  },
+  {
+    "country_code": "CV",
+    "country_name": "Cape Verde",
+    "ms_prevalence_score": 4.10503118,
+    "ms_government_response": 22.91666667,
+    "ms_prevalence_score_C": 4.10503118,
+    "ms_government_response_C": -22.91666667,
+    "coordinates": [-24, 16]
+  },
+  {
+    "country_code": "CF",
+    "country_name": "Central African Republic",
+    "ms_prevalence_score": 22.2507059,
+    "ms_government_response": 2.5,
+    "ms_prevalence_score_C": 5.146358276740115,
+    "ms_government_response_C": -2.5,
+    "coordinates": [21, 7]
+  },
+  {
+    "country_code": "TD",
+    "country_name": "Chad",
+    "ms_prevalence_score": 11.98403933,
+    "ms_government_response": 16.66666667,
+    "ms_prevalence_score_C": 4.558234498010845,
+    "ms_government_response_C": -16.66666667,
+    "coordinates": [19, 15]
+  },
+  {
+    "country_code": "CL",
+    "country_name": "Chile",
+    "ms_prevalence_score": 0.777680506,
+    "ms_government_response": 62.32142857,
+    "ms_prevalence_score_C": 0.777680506,
+    "ms_government_response_C": -62.32142857,
+    "coordinates": [-71, -30]
+  },
+  {
+    "country_code": "CN",
+    "country_name": "China",
+    "ms_prevalence_score": 2.766052799,
+    "ms_government_response": 27.38095238,
+    "ms_prevalence_score_C": 2.766052799,
+    "ms_government_response_C": -27.38095238,
+    "coordinates": [105, 35]
+  },
+  {
+    "country_code": "CO",
+    "country_name": "Colombia",
+    "ms_prevalence_score": 2.725779633,
+    "ms_government_response": 41.07142857,
+    "ms_prevalence_score_C": 2.725779633,
+    "ms_government_response_C": -41.07142857,
+    "coordinates": [-72, 4]
+  },
+  {
+    "country_code": "CG",
+    "country_name": "Congo, Republic of",
+    "ms_prevalence_score": 8.026860052,
+    "ms_government_response": 14.82142857,
+    "ms_prevalence_score_C": 4.331548337101801,
+    "ms_government_response_C": -14.82142857,
+    "coordinates": [15, -1]
+  },
+  {
+    "country_code": "CD",
+    "country_name": "Congo, Democratic Republic of the",
+    "ms_prevalence_score": 13.70856417,
+    "ms_government_response": 18.92857143,
+    "ms_prevalence_score_C": 4.657023531286452,
+    "ms_government_response_C": -18.92857143,
+    "coordinates": [25, 0]
+  },
+  {
+    "country_code": "CR",
+    "country_name": "Costa Rica",
+    "ms_prevalence_score": 1.250377348,
+    "ms_government_response": 50.0,
+    "ms_prevalence_score_C": 1.250377348,
+    "ms_government_response_C": -50.0,
+    "coordinates": [-84, 10]
+  },
+  {
+    "country_code": "CI",
+    "country_name": "C\u00f4te d'Ivoire",
+    "ms_prevalence_score": 5.914804894,
+    "ms_government_response": 42.44047619,
+    "ms_prevalence_score_C": 4.210559713195648,
+    "ms_government_response_C": -42.44047619,
+    "coordinates": [-5, 8]
+  },
+  {
+    "country_code": "HR",
+    "country_name": "Croatia",
+    "ms_prevalence_score": 5.992110894,
+    "ms_government_response": 68.1547619,
+    "ms_prevalence_score_C": 4.214988170721608,
+    "ms_government_response_C": -68.1547619,
+    "coordinates": [15.5, 45.16666666]
+  },
+  {
+    "country_code": "CU",
+    "country_name": "Cuba",
+    "ms_prevalence_score": 3.768351423,
+    "ms_government_response": 20.77380952,
+    "ms_prevalence_score_C": 3.768351423,
+    "ms_government_response_C": -20.77380952,
+    "coordinates": [-80, 21.5]
+  },
+  {
+    "country_code": "CY",
+    "country_name": "Cyprus",
+    "ms_prevalence_score": 4.224560585,
+    "ms_government_response": 63.39285714,
+    "ms_prevalence_score_C": 4.113734432740015,
+    "ms_government_response_C": -63.39285714,
+    "coordinates": [33, 35]
+  },
+  {
+    "country_code": "CZ",
+    "country_name": "Czech Republic",
+    "ms_prevalence_score": 2.881450609,
+    "ms_government_response": 52.91666667,
+    "ms_prevalence_score_C": 2.881450609,
+    "ms_government_response_C": -52.91666667,
+    "coordinates": [15.5, 49.75]
+  },
+  {
+    "country_code": "DK",
+    "country_name": "Denmark",
+    "ms_prevalence_score": 1.626662448,
+    "ms_government_response": 58.57142857,
+    "ms_prevalence_score_C": 1.626662448,
+    "ms_government_response_C": -58.57142857,
+    "coordinates": [10, 56]
+  },
+  {
+    "country_code": "DJ",
+    "country_name": "Djibouti",
+    "ms_prevalence_score": 7.148675773,
+    "ms_government_response": 35.29761905,
+    "ms_prevalence_score_C": 4.28124174020741,
+    "ms_government_response_C": -35.29761905,
+    "coordinates": [43, 11.5]
+  },
+  {
+    "country_code": "DM",
+    "country_name": "Dominica",
+    "ms_prevalence_score": 4.1187856929999995,
+    "ms_government_response": 47.43230253059422,
+    "ms_prevalence_score_C": 4.107675140879938,
+    "ms_government_response_C": -47.43230253059422,
+    "coordinates": [-61.33333333, 15.41666666]
+  },
+  {
+    "country_code": "DO",
+    "country_name": "Dominican Republic",
+    "ms_prevalence_score": 4.027443219,
+    "ms_government_response": 58.03571429,
+    "ms_prevalence_score_C": 4.027443219,
+    "ms_government_response_C": -58.03571429,
+    "coordinates": [-70.66666666, 19]
+  },
+  {
+    "country_code": "EC",
+    "country_name": "Ecuador",
+    "ms_prevalence_score": 2.430839223,
+    "ms_government_response": 46.42857143,
+    "ms_prevalence_score_C": 2.430839223,
+    "ms_government_response_C": -46.42857143,
+    "coordinates": [-77.5, -2]
+  },
+  {
+    "country_code": "EG",
+    "country_name": "Egypt",
+    "ms_prevalence_score": 5.519003082,
+    "ms_government_response": 40.05952381,
+    "ms_prevalence_score_C": 4.187886291816451,
+    "ms_government_response_C": -40.05952381,
+    "coordinates": [30, 27]
+  },
+  {
+    "country_code": "SV",
+    "country_name": "El Salvador",
+    "ms_prevalence_score": 2.546643668,
+    "ms_government_response": 37.38095238,
+    "ms_prevalence_score_C": 2.546643668,
+    "ms_government_response_C": -37.38095238,
+    "coordinates": [-88.91666666, 13.83333333]
+  },
+  {
+    "country_code": "GQ",
+    "country_name": "Equatorial Guinea",
+    "ms_prevalence_score": 6.36369655,
+    "ms_government_response": 8.571428571,
+    "ms_prevalence_score_C": 4.236274374830633,
+    "ms_government_response_C": -8.571428571,
+    "coordinates": [10, 2]
+  },
+  {
+    "country_code": "ER",
+    "country_name": "Eritrea",
+    "ms_prevalence_score": 93.02943343,
+    "ms_government_response": -2.023809524,
+    "ms_prevalence_score_C": 7.308110887598612,
+    "ms_government_response_C": 2.023809524,
+    "coordinates": [39, 15]
+  },
+  {
+    "country_code": "EE",
+    "country_name": "Estonia",
+    "ms_prevalence_score": 3.596110051,
+    "ms_government_response": 48.80952381,
+    "ms_prevalence_score_C": 3.596110051,
+    "ms_government_response_C": -48.80952381,
+    "coordinates": [26, 59]
+  },
+  {
+    "country_code": "ET",
+    "country_name": "Ethiopia",
+    "ms_prevalence_score": 6.149931174,
+    "ms_government_response": 36.25,
+    "ms_prevalence_score_C": 4.224028871400924,
+    "ms_government_response_C": -36.25,
+    "coordinates": [38, 8]
+  },
+  {
+    "country_code": "FJ",
+    "country_name": "Fiji",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 43.55658649731492,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -43.55658649731492,
+    "coordinates": [175, -18]
+  },
+  {
+    "country_code": "FI",
+    "country_name": "Finland",
+    "ms_prevalence_score": 1.654350874,
+    "ms_government_response": 57.91666667,
+    "ms_prevalence_score_C": 1.654350874,
+    "ms_government_response_C": -57.91666667,
+    "coordinates": [26, 64]
+  },
+  {
+    "country_code": "FR",
+    "country_name": "France",
+    "ms_prevalence_score": 2.009048875,
+    "ms_government_response": 61.54761905,
+    "ms_prevalence_score_C": 2.009048875,
+    "ms_government_response_C": -61.54761905,
+    "coordinates": [2, 46]
+  },
+  {
+    "country_code": "GA",
+    "country_name": "Gabon",
+    "ms_prevalence_score": 4.829529616,
+    "ms_government_response": 24.22619048,
+    "ms_prevalence_score_C": 4.148389953117541,
+    "ms_government_response_C": -24.22619048,
+    "coordinates": [11.75, -1]
+  },
+  {
+    "country_code": "GM",
+    "country_name": "Gambia",
+    "ms_prevalence_score": 5.799331018,
+    "ms_government_response": 33.86904762,
+    "ms_prevalence_score_C": 4.203944817130348,
+    "ms_government_response_C": -33.86904762,
+    "coordinates": [-16.56666666, 13.46666666]
+  },
+  {
+    "country_code": "GE",
+    "country_name": "Georgia",
+    "ms_prevalence_score": 4.333950212,
+    "ms_government_response": 62.79761905,
+    "ms_prevalence_score_C": 4.120000793914441,
+    "ms_government_response_C": -62.79761905,
+    "coordinates": [43.5, 42]
+  },
+  {
+    "country_code": "DE",
+    "country_name": "Germany",
+    "ms_prevalence_score": 2.040402358,
+    "ms_government_response": 57.14285714,
+    "ms_prevalence_score_C": 2.040402358,
+    "ms_government_response_C": -57.14285714,
+    "coordinates": [9, 51]
+  },
+  {
+    "country_code": "GH",
+    "country_name": "Ghana",
+    "ms_prevalence_score": 4.835881869,
+    "ms_government_response": 27.61904762,
+    "ms_prevalence_score_C": 4.148753840559714,
+    "ms_government_response_C": -27.61904762,
+    "coordinates": [-2, 8]
+  },
+  {
+    "country_code": "GR",
+    "country_name": "Greece",
+    "ms_prevalence_score": 7.913680102,
+    "ms_government_response": 55.05952381,
+    "ms_prevalence_score_C": 4.325064848092341,
+    "ms_government_response_C": -55.05952381,
+    "coordinates": [22, 39]
+  },
+  {
+    "country_code": "GD",
+    "country_name": "Grenada",
+    "ms_prevalence_score": 4.1187856929999995,
+    "ms_government_response": 44.04144083291205,
+    "ms_prevalence_score_C": 4.107675140879938,
+    "ms_government_response_C": -44.04144083291205,
+    "coordinates": [-61.66666666, 12.11666666]
+  },
+  {
+    "country_code": "GT",
+    "country_name": "Guatemala",
+    "ms_prevalence_score": 2.921535167,
+    "ms_government_response": 45.23809524,
+    "ms_prevalence_score_C": 2.921535167,
+    "ms_government_response_C": -45.23809524,
+    "coordinates": [-90.25, 15.5]
+  },
+  {
+    "country_code": "GN",
+    "country_name": "Guinea",
+    "ms_prevalence_score": 7.795665816,
+    "ms_government_response": 19.3452381,
+    "ms_prevalence_score_C": 4.318304425188458,
+    "ms_government_response_C": -19.3452381,
+    "coordinates": [-10, 11]
+  },
+  {
+    "country_code": "GW",
+    "country_name": "Guinea-Bissau",
+    "ms_prevalence_score": 7.456517655,
+    "ms_government_response": 18.86904762,
+    "ms_prevalence_score_C": 4.298876395979908,
+    "ms_government_response_C": -18.86904762,
+    "coordinates": [-15, 12]
+  },
+  {
+    "country_code": "GY",
+    "country_name": "Guyana",
+    "ms_prevalence_score": 2.586434483,
+    "ms_government_response": 31.48809524,
+    "ms_prevalence_score_C": 2.586434483,
+    "ms_government_response_C": -31.48809524,
+    "coordinates": [-59, 5]
+  },
+  {
+    "country_code": "HT",
+    "country_name": "Haiti",
+    "ms_prevalence_score": 5.551376006,
+    "ms_government_response": 39.70238095,
+    "ms_prevalence_score_C": 4.189740767781125,
+    "ms_government_response_C": -39.70238095,
+    "coordinates": [-72.41666666, 19]
+  },
+  {
+    "country_code": "HN",
+    "country_name": "Honduras",
+    "ms_prevalence_score": 3.385409986,
+    "ms_government_response": 36.96428571,
+    "ms_prevalence_score_C": 3.385409986,
+    "ms_government_response_C": -36.96428571,
+    "coordinates": [-86.5, 15]
+  },
+  {
+    "country_code": "HK",
+    "country_name": "Hong Kong, China",
+    "ms_prevalence_score": 1.395777808,
+    "ms_government_response": 21.36904762,
+    "ms_prevalence_score_C": 1.395777808,
+    "ms_government_response_C": -21.36904762,
+    "coordinates": [114.188, 22.267]
+  },
+  {
+    "country_code": "HU",
+    "country_name": "Hungary",
+    "ms_prevalence_score": 3.66983997,
+    "ms_government_response": 58.1547619,
+    "ms_prevalence_score_C": 3.66983997,
+    "ms_government_response_C": -58.1547619,
+    "coordinates": [20, 47]
+  },
+  {
+    "country_code": "IS",
+    "country_name": "Iceland",
+    "ms_prevalence_score": 2.113970058,
+    "ms_government_response": 46.36904762,
+    "ms_prevalence_score_C": 2.113970058,
+    "ms_government_response_C": -46.36904762,
+    "coordinates": [-18, 65]
+  },
+  {
+    "country_code": "IN",
+    "country_name": "India",
+    "ms_prevalence_score": 6.103056668,
+    "ms_government_response": 45.6547619,
+    "ms_prevalence_score_C": 4.221343675441085,
+    "ms_government_response_C": -45.6547619,
+    "coordinates": [77, 20]
+  },
+  {
+    "country_code": "ID",
+    "country_name": "Indonesia",
+    "ms_prevalence_score": 4.726287326,
+    "ms_government_response": 50.83333333,
+    "ms_prevalence_score_C": 4.142475740816454,
+    "ms_government_response_C": -50.83333333,
+    "coordinates": [120, -5]
+  },
+  {
+    "country_code": "IR",
+    "country_name": "Iran, Islamic Republic of",
+    "ms_prevalence_score": 16.24033731,
+    "ms_government_response": 6.785714286,
+    "ms_prevalence_score_C": 4.8020556092087086,
+    "ms_government_response_C": -6.785714286,
+    "coordinates": [53, 32]
+  },
+  {
+    "country_code": "IQ",
+    "country_name": "Iraq",
+    "ms_prevalence_score": 4.830977982,
+    "ms_government_response": 4.883080145315075,
+    "ms_prevalence_score_C": 4.148472922451267,
+    "ms_government_response_C": -4.883080145315075,
+    "coordinates": [44, 33]
+  },
+  {
+    "country_code": "IE",
+    "country_name": "Ireland",
+    "ms_prevalence_score": 1.667999486,
+    "ms_government_response": 57.73809524,
+    "ms_prevalence_score_C": 1.667999486,
+    "ms_government_response_C": -57.73809524,
+    "coordinates": [-8, 53]
+  },
+  {
+    "country_code": "IL",
+    "country_name": "Israel",
+    "ms_prevalence_score": 3.861630551,
+    "ms_government_response": 52.14285714,
+    "ms_prevalence_score_C": 3.861630551,
+    "ms_government_response_C": -52.14285714,
+    "coordinates": [35.13, 31.47]
+  },
+  {
+    "country_code": "IT",
+    "country_name": "Italy",
+    "ms_prevalence_score": 2.431014931,
+    "ms_government_response": 61.96428571,
+    "ms_prevalence_score_C": 2.431014931,
+    "ms_government_response_C": -61.96428571,
+    "coordinates": [12.83333333, 42.83333333]
+  },
+  {
+    "country_code": "JM",
+    "country_name": "Jamaica",
+    "ms_prevalence_score": 2.571243719,
+    "ms_government_response": 58.63095238,
+    "ms_prevalence_score_C": 2.571243719,
+    "ms_government_response_C": -58.63095238,
+    "coordinates": [-77.5, 18.25]
+  },
+  {
+    "country_code": "JP",
+    "country_name": "Japan",
+    "ms_prevalence_score": 0.285787036,
+    "ms_government_response": 36.60714286,
+    "ms_prevalence_score_C": 0.285787036,
+    "ms_government_response_C": -36.60714286,
+    "coordinates": [138, 36]
+  },
+  {
+    "country_code": "JO",
+    "country_name": "Jordan",
+    "ms_prevalence_score": 1.804463267,
+    "ms_government_response": 38.63095238,
+    "ms_prevalence_score_C": 1.804463267,
+    "ms_government_response_C": -38.63095238,
+    "coordinates": [36, 31]
+  },
+  {
+    "country_code": "KZ",
+    "country_name": "Kazakhstan",
+    "ms_prevalence_score": 4.210616845,
+    "ms_government_response": 32.79761905,
+    "ms_prevalence_score_C": 4.112935668603427,
+    "ms_government_response_C": -32.79761905,
+    "coordinates": [68, 48]
+  },
+  {
+    "country_code": "KE",
+    "country_name": "Kenya",
+    "ms_prevalence_score": 6.936966549,
+    "ms_government_response": 36.48809524,
+    "ms_prevalence_score_C": 4.269114023001267,
+    "ms_government_response_C": -36.48809524,
+    "coordinates": [38, 1]
+  },
+  {
+    "country_code": "KI",
+    "country_name": "Kiribati",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 42.77815242717177,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -42.77815242717177,
+    "coordinates": [173, 1.41666666]
+  },
+  {
+    "country_code": "KP",
+    "country_name": "Korea, Democratic People's Republic of",
+    "ms_prevalence_score": 104.5610525,
+    "ms_government_response": -5.595238095,
+    "ms_prevalence_score_C": 8.214,
+    "ms_government_response_C": 5.595238095,
+    "coordinates": [127, 40]
+  },
+  {
+    "country_code": "KR",
+    "country_name": "Korea, Republic of",
+    "ms_prevalence_score": 1.949238531,
+    "ms_government_response": 27.61904762,
+    "ms_prevalence_score_C": 1.949238531,
+    "ms_government_response_C": -27.61904762,
+    "coordinates": [127.5, 37]
+  },
+  {
+    "country_code": "XK",
+    "country_name": "Kosovo",
+    "ms_prevalence_score": 3.970489055,
+    "ms_government_response": 54.81481481,
+    "ms_prevalence_score_C": 3.970489055,
+    "ms_government_response_C": -54.81481481,
+    "coordinates": [21.166667, 42.666667]
+  },
+  {
+    "country_code": "KW",
+    "country_name": "Kuwait",
+    "ms_prevalence_score": 1.463003721,
+    "ms_government_response": 27.79761905,
+    "ms_prevalence_score_C": 1.463003721,
+    "ms_government_response_C": -27.79761905,
+    "coordinates": [45.75, 29.5]
+  },
+  {
+    "country_code": "KG",
+    "country_name": "Kyrgyzstan",
+    "ms_prevalence_score": 4.109113399,
+    "ms_government_response": 40.89285714,
+    "ms_prevalence_score_C": 4.107121065605606,
+    "ms_government_response_C": -40.89285714,
+    "coordinates": [75, 41]
+  },
+  {
+    "country_code": "LA",
+    "country_name": "Lao",
+    "ms_prevalence_score": 9.363227619,
+    "ms_government_response": 34.04761905,
+    "ms_prevalence_score_C": 4.408101864764995,
+    "ms_government_response_C": -34.04761905,
+    "coordinates": [105, 18]
+  },
+  {
+    "country_code": "LV",
+    "country_name": "Latvia",
+    "ms_prevalence_score": 3.863621092,
+    "ms_government_response": 60.89285714,
+    "ms_prevalence_score_C": 3.863621092,
+    "ms_government_response_C": -60.89285714,
+    "coordinates": [25, 57]
+  },
+  {
+    "country_code": "LB",
+    "country_name": "Lebanon",
+    "ms_prevalence_score": 1.717259491,
+    "ms_government_response": 31.30952381,
+    "ms_prevalence_score_C": 1.717259491,
+    "ms_government_response_C": -31.30952381,
+    "coordinates": [35.83333333, 33.83333333]
+  },
+  {
+    "country_code": "LS",
+    "country_name": "Lesotho",
+    "ms_prevalence_score": 4.176791649,
+    "ms_government_response": 38.27380952,
+    "ms_prevalence_score_C": 4.110997999550659,
+    "ms_government_response_C": -38.27380952,
+    "coordinates": [28.5, -29.5]
+  },
+  {
+    "country_code": "LR",
+    "country_name": "Liberia",
+    "ms_prevalence_score": 7.414357088,
+    "ms_government_response": 31.66666667,
+    "ms_prevalence_score_C": 4.296461236998329,
+    "ms_government_response_C": -31.66666667,
+    "coordinates": [-9.5, 6.5]
+  },
+  {
+    "country_code": "LY",
+    "country_name": "Libya",
+    "ms_prevalence_score": 7.742500379,
+    "ms_government_response": -2.5,
+    "ms_prevalence_score_C": 4.31525885460398,
+    "ms_government_response_C": 2.5,
+    "coordinates": [17, 25]
+  },
+  {
+    "country_code": "LT",
+    "country_name": "Lithuania",
+    "ms_prevalence_score": 5.798203825,
+    "ms_government_response": 59.10714286,
+    "ms_prevalence_score_C": 4.203880246122612,
+    "ms_government_response_C": -59.10714286,
+    "coordinates": [24, 56]
+  },
+  {
+    "country_code": "LU",
+    "country_name": "Luxembourg",
+    "ms_prevalence_score": 1.485254724,
+    "ms_government_response": 45.41666667,
+    "ms_prevalence_score_C": 1.485254724,
+    "ms_government_response_C": -45.41666667,
+    "coordinates": [6.16666666, 49.75]
+  },
+  {
+    "country_code": "MK",
+    "country_name": "North Macedonia",
+    "ms_prevalence_score": 8.661375558,
+    "ms_government_response": 63.21428571,
+    "ms_prevalence_score_C": 4.367896420923036,
+    "ms_government_response_C": -63.21428571,
+    "coordinates": [22, 41.83333333]
+  },
+  {
+    "country_code": "MG",
+    "country_name": "Madagascar",
+    "ms_prevalence_score": 7.511700917,
+    "ms_government_response": 31.78571429,
+    "ms_prevalence_score_C": 4.302037557234027,
+    "ms_government_response_C": -31.78571429,
+    "coordinates": [47, -20]
+  },
+  {
+    "country_code": "MW",
+    "country_name": "Malawi",
+    "ms_prevalence_score": 7.464975934,
+    "ms_government_response": 26.78571429,
+    "ms_prevalence_score_C": 4.299360926666973,
+    "ms_government_response_C": -26.78571429,
+    "coordinates": [34, -13.5]
+  },
+  {
+    "country_code": "MY",
+    "country_name": "Malaysia",
+    "ms_prevalence_score": 6.914423126,
+    "ms_government_response": 38.39285714,
+    "ms_prevalence_score_C": 4.267822627879991,
+    "ms_government_response_C": -38.39285714,
+    "coordinates": [112.5, 2.5]
+  },
+  {
+    "country_code": "ML",
+    "country_name": "Mali",
+    "ms_prevalence_score": 3.565781866,
+    "ms_government_response": 30.83333333,
+    "ms_prevalence_score_C": 3.565781866,
+    "ms_government_response_C": -30.83333333,
+    "coordinates": [-4, 17]
+  },
+  {
+    "country_code": "MT",
+    "country_name": "Malta",
+    "ms_prevalence_score": 2.3038644175,
+    "ms_government_response": 61.494645661097,
+    "ms_prevalence_score_C": 2.3038644175,
+    "ms_government_response_C": -61.494645661097,
+    "coordinates": [14.58333333, 35.83333333]
+  },
+  {
+    "country_code": "MR",
+    "country_name": "Mauritania",
+    "ms_prevalence_score": 21.42940709,
+    "ms_government_response": 15.47619048,
+    "ms_prevalence_score_C": 5.09931035166047,
+    "ms_government_response_C": -15.47619048,
+    "coordinates": [-12, 20]
+  },
+  {
+    "country_code": "MU",
+    "country_name": "Mauritius",
+    "ms_prevalence_score": 0.959533475,
+    "ms_government_response": 34.88095238,
+    "ms_prevalence_score_C": 0.959533475,
+    "ms_government_response_C": -34.88095238,
+    "coordinates": [57.55, -20.28333333]
+  },
+  {
+    "country_code": "MX",
+    "country_name": "Mexico",
+    "ms_prevalence_score": 2.708265587,
+    "ms_government_response": 52.44047619,
+    "ms_prevalence_score_C": 2.708265587,
+    "ms_government_response_C": -52.44047619,
+    "coordinates": [-102, 23]
+  },
+  {
+    "country_code": "MD",
+    "country_name": "Moldova",
+    "ms_prevalence_score": 5.508897757,
+    "ms_government_response": 55.71428571,
+    "ms_prevalence_score_C": 4.187307410454738,
+    "ms_government_response_C": -55.71428571,
+    "coordinates": [29, 47]
+  },
+  {
+    "country_code": "MN",
+    "country_name": "Mongolia",
+    "ms_prevalence_score": 12.29436347,
+    "ms_government_response": 30.6547619,
+    "ms_prevalence_score_C": 4.576011349397158,
+    "ms_government_response_C": -30.6547619,
+    "coordinates": [105, 46]
+  },
+  {
+    "country_code": "ME",
+    "country_name": "Montenegro",
+    "ms_prevalence_score": 5.860328266,
+    "ms_government_response": 63.98809524,
+    "ms_prevalence_score_C": 4.207439031317715,
+    "ms_government_response_C": -63.98809524,
+    "coordinates": [19.3, 42.5]
+  },
+  {
+    "country_code": "MA",
+    "country_name": "Morocco",
+    "ms_prevalence_score": 2.44560273,
+    "ms_government_response": 36.54761905,
+    "ms_prevalence_score_C": 2.44560273,
+    "ms_government_response_C": -36.54761905,
+    "coordinates": [-5, 32]
+  },
+  {
+    "country_code": "MZ",
+    "country_name": "Mozambique",
+    "ms_prevalence_score": 5.413095982,
+    "ms_government_response": 40.71428571,
+    "ms_prevalence_score_C": 4.181819426449627,
+    "ms_government_response_C": -40.71428571,
+    "coordinates": [35, -18.25]
+  },
+  {
+    "country_code": "MM",
+    "country_name": "Myanmar",
+    "ms_prevalence_score": 10.97337851,
+    "ms_government_response": 32.38095238,
+    "ms_prevalence_score_C": 4.500339011056113,
+    "ms_government_response_C": -32.38095238,
+    "coordinates": [98, 22]
+  },
+  {
+    "country_code": "NA",
+    "country_name": "Namibia",
+    "ms_prevalence_score": 3.33117676,
+    "ms_government_response": 33.27380952,
+    "ms_prevalence_score_C": 3.33117676,
+    "ms_government_response_C": -33.27380952,
+    "coordinates": [17, -22]
+  },
+  {
+    "country_code": "NR",
+    "country_name": "Nauru",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 39.27086959447845,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -39.27086959447845,
+    "coordinates": [166.91666666, -0.53333333]
+  },
+  {
+    "country_code": "NP",
+    "country_name": "Nepal",
+    "ms_prevalence_score": 5.950652642,
+    "ms_government_response": 38.69047619,
+    "ms_prevalence_score_C": 4.212613243703233,
+    "ms_government_response_C": -38.69047619,
+    "coordinates": [84, 28]
+  },
+  {
+    "country_code": "NL",
+    "country_name": "Netherlands",
+    "ms_prevalence_score": 1.768359756,
+    "ms_government_response": 75.23809524,
+    "ms_prevalence_score_C": 1.768359756,
+    "ms_government_response_C": -75.23809524,
+    "coordinates": [5.75, 52.5]
+  },
+  {
+    "country_code": "NZ",
+    "country_name": "New Zealand",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 57.55952381,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -57.55952381,
+    "coordinates": [174, -41]
+  },
+  {
+    "country_code": "NI",
+    "country_name": "Nicaragua",
+    "ms_prevalence_score": 2.899963453,
+    "ms_government_response": 46.30952381,
+    "ms_prevalence_score_C": 2.899963453,
+    "ms_government_response_C": -46.30952381,
+    "coordinates": [-85, 13]
+  },
+  {
+    "country_code": "NE",
+    "country_name": "Niger",
+    "ms_prevalence_score": 6.70514575,
+    "ms_government_response": 25.89285714,
+    "ms_prevalence_score_C": 4.2558342185616915,
+    "ms_government_response_C": -25.89285714,
+    "coordinates": [8, 16]
+  },
+  {
+    "country_code": "NG",
+    "country_name": "Nigeria",
+    "ms_prevalence_score": 7.651822686,
+    "ms_government_response": 45.83333333,
+    "ms_prevalence_score_C": 4.310064402530369,
+    "ms_government_response_C": -45.83333333,
+    "coordinates": [8, 10]
+  },
+  {
+    "country_code": "NO",
+    "country_name": "Norway",
+    "ms_prevalence_score": 1.810744843,
+    "ms_government_response": 66.8452381,
+    "ms_prevalence_score_C": 1.810744843,
+    "ms_government_response_C": -66.8452381,
+    "coordinates": [10, 62]
+  },
+  {
+    "country_code": "OM",
+    "country_name": "Oman",
+    "ms_prevalence_score": 2.143674966,
+    "ms_government_response": 31.96428571,
+    "ms_prevalence_score_C": 2.143674966,
+    "ms_government_response_C": -31.96428571,
+    "coordinates": [57, 21]
+  },
+  {
+    "country_code": "PK",
+    "country_name": "Pakistan",
+    "ms_prevalence_score": 16.8221449,
+    "ms_government_response": 18.57142857,
+    "ms_prevalence_score_C": 4.83538433143721,
+    "ms_government_response_C": -18.57142857,
+    "coordinates": [70, 30]
+  },
+  {
+    "country_code": "PW",
+    "country_name": "Palau",
+    "ms_prevalence_score": 7.704015627,
+    "ms_government_response": 45.76139821196417,
+    "ms_prevalence_score_C": 4.3130542638913685,
+    "ms_government_response_C": -45.76139821196417,
+    "coordinates": [134.5, 7.5]
+  },
+  {
+    "country_code": "PA",
+    "country_name": "Panama",
+    "ms_prevalence_score": 2.061863469,
+    "ms_government_response": 43.86904762,
+    "ms_prevalence_score_C": 2.061863469,
+    "ms_government_response_C": -43.86904762,
+    "coordinates": [-80, 9]
+  },
+  {
+    "country_code": "PG",
+    "country_name": "Papua New Guinea",
+    "ms_prevalence_score": 10.27523993,
+    "ms_government_response": 18.92857143,
+    "ms_prevalence_score_C": 4.460346293171803,
+    "ms_government_response_C": -18.92857143,
+    "coordinates": [147, -6]
+  },
+  {
+    "country_code": "PY",
+    "country_name": "Paraguay",
+    "ms_prevalence_score": 1.604042735,
+    "ms_government_response": 40.89285714,
+    "ms_prevalence_score_C": 1.604042735,
+    "ms_government_response_C": -40.89285714,
+    "coordinates": [-58, -23]
+  },
+  {
+    "country_code": "PE",
+    "country_name": "Peru",
+    "ms_prevalence_score": 2.562096485,
+    "ms_government_response": 52.5,
+    "ms_prevalence_score_C": 2.562096485,
+    "ms_government_response_C": -52.5,
+    "coordinates": [-76, -10]
+  },
+  {
+    "country_code": "PH",
+    "country_name": "Philippines",
+    "ms_prevalence_score": 7.704015627,
+    "ms_government_response": 55.83333333,
+    "ms_prevalence_score_C": 4.3130542638913685,
+    "ms_government_response_C": -55.83333333,
+    "coordinates": [122, 13]
+  },
+  {
+    "country_code": "PL",
+    "country_name": "Poland",
+    "ms_prevalence_score": 3.3555061,
+    "ms_government_response": 53.86904762,
+    "ms_prevalence_score_C": 3.3555061,
+    "ms_government_response_C": -53.86904762,
+    "coordinates": [20, 52]
+  },
+  {
+    "country_code": "PT",
+    "country_name": "Portugal",
+    "ms_prevalence_score": 2.483847912,
+    "ms_government_response": 66.25,
+    "ms_prevalence_score_C": 2.483847912,
+    "ms_government_response_C": -66.25,
+    "coordinates": [-8, 39.5]
+  },
+  {
+    "country_code": "QA",
+    "country_name": "Qatar",
+    "ms_prevalence_score": 1.499978412,
+    "ms_government_response": 35.41666667,
+    "ms_prevalence_score_C": 1.499978412,
+    "ms_government_response_C": -35.41666667,
+    "coordinates": [51.25, 25.5]
+  },
+  {
+    "country_code": "RO",
+    "country_name": "Romania",
+    "ms_prevalence_score": 4.322711736,
+    "ms_government_response": 43.92857143,
+    "ms_prevalence_score_C": 4.119357000242248,
+    "ms_government_response_C": -43.92857143,
+    "coordinates": [25, 46]
+  },
+  {
+    "country_code": "RU",
+    "country_name": "Russian Federation",
+    "ms_prevalence_score": 5.515316515,
+    "ms_government_response": 20.71428571,
+    "ms_prevalence_score_C": 4.187675107621484,
+    "ms_government_response_C": -20.71428571,
+    "coordinates": [100, 60]
+  },
+  {
+    "country_code": "RW",
+    "country_name": "Rwanda",
+    "ms_prevalence_score": 11.55589595,
+    "ms_government_response": 33.57142857,
+    "ms_prevalence_score_C": 4.533708396888665,
+    "ms_government_response_C": -33.57142857,
+    "coordinates": [30, -2]
+  },
+  {
+    "country_code": "KN",
+    "country_name": "Saint Kitts and Nevis",
+    "ms_prevalence_score": 4.1187856929999995,
+    "ms_government_response": 50.96626117985219,
+    "ms_prevalence_score_C": 4.107675140879938,
+    "ms_government_response_C": -50.96626117985219,
+    "coordinates": [-62.75, 17.33333333]
+  },
+  {
+    "country_code": "LC",
+    "country_name": "Saint Lucia",
+    "ms_prevalence_score": 4.1187856929999995,
+    "ms_government_response": 49.84156575430544,
+    "ms_prevalence_score_C": 4.107675140879938,
+    "ms_government_response_C": -49.84156575430544,
+    "coordinates": [-60.96666666, 13.88333333]
+  },
+  {
+    "country_code": "VC",
+    "country_name": "Saint Vincent and the Grenadines",
+    "ms_prevalence_score": 4.1187856929999995,
+    "ms_government_response": 48.41930819195496,
+    "ms_prevalence_score_C": 4.107675140879938,
+    "ms_government_response_C": -48.41930819195496,
+    "coordinates": [-61.2, 13.25]
+  },
+  {
+    "country_code": "WS",
+    "country_name": "Samoa",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 51.776820858478445,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -51.776820858478445,
+    "coordinates": [-172.33333333, -13.58333333]
+  },
+  {
+    "country_code": "SA",
+    "country_name": "Saudi Arabia",
+    "ms_prevalence_score": 1.931979501,
+    "ms_government_response": 27.91666667,
+    "ms_prevalence_score_C": 1.931979501,
+    "ms_government_response_C": -27.91666667,
+    "coordinates": [45, 25]
+  },
+  {
+    "country_code": "SN",
+    "country_name": "Senegal",
+    "ms_prevalence_score": 2.86836666,
+    "ms_government_response": 47.08333333,
+    "ms_prevalence_score_C": 2.86836666,
+    "ms_government_response_C": -47.08333333,
+    "coordinates": [-14, 14]
+  },
+  {
+    "country_code": "RS",
+    "country_name": "Serbia",
+    "ms_prevalence_score": 3.334925494,
+    "ms_government_response": 61.9047619,
+    "ms_prevalence_score_C": 3.334925494,
+    "ms_government_response_C": -61.9047619,
+    "coordinates": [21, 44]
+  },
+  {
+    "country_code": "SC",
+    "country_name": "Seychelles",
+    "ms_prevalence_score": 7.511700917,
+    "ms_government_response": 46.23183831434445,
+    "ms_prevalence_score_C": 4.302037557234027,
+    "ms_government_response_C": -46.23183831434445,
+    "coordinates": [55.66666666, -4.58333333]
+  },
+  {
+    "country_code": "SL",
+    "country_name": "Sierra Leone",
+    "ms_prevalence_score": 5.031936572,
+    "ms_government_response": 46.2,
+    "ms_prevalence_score_C": 4.159984791908903,
+    "ms_government_response_C": -46.2,
+    "coordinates": [-11.5, 8.5]
+  },
+  {
+    "country_code": "SG",
+    "country_name": "Singapore",
+    "ms_prevalence_score": 3.428292209,
+    "ms_government_response": 32.79761905,
+    "ms_prevalence_score_C": 3.428292209,
+    "ms_government_response_C": -32.79761905,
+    "coordinates": [103.8, 1.36666666]
+  },
+  {
+    "country_code": "SK",
+    "country_name": "Slovakia",
+    "ms_prevalence_score": 2.93569363,
+    "ms_government_response": 53.1547619,
+    "ms_prevalence_score_C": 2.93569363,
+    "ms_government_response_C": -53.1547619,
+    "coordinates": [19.5, 48.66666666]
+  },
+  {
+    "country_code": "SI",
+    "country_name": "Slovenia",
+    "ms_prevalence_score": 2.172980644,
+    "ms_government_response": 59.58333333,
+    "ms_prevalence_score_C": 2.172980644,
+    "ms_government_response_C": -59.58333333,
+    "coordinates": [14.81666666, 46.11666666]
+  },
+  {
+    "country_code": "SB",
+    "country_name": "Solomon Islands",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 32.44913426814203,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -32.44913426814203,
+    "coordinates": [159, -8]
+  },
+  {
+    "country_code": "SO",
+    "country_name": "Somalia",
+    "ms_prevalence_score": 15.50152648,
+    "ms_government_response": 15.95238095,
+    "ms_prevalence_score_C": 4.759732990260959,
+    "ms_government_response_C": -15.95238095,
+    "coordinates": [49, 10]
+  },
+  {
+    "country_code": "ZA",
+    "country_name": "South Africa",
+    "ms_prevalence_score": 2.804957849,
+    "ms_government_response": 47.44047619,
+    "ms_prevalence_score_C": 2.804957849,
+    "ms_government_response_C": -47.44047619,
+    "coordinates": [24, -29]
+  },
+  {
+    "country_code": "SS",
+    "country_name": "South Sudan",
+    "ms_prevalence_score": 20.46431358,
+    "ms_government_response": -4.339979611403027,
+    "ms_prevalence_score_C": 5.0440251782248335,
+    "ms_government_response_C": 4.339979611403027,
+    "coordinates": [30, 7]
+  },
+  {
+    "country_code": "ES",
+    "country_name": "Spain",
+    "ms_prevalence_score": 2.26663458,
+    "ms_government_response": 66.9047619,
+    "ms_prevalence_score_C": 2.26663458,
+    "ms_government_response_C": -66.9047619,
+    "coordinates": [-4, 40]
+  },
+  {
+    "country_code": "LK",
+    "country_name": "Sri Lanka",
+    "ms_prevalence_score": 2.124032687,
+    "ms_government_response": 37.38095238,
+    "ms_prevalence_score_C": 2.124032687,
+    "ms_government_response_C": -37.38095238,
+    "coordinates": [81, 7]
+  },
+  {
+    "country_code": "SD",
+    "country_name": "Sudan",
+    "ms_prevalence_score": 12.03960316,
+    "ms_government_response": 14.94047619,
+    "ms_prevalence_score_C": 4.561417460020711,
+    "ms_government_response_C": -14.94047619,
+    "coordinates": [30, 15]
+  },
+  {
+    "country_code": "SR",
+    "country_name": "Suriname",
+    "ms_prevalence_score": 2.25919433,
+    "ms_government_response": 27.14285714,
+    "ms_prevalence_score_C": 2.25919433,
+    "ms_government_response_C": -27.14285714,
+    "coordinates": [-56, 4]
+  },
+  {
+    "country_code": "SZ",
+    "country_name": "Swaziland",
+    "ms_prevalence_score": 8.827411932,
+    "ms_government_response": 29.28571429,
+    "ms_prevalence_score_C": 4.37740777877396,
+    "ms_government_response_C": -29.28571429,
+    "coordinates": [31.5, -26.5]
+  },
+  {
+    "country_code": "SE",
+    "country_name": "Sweden",
+    "ms_prevalence_score": 1.584629939,
+    "ms_government_response": 68.69047619,
+    "ms_prevalence_score_C": 1.584629939,
+    "ms_government_response_C": -68.69047619,
+    "coordinates": [15, 62]
+  },
+  {
+    "country_code": "CH",
+    "country_name": "Switzerland",
+    "ms_prevalence_score": 1.672961335,
+    "ms_government_response": 60.0,
+    "ms_prevalence_score_C": 1.672961335,
+    "ms_government_response_C": -60.0,
+    "coordinates": [8, 47]
+  },
+  {
+    "country_code": "SY",
+    "country_name": "Syria",
+    "ms_prevalence_score": 7.268546314,
+    "ms_government_response": -1.394719575893467,
+    "ms_prevalence_score_C": 4.288108498278354,
+    "ms_government_response_C": 1.394719575893467,
+    "coordinates": [38, 35]
+  },
+  {
+    "country_code": "TW",
+    "country_name": "Taiwan, China",
+    "ms_prevalence_score": 0.49204569,
+    "ms_government_response": 38.20987654,
+    "ms_prevalence_score_C": 0.49204569,
+    "ms_government_response_C": -38.20987654,
+    "coordinates": [121, 23.5]
+  },
+  {
+    "country_code": "TJ",
+    "country_name": "Tajikistan",
+    "ms_prevalence_score": 4.538313523,
+    "ms_government_response": 33.03571429,
+    "ms_prevalence_score_C": 4.13170770207976,
+    "ms_government_response_C": -33.03571429,
+    "coordinates": [71, 39]
+  },
+  {
+    "country_code": "TZ",
+    "country_name": "Tanzania",
+    "ms_prevalence_score": 6.240019779,
+    "ms_government_response": 32.79761905,
+    "ms_prevalence_score_C": 4.229189577695592,
+    "ms_government_response_C": -32.79761905,
+    "coordinates": [35, -6]
+  },
+  {
+    "country_code": "TH",
+    "country_name": "Thailand",
+    "ms_prevalence_score": 8.884530948,
+    "ms_government_response": 48.86904762,
+    "ms_prevalence_score_C": 4.380679829278199,
+    "ms_government_response_C": -48.86904762,
+    "coordinates": [100, 15]
+  },
+  {
+    "country_code": "TL",
+    "country_name": "Timor-Leste",
+    "ms_prevalence_score": 7.660334518,
+    "ms_government_response": 28.51190476,
+    "ms_prevalence_score_C": 4.310552000989481,
+    "ms_government_response_C": -28.51190476,
+    "coordinates": [125.91666666, -8.83333333]
+  },
+  {
+    "country_code": "TG",
+    "country_name": "Togo",
+    "ms_prevalence_score": 6.807926395,
+    "ms_government_response": 23.57142857,
+    "ms_prevalence_score_C": 4.261721985628586,
+    "ms_government_response_C": -23.57142857,
+    "coordinates": [1.16666666, 8]
+  },
+  {
+    "country_code": "TO",
+    "country_name": "Tonga",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 45.35504159924779,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -45.35504159924779,
+    "coordinates": [-175, -20]
+  },
+  {
+    "country_code": "TT",
+    "country_name": "Trinidad and Tobago",
+    "ms_prevalence_score": 2.961842667,
+    "ms_government_response": 49.88095238,
+    "ms_prevalence_score_C": 2.961842667,
+    "ms_government_response_C": -49.88095238,
+    "coordinates": [-61, 11]
+  },
+  {
+    "country_code": "TN",
+    "country_name": "Tunisia",
+    "ms_prevalence_score": 2.176713904,
+    "ms_government_response": 44.3452381,
+    "ms_prevalence_score_C": 2.176713904,
+    "ms_government_response_C": -44.3452381,
+    "coordinates": [9, 34]
+  },
+  {
+    "country_code": "TR",
+    "country_name": "Turkey",
+    "ms_prevalence_score": 6.498175847,
+    "ms_government_response": 47.38095238,
+    "ms_prevalence_score_C": 4.243977992336202,
+    "ms_government_response_C": -47.38095238,
+    "coordinates": [35, 39]
+  },
+  {
+    "country_code": "TM",
+    "country_name": "Turkmenistan",
+    "ms_prevalence_score": 11.22031846,
+    "ms_government_response": 27.08333333,
+    "ms_prevalence_score_C": 4.514484912797735,
+    "ms_government_response_C": -27.08333333,
+    "coordinates": [60, 40]
+  },
+  {
+    "country_code": "TV",
+    "country_name": "Tuvalu",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 43.72923529537415,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -43.72923529537415,
+    "coordinates": [178, -8]
+  },
+  {
+    "country_code": "UG",
+    "country_name": "Uganda",
+    "ms_prevalence_score": 7.579204302,
+    "ms_government_response": 42.02380952,
+    "ms_prevalence_score_C": 4.305904474075295,
+    "ms_government_response_C": -42.02380952,
+    "coordinates": [32, 1]
+  },
+  {
+    "country_code": "UA",
+    "country_name": "Ukraine",
+    "ms_prevalence_score": 6.412410947,
+    "ms_government_response": 53.03571429,
+    "ms_prevalence_score_C": 4.239064968549326,
+    "ms_government_response_C": -53.03571429,
+    "coordinates": [32, 49]
+  },
+  {
+    "country_code": "AE",
+    "country_name": "United Arab Emirates",
+    "ms_prevalence_score": 1.667407502,
+    "ms_government_response": 47.79761905,
+    "ms_prevalence_score_C": 1.667407502,
+    "ms_government_response_C": -47.79761905,
+    "coordinates": [54, 24]
+  },
+  {
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "ms_prevalence_score": 2.078790621,
+    "ms_government_response": 71.5,
+    "ms_prevalence_score_C": 2.078790621,
+    "ms_government_response_C": -71.5,
+    "coordinates": [-2, 54]
+  },
+  {
+    "country_code": "US",
+    "country_name": "United States",
+    "ms_prevalence_score": 1.259833029,
+    "ms_government_response": 71.72619048,
+    "ms_prevalence_score_C": 1.259833029,
+    "ms_government_response_C": -71.72619048,
+    "coordinates": [-97, 38]
+  },
+  {
+    "country_code": "UY",
+    "country_name": "Uruguay",
+    "ms_prevalence_score": 1.033761288,
+    "ms_government_response": 50.41666667,
+    "ms_prevalence_score_C": 1.033761288,
+    "ms_government_response_C": -50.41666667,
+    "coordinates": [-56, -33]
+  },
+  {
+    "country_code": "UZ",
+    "country_name": "Uzbekistan",
+    "ms_prevalence_score": 5.17676134,
+    "ms_government_response": 30.35714286,
+    "ms_prevalence_score_C": 4.168281047487967,
+    "ms_government_response_C": -30.35714286,
+    "coordinates": [64, 41]
+  },
+  {
+    "country_code": "VU",
+    "country_name": "Vanuatu",
+    "ms_prevalence_score": 0.641822816,
+    "ms_government_response": 41.55743491493538,
+    "ms_prevalence_score_C": 0.641822816,
+    "ms_government_response_C": -41.55743491493538,
+    "coordinates": [167, -16]
+  },
+  {
+    "country_code": "VE",
+    "country_name": "Venezuela",
+    "ms_prevalence_score": 5.583347115,
+    "ms_government_response": 28.21428571,
+    "ms_prevalence_score_C": 4.191572225860244,
+    "ms_government_response_C": -28.21428571,
+    "coordinates": [-66, 8]
+  },
+  {
+    "country_code": "VN",
+    "country_name": "Vietnam",
+    "ms_prevalence_score": 4.504251752,
+    "ms_government_response": 48.0952381,
+    "ms_prevalence_score_C": 4.129756480879174,
+    "ms_government_response_C": -48.0952381,
+    "coordinates": [107.83333333, 16.16666666]
+  },
+  {
+    "country_code": "YE",
+    "country_name": "Yemen",
+    "ms_prevalence_score": 3.148926763,
+    "ms_government_response": -2.8251643832458786,
+    "ms_prevalence_score_C": 3.148926763,
+    "ms_government_response_C": 2.8251643832458786,
+    "coordinates": [48, 15]
+  },
+  {
+    "country_code": "ZM",
+    "country_name": "Zambia",
+    "ms_prevalence_score": 5.738609503,
+    "ms_government_response": 31.78571429,
+    "ms_prevalence_score_C": 4.20046639824838,
+    "ms_government_response_C": -31.78571429,
+    "coordinates": [30, -15]
+  },
+  {
+    "country_code": "ZW",
+    "country_name": "Zimbabwe",
+    "ms_prevalence_score": 6.670304853,
+    "ms_government_response": 19.04761905,
+    "ms_prevalence_score_C": 4.253838365296345,
+    "ms_government_response_C": -19.04761905,
+    "coordinates": [30, -20]
+  }
+]

@@ -9,8 +9,8 @@ class Quadrant extends React.Component {
     this.margin = { top: 20, right: 10, bottom: 30, left: 10 };
     this.xAxis = d3.axisBottom().ticks(0).tickSize([0, 0]);
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
-    this.xKey = "prevalence";
-    this.yKey = "regulation";
+    this.xKey = "ms_prevalence_score";
+    this.yKey = "ms_government_response";
     this.cKey = "risk";
   }
 

@@ -23,7 +23,7 @@ class Geo extends React.Component {
     this.projection = d3.geoNaturalEarth1();
     this.path = d3.geoPath().projection(this.projection);
     this.outline = { type: "Sphere" };
-    this.rKey = "prevalence";
+    this.rKey = "ms_prevalence_score";
     this.cKey = "risk";
   }
 

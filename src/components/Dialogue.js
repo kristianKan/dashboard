@@ -1,10 +1,23 @@
 import React from "react";
 import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  popover: {
+    padding: theme.spacing(2),
+  },
+}));
 
 export default function Dialogue(props) {
-  const { onClose, selectedValue, open, anchor, id, countries } = props;
+  const classes = useStyles();
+  const { onClose, selectedValue, open, anchorEl, id } = props;
 
-  console.log(anchor);
+  if (!selectedValue) {
+    return null;
+  }
+  const { countries, name } = selectedValue;
+
   const handleClose = () => {
     onClose(selectedValue);
   };
@@ -13,7 +26,7 @@ export default function Dialogue(props) {
     <Popover
       id={id}
       open={open}
-      anchor={anchor}
+      anchorEl={anchorEl}
       onClose={handleClose}
       anchorOrigin={{
         vertical: "bottom",
@@ -24,7 +37,13 @@ export default function Dialogue(props) {
         horizontal: "center",
       }}
     >
-      {countries.join()}
+      <div className={classes.popover}>
+        <h3>{name}</h3>
+        <div>
+          <b>Countries</b>
+        </div>
+        <Typography>{countries.join()}</Typography>
+      </div>
     </Popover>
   );
 }

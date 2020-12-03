@@ -109,26 +109,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TableComponent(props) {
-  const rows = props.data.products;
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("name");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState([]);
-  const [anchor, setAnchor] = React.useState(null);
+  const [selectedValue, setSelectedValue] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const { data } = props;
+  const rows = data.products;
 
   const handleClickOpen = (event, value) => {
     setOpen(true);
-    setAnchor(event.target.parentNode);
+    setAnchorEl(event.target.parentNode);
     setSelectedValue(value);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setAnchor(null);
-    setSelectedValue([]);
+    setAnchorEl(null);
+    setSelectedValue(null);
   };
 
   const handleRequestSort = (event, property) => {
@@ -180,7 +182,7 @@ export default function TableComponent(props) {
                       {row.countries.length > 3 ? (
                         <Link
                           aria-describedby={id}
-                          onClick={(e) => handleClickOpen(e, row.countries)}
+                          onClick={(e) => handleClickOpen(e, row)}
                         >
                           {row.countries.length} countries
                         </Link>
@@ -201,6 +203,7 @@ export default function TableComponent(props) {
         </Table>
       </TableContainer>
       <TablePagination
+        labelRowsPerPage="# rows"
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={rows.length}
@@ -210,8 +213,8 @@ export default function TableComponent(props) {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       <Dialogue
-        anchor={anchor}
-        countries={selectedValue}
+        anchorEl={anchorEl}
+        selectedValue={selectedValue}
         open={open}
         id={id}
         onClose={handleClose}

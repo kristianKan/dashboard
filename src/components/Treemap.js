@@ -5,7 +5,7 @@ const colors = ["#F4D166", "#F7A144", "#EF701B", "#CE4E22", "#9E3A26"];
 const labelFormat = ["Lowest", "Low", "Medium", "High", "Highest"];
 
 function makeHierarchy(data) {
-  const dataGroup = d3.group(data.suppliers, (d) => d.tier.ms_employment);
+  const dataGroup = d3.group(data.products, (d) => d.tier);
   const childrenAccessorFn = ([, value]) => value.size && Array.from(value);
 
   return d3
@@ -13,7 +13,7 @@ function makeHierarchy(data) {
     .sum(([, value]) =>
       value.size
         ? Array.from(value)
-        : value.reduce((sum, d) => sum + d.risks.scores.ms_product, 0)
+        : value.reduce((sum, d) => sum + d.risk_score, 0)
     )
     .sort((a, b) => b.value - a.value);
 }
@@ -21,7 +21,7 @@ function makeHierarchy(data) {
 function getUniqueProducts(data) {
   return data.reduce((acc, supplier) => {
     supplier.products.forEach((product) => {
-      return !acc.includes(product.name) && acc.push(product.name);
+      return !acc.includes(product.id) && acc.push(product.id);
     });
     return acc;
   }, []);
@@ -37,12 +37,7 @@ class Treemap extends React.Component {
 
   componentDidMount() {
     const { ref, margin } = this;
-    const {
-      getContainerHeight,
-      getContainerWidth,
-      getColorScale,
-      data,
-    } = this.props;
+    const { getContainerHeight, getContainerWidth, data } = this.props;
     const root = makeHierarchy(data);
 
     this.height = getContainerHeight(ref, margin);
@@ -121,21 +116,16 @@ class Treemap extends React.Component {
   }
 
   mouseover() {
-    const { ref } = this;
+    const { tooltipRef } = this;
+    const tooltip = d3.select(tooltipRef.current);
 
     return function (event, d) {
-      const uniqueProducts = getUniqueProducts(d.data[1]);
-
-      const tooltip = d3
-        .select(ref.current)
-        .append("foreignObject")
-        .attr("width", "100%")
-        .attr("overflow", "visible");
-
       const div = tooltip
-        .append("xhtml:div")
+        .append("div")
         .attr("class", "container")
-        .style("max-width", "fit-content")
+        .style("max-width", "200px")
+        .style("max-height", "100px")
+        .style("overflow", "scroll")
         .style("background", "black")
         .style("padding", "6px");
 
@@ -143,16 +133,17 @@ class Treemap extends React.Component {
         .append("span")
         .style("font-size", "14px")
         .style("color", "white")
-        .text(`Tier ${d.data[1][0].tier.ms_employment}`);
+        .text(`Tier ${d.data[1][0].tier}`);
 
-      const products = div.selectAll(".product").data(uniqueProducts);
+      const products = div.selectAll(".product").data(d.data[1], (d) => d.id);
 
       products
         .enter()
         .append("div")
         .attr("class", "product")
+        .style("font-size", "10px")
         .style("color", "white")
-        .text((v) => v);
+        .text((v) => v.name);
 
       const node = d3.select(this).select("rect");
       const { width, height } = div.node().getBoundingClientRect();
@@ -167,19 +158,20 @@ class Treemap extends React.Component {
       const x = isLeft ? nodeX - width : nodeX + nodeWidth;
 
       tooltip
-        .attr("x", `${x}`)
-        .attr("y", `${y}`)
-        .attr("height", height)
-        .attr("width", width);
+        .style("left", `${x}px`)
+        .style("top", `${y}px`)
+        .style("opacity", 1)
+        .style("z-index", 1);
     };
   }
 
   mouseleave() {
-    const { ref } = this;
-    const tooltip = d3.select(ref.current);
+    const { tooltipRef } = this;
+    const tooltip = d3.select(tooltipRef.current);
 
     return function () {
-      tooltip.selectAll("foreignObject").remove();
+      tooltip.style("opacity", 0).style("z-index", -1);
+      tooltip.select(".container").remove();
     };
   }
 

@@ -97,9 +97,11 @@ export function drawTooltip() {
 }
 
 export function getLinearScale({ data, key, range }) {
+  const valueAccessorFn = (d) => get(d, key);
+
   return d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => +d[key]), d3.max(data, (d) => +d[key])])
+    .domain([d3.min(data, valueAccessorFn), d3.max(data, valueAccessorFn)])
     .range(range);
 }
 
@@ -112,4 +114,13 @@ export function getColorScale({ data, key, range }) {
     .domain([d3.min(data, valueAccessorFn), d3.max(data, valueAccessorFn)])
     .range(colorRange)
     .interpolate(d3.interpolateRgb);
+}
+
+export function getOrdinalColorScale({ data, key, range }) {
+  const valueAccessorFn = (d) => get(d, key);
+
+  return d3
+    .scaleOrdinal()
+    .domain([d3.min(data, valueAccessorFn), d3.max(data, valueAccessorFn)])
+    .range(range);
 }

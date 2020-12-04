@@ -1,6 +1,9 @@
 import * as React from "react";
 import * as d3 from "d3";
 
+const colors = ["#F4D166", "#F7A144", "#EF701B", "#CE4E22", "#9E3A26"];
+const labelFormat = ["Lowest", "Low", "Medium", "High", "Highest"];
+
 function makeHierarchy(data) {
   const dataGroup = d3.group(data.suppliers, (d) => d.tier.ms_employment);
   const childrenAccessorFn = ([, value]) => value.size && Array.from(value);
@@ -47,8 +50,6 @@ class Treemap extends React.Component {
 
     d3.treemap().size([this.width, this.height]).padding(0)(root);
 
-    this.colorScale = getColorScale({ data: root.children, key: "value" });
-
     this.draw(root);
   }
 
@@ -79,9 +80,7 @@ class Treemap extends React.Component {
   }
 
   drawRects(data) {
-    const { colorScale } = this;
     const { duration } = this.props;
-    const riskLevel = ["Highest", "High", "Medium", "Low", "Lowest"];
 
     return (node) => {
       const g = node.select("g.container");
@@ -98,7 +97,7 @@ class Treemap extends React.Component {
 
       enterLeaf
         .append("rect")
-        .attr("fill", (d) => colorScale(+d.value))
+        .attr("fill", (d) => colors[d.data[0]])
         .attr("opacity", 0)
         .attr("stroke", "none")
         .attr("width", (d) => d.x1 - d.x0)
@@ -117,7 +116,7 @@ class Treemap extends React.Component {
         .attr("x", 6)
         .attr("y", 18)
         .attr("fill", "white")
-        .text((d, i) => `Tier ${d.data[0]} - ${riskLevel[i]}`);
+        .text((d) => `Tier ${d.data[0] + 1} - ${labelFormat[d.data[0]]}`);
     };
   }
 

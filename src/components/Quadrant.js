@@ -11,7 +11,7 @@ class Quadrant extends React.Component {
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
     this.xKey = "ms_prevalence_score";
     this.yKey = "ms_government_response";
-    this.cKey = "risk";
+    this.cKey = "ms_prevalence_score";
   }
 
   componentDidMount() {
@@ -199,10 +199,14 @@ class Quadrant extends React.Component {
     const tooltip = d3.select(tooltipRef.current);
 
     return function (event, d) {
+      const prevalence = Math.round(d.ms_prevalence_score * 10) / 10;
+      const governance = Math.round(d.ms_government_response * 10) / 10;
+
       tooltip.html(`
-          <span style="font-size: 14px">${d.name}</span>
+          <span style="font-size: 14px">${d.country_name}</span>
           </br>
-          <span style="font-size: 9px">Strength of governance: ${d.regulation}</span>
+          <div style="font-size: 9px">Slaves per 1000 of population: ${prevalence}</div>
+          <div style="font-size: 9px">Strength of governance index: ${governance}</div>
         `);
 
       const node = d3.select(this);

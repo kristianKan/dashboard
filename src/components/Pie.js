@@ -110,7 +110,7 @@ class Pie extends React.Component {
         .attr("x", -10)
         .attr("y", 0)
         .attr("fill", "white")
-        .text((d) => `${(100 / dataLength) * d.value}%`);
+        .text((d) => `${Math.round((100 / dataLength) * d.value)}%`);
     };
   }
 

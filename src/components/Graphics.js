@@ -20,6 +20,7 @@ import {
   getContainerHeight,
   getContainerWidth,
   getColorScale,
+  getOrdinalColorScale,
   getLinearScale,
 } from "./utils";
 
@@ -120,7 +121,7 @@ export default function Graphics(props) {
               drawContainer={drawContainer}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
-              getColorScale={getColorScale}
+              getColorScale={getOrdinalColorScale}
               getLinearScale={getLinearScale}
               duration={duration}
               {...props}
@@ -135,7 +136,7 @@ export default function Graphics(props) {
               drawLegend={drawLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
-              getColorScale={getColorScale}
+              getColorScale={getOrdinalColorScale}
               duration={duration}
               {...props}
             />

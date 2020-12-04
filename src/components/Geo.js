@@ -23,8 +23,8 @@ class Geo extends React.Component {
     this.projection = d3.geoNaturalEarth1();
     this.path = d3.geoPath().projection(this.projection);
     this.outline = { type: "Sphere" };
-    this.rKey = "ms_prevalence_score";
-    this.cKey = "risk";
+    this.rKey = "suppliers.length";
+    this.cKey = "ms_prevalence_score";
   }
 
   componentDidMount() {
@@ -99,7 +99,7 @@ class Geo extends React.Component {
   }
 
   drawCircles(data) {
-    const { rScale, cKey, rKey, colorScale } = this;
+    const { rScale, cKey, colorScale } = this;
     const { duration } = this.props;
     const centroids = this.getCentroids(data);
 
@@ -130,7 +130,7 @@ class Geo extends React.Component {
         .merge(enterCircles)
         .transition()
         .duration(duration)
-        .attr("r", (d) => rScale(+d[rKey]));
+        .attr("r", (d) => rScale(+d.suppliers.length));
 
       enterCircles
         .on("mouseover", this.mouseover())
@@ -159,12 +159,13 @@ class Geo extends React.Component {
     const tooltip = d3.select(tooltipRef.current);
 
     return function (event, d) {
+      const prevalence = Math.round(d.ms_prevalence_score * 10) / 10;
+
       tooltip.html(`
-          <span style="font-size: 14px">${d.name}</span>
+          <span style="font-size: 14px">${d.country_name}</span>
           </br>
-          <span style="font-size: 9px">${d.risk}</span>
-          </br>
-          <span style="font-size: 9px">${d.suppliers.length} suppliers</span>
+          <div style="font-size: 9px">Risk: ${prevalence}</div>
+          <div style="font-size: 9px">${d.suppliers.length} suppliers</div>
         `);
 
       const node = d3.select(this);

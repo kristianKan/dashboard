@@ -12,6 +12,7 @@ import Treemap from "./Treemap";
 import Bars from "./Bars";
 import Pie from "./Pie";
 import Table from "./Table";
+import InfoPopper from "./InfoPopper";
 
 import {
   drawContainer,
@@ -31,6 +32,10 @@ const useStyles = makeStyles(() => ({
   },
   paper: {
     padding: "20px",
+  },
+  title: {
+    display: "flex",
+    alignItems: "center",
   },
 }));
 
@@ -53,7 +58,10 @@ export default function Graphics(props) {
         <Grid item sm={12}>
           <Paper className={classes.paper}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Supplier Risk Summary</h3>
+              <div className={classes.title}>
+                <h3>Supplier Risk Summary</h3>
+                <InfoPopper info="test popper test popper test popper test popper test popper test popper test popper test popper" />
+              </div>
               <Select
                 style={{ width: "180px" }}
                 value={selectedItem}
@@ -79,7 +87,10 @@ export default function Graphics(props) {
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
-            <h3>Geographic Risk Map</h3>
+            <div className={classes.title}>
+              <h3>Geographic Risk Map</h3>
+              <InfoPopper info="test popper" />
+            </div>
             <Geo
               drawTooltip={drawTooltip}
               drawContainer={drawContainer}
@@ -94,7 +105,10 @@ export default function Graphics(props) {
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
-            <h3>Geographic Risk Quadrant</h3>
+            <div className={classes.title}>
+              <h3>Geographic Risk Quadrant</h3>
+              <InfoPopper info="test popper" />
+            </div>
             <Quadrant
               drawTooltip={drawTooltip}
               drawContainer={drawContainer}
@@ -109,13 +123,19 @@ export default function Graphics(props) {
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
-            <h3>Product and Service Risk</h3>
+            <div className={classes.title}>
+              <h3>Product and Service Risk Table</h3>
+              <InfoPopper info="test popper" />
+            </div>
             <Table {...props} />
           </Paper>
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
-            <h3>Product and Service Risk Treemap</h3>
+            <div className={classes.title}>
+              <h3>Product and Service Risk Treemap</h3>
+              <InfoPopper info="test popper" />
+            </div>
             <Treemap
               drawTooltip={drawTooltip}
               drawContainer={drawContainer}
@@ -130,7 +150,10 @@ export default function Graphics(props) {
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
-            <h3>Employment Mode Risk</h3>
+            <div className={classes.title}>
+              <h3>Employment Mode Risk</h3>
+              <InfoPopper info="test popper" />
+            </div>
             <Bars
               drawContainer={drawContainer}
               drawLegend={drawLegend}
@@ -144,7 +167,10 @@ export default function Graphics(props) {
         </Grid>
         <Grid item sm={6}>
           <Paper className={classes.paper}>
-            <h3>Governance Performance</h3>
+            <div className={classes.title}>
+              <h3>Governance Performance</h3>
+              <InfoPopper info="test popper" />
+            </div>
             <Pie
               drawContainer={drawContainer}
               drawLegend={drawLegend}

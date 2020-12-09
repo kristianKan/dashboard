@@ -30,10 +30,26 @@ function getDataMean(data) {
   );
 }
 
+function crop(marginWidth) {
+  const ellipsisWidth = 20;
+  return (n) => {
+    n.each(function () {
+      const text = d3.select(this);
+      while (
+        text.node().getComputedTextLength() >
+        marginWidth - ellipsisWidth
+      ) {
+        text.text(`${text.text().slice(0, -4)}...`);
+      }
+    });
+  };
+}
+
 class StackedBars extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
+    this.tooltipRef = React.createRef();
     this.margin = { top: 20, right: 20, bottom: 60, left: 100 };
     this.xAxis = d3.axisBottom();
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
@@ -113,8 +129,10 @@ class StackedBars extends React.Component {
   }
 
   draw(series, mean, legend) {
-    const { ref, margin, width, height } = this;
-    const { drawContainer, drawLegend } = this.props;
+    const { ref, tooltipRef, margin, width, height } = this;
+    const { drawContainer, drawLegend, drawTooltip } = this.props;
+
+    d3.select(tooltipRef.current).call(drawTooltip());
 
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
@@ -126,13 +144,22 @@ class StackedBars extends React.Component {
   }
 
   redraw(series, mean) {
-    const { ref } = this;
+    const { ref, yAxis, xAxis, margin } = this;
+    const { duration } = this.props;
+
+    const x = d3.select(".x.axis").transition().duration(duration).call(xAxis);
+
+    const y = d3
+      .select(".y.axis")
+      .transition()
+      .duration(duration)
+      .call(yAxis)
+      .on("end", () => y.selectAll("text").call(crop(margin.left)));
 
     d3.select(ref.current)
       .call(this.drawSeries(series))
       .call(this.drawBars())
-      .call(this.drawMean(mean))
-      .call(this.drawAxes());
+      .call(this.drawMean(mean));
   }
 
   drawSeries(data) {
@@ -187,37 +214,69 @@ class StackedBars extends React.Component {
   }
 
   drawAxes() {
-    const { height, xAxis, yAxis } = this;
-    const { duration } = this.props;
+    const { height, xAxis, yAxis, margin } = this;
 
     return (node) => {
       const g = node.select("g.container");
-      const x = g.selectAll(".x.axis").data(["dummy"]);
-      const y = g.selectAll(".y.axis").data(["dummy"]);
 
-      x.enter()
+      const x = g
         .append("g")
         .attr("class", "x axis")
         .attr("transform", `translate(0, ${height})`)
-        .merge(x)
-        .transition()
-        .duration(duration)
         .call(xAxis);
 
-      y.enter()
+      x.selectAll(".domain").attr("stroke", "#CCCCCC");
+      x.selectAll(".tick line").attr("stroke", "#CCCCCC");
+
+      const y = g
         .append("g")
         .attr("class", "y axis")
-        .merge(y)
-        .transition()
-        .duration(duration)
-        .call(yAxis)
-        .call((n) => n.select(".domain").remove());
+        .attr("transform", `translate(${-15}, 0)`)
+        .call(yAxis);
 
-      g.selectAll(".domain").attr("stroke", "#CCCCCC");
+      y.selectAll("text")
+        .call(crop(margin.left))
+        .on("mouseover", this.mouseover())
+        .on("mouseleave", this.mouseleave());
 
-      g.selectAll(".tick line").attr("stroke", "#CCCCCC");
+      y.selectAll(".domain").attr("stroke", "#FFFFFF");
+    };
+  }
 
-      g.selectAll(".y.axis text").attr("transform", `translate(${-15}, 0)`);
+  mouseover() {
+    const { tooltipRef } = this;
+    const tooltip = d3.select(tooltipRef.current);
+
+    return function (event, d) {
+      tooltip
+        .append("div")
+        .attr("class", "container")
+        .style("font-size", "10px")
+        .style("background", "black")
+        .style("color", "white")
+        .text(d);
+
+      const node = d3.select(this.parentNode);
+      const { height } = node.node().getBoundingClientRect();
+      const { matrix } = node.node().transform.baseVal[0];
+      const x = matrix.e;
+      const y = matrix.f + height * 2;
+
+      tooltip
+        .style("left", `${x}px`)
+        .style("top", `${y}px`)
+        .style("opacity", 1)
+        .style("z-index", 1);
+    };
+  }
+
+  mouseleave() {
+    const { tooltipRef } = this;
+    const tooltip = d3.select(tooltipRef.current);
+
+    return function () {
+      tooltip.style("opacity", 0).style("z-index", -1);
+      tooltip.select(".container").remove();
     };
   }
 
@@ -252,7 +311,8 @@ class StackedBars extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ position: "relative" }}>
+        <div ref={this.tooltipRef} />
         <svg ref={this.ref} />
       </div>
     );

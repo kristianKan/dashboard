@@ -116,7 +116,7 @@ export function* fetchData() {
     const { data } = yield call(requestSuppliersData);
 
     const suppliers = processSuppliersData(data).sort(
-      (a, b) => a.risks.total - b.risks.total
+      (a, b) => b.risks.total - a.risks.total
     );
 
     const countries = getUniqueCountries(

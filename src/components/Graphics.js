@@ -77,6 +77,7 @@ export default function Graphics(props) {
             <StackedBars
               drawContainer={drawContainer}
               drawLegend={drawLegend}
+              drawTooltip={drawTooltip}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               duration={duration}

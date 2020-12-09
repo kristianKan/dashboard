@@ -121,7 +121,7 @@ class Geo extends React.Component {
         .append("circle")
         .attr("class", "circle")
         .attr("fill", (d) => colorScale(+d[cKey]))
-        .attr("opacity", 1)
+        .attr("opacity", 0.8)
         .attr("stroke", "none")
         .attr("cx", (d) => d.centroid[0])
         .attr("cy", (d) => d.centroid[1]);
@@ -164,7 +164,7 @@ class Geo extends React.Component {
       tooltip.html(`
           <span style="font-size: 14px">${d.country_name}</span>
           </br>
-          <div style="font-size: 9px">Risk: ${prevalence}</div>
+          <div style="font-size: 9px">Victims per 1,000 of population: ${prevalence}</div>
           <div style="font-size: 9px">${d.suppliers.length} suppliers</div>
         `);
 

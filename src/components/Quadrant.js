@@ -36,7 +36,7 @@ class Quadrant extends React.Component {
     this.yScale = getLinearScale({
       data: data.countries,
       key: yKey,
-      range: [this.height, 0],
+      range: [0, this.height],
     });
 
     this.colorScale = getColorScale({ data: data.countries, key: cKey });
@@ -94,7 +94,7 @@ class Quadrant extends React.Component {
         .append("circle")
         .attr("class", "circle")
         .attr("fill", (d) => colorScale(+d[cKey]))
-        .attr("opacity", 1)
+        .attr("opacity", 0.8)
         .attr("stroke", "none")
         .attr("cx", (d) => xScale(d[xKey]))
         .attr("cy", (d) => yScale(d[yKey]));
@@ -111,7 +111,7 @@ class Quadrant extends React.Component {
     const { xScale, yScale } = this;
     const origin = 0;
     const xRange = xScale.range()[1];
-    const yRange = yScale.range()[0];
+    const yRange = yScale.range()[1];
     const margin = 3;
     const quadsData = [
       {
@@ -124,13 +124,13 @@ class Quadrant extends React.Component {
         x: xRange / 2 + margin,
         y: origin - margin,
         color: "#FEECEB",
-        text: "High Risk, High Prevalence, Weak Regulation",
+        text: "High Prevalence, Weak Regulation",
       },
       {
         x: origin - margin,
         y: yRange / 2 + margin,
         color: "#FFFDEB",
-        text: "Low Risk, Low Prevalence, Strong Regulation",
+        text: "Low Prevalence, Strong Regulation",
       },
       {
         x: xRange / 2 + margin,
@@ -175,7 +175,7 @@ class Quadrant extends React.Component {
       x.enter()
         .append("g")
         .attr("class", "x axis")
-        .attr("transform", `translate(0, ${yScale.range()[0] / 2})`)
+        .attr("transform", `translate(0, ${yScale.range()[1] / 2})`)
         .merge(x)
         .transition()
         .duration(duration)
@@ -205,7 +205,7 @@ class Quadrant extends React.Component {
       tooltip.html(`
           <span style="font-size: 14px">${d.country_name}</span>
           </br>
-          <div style="font-size: 9px">Slaves per 1000 of population: ${prevalence}</div>
+          <div style="font-size: 9px">Victims per 1,000 of population: ${prevalence}</div>
           <div style="font-size: 9px">Strength of governance index: ${governance}</div>
         `);
 

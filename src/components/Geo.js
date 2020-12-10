@@ -1,5 +1,8 @@
 import * as React from "react";
 import * as d3 from "d3";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 
 function getMapHeight({ projection, width, outline }) {
   const [[x0, y0], [x1, y1]] = d3
@@ -40,19 +43,35 @@ class Geo extends React.Component {
     const width = getContainerWidth(ref, margin);
     const containerHeight = getContainerHeight(ref, margin);
     const mapHeight = getMapHeight({ projection, width, outline });
+    const height = containerHeight > mapHeight ? containerHeight : mapHeight;
 
-    this.height = containerHeight > mapHeight ? containerHeight : mapHeight;
     this.width = width;
+    this.height = height;
+
+    const centroids = this.getCentroids(data);
+
+    this.xScale = d3.scaleLinear().domain([0, width]).range([0, width]);
+
+    this.yScale = d3.scaleLinear().domain([0, height]).range([0, height]);
 
     this.rScale = getLinearScale({
       data: data.countries,
       key: rKey,
-      range: [2, 10],
+      range: [5, 15],
     });
 
     this.colorScale = getColorScale({ data: data.countries, key: cKey });
 
-    this.draw(data);
+    this.zoom = d3
+      .zoom()
+      .translateExtent([
+        [0, 0],
+        [width, height],
+      ])
+      .scaleExtent([1, 8])
+      .on("zoom", this.zoomed.bind(this));
+
+    this.draw(data, centroids);
   }
 
   componentDidUpdate() {
@@ -80,8 +99,28 @@ class Geo extends React.Component {
     }, []);
   }
 
-  draw(data) {
-    const { ref, tooltipRef, margin, width, height } = this;
+  zoomed(event) {
+    const { ref, xScale, yScale } = this;
+    const { transform } = event;
+    const xScaleZoomed = transform.rescaleX(xScale);
+    const yScaleZoomed = transform.rescaleY(yScale);
+
+    d3.select(ref.current)
+      .selectAll(".map")
+      .attr("transform", event.transform)
+      .attr("stroke-width", 1 / transform.k)
+      .transition()
+      .duration(300)
+      .attr("stroke", transform.k > 1 ? "white" : "lightgrey");
+
+    d3.select(ref.current)
+      .selectAll(".circle")
+      .attr("cx", (d) => xScaleZoomed(d.centroid[0]))
+      .attr("cy", (d) => yScaleZoomed(d.centroid[1]));
+  }
+
+  draw(data, centroids) {
+    const { ref, tooltipRef, margin, width, height, zoom } = this;
     const { drawContainer, drawTooltip } = this.props;
 
     d3.select(tooltipRef.current).call(drawTooltip());
@@ -89,7 +128,8 @@ class Geo extends React.Component {
     d3.select(ref.current)
       .call(drawContainer({ width, height, margin }))
       .call(this.drawMap(data.geo))
-      .call(this.drawCircles(data));
+      .call(this.drawCircles(centroids))
+      .call(zoom);
   }
 
   redraw(data) {
@@ -101,12 +141,11 @@ class Geo extends React.Component {
   drawCircles(data) {
     const { rScale, cKey, colorScale } = this;
     const { duration } = this.props;
-    const centroids = this.getCentroids(data);
 
     return (node) => {
       const g = node.select("g.container");
 
-      const circles = g.selectAll(".circle").data(centroids);
+      const circles = g.selectAll(".circle").data(data);
 
       circles
         .exit()
@@ -139,7 +178,7 @@ class Geo extends React.Component {
   }
 
   drawMap(geo) {
-    const { path } = this;
+    const { path, height } = this;
 
     return (node) => {
       const g = node.select("g.container");
@@ -148,9 +187,14 @@ class Geo extends React.Component {
         .data(geo.features)
         .enter()
         .append("path")
+        .attr("class", "map")
         .attr("d", path)
         .attr("fill", "lightgrey")
         .attr("stroke", "lightgrey");
+
+      const gHeight = g.node().getBBox().height;
+
+      g.attr("transform", `translate(0, ${height / 2 - gHeight / 2})`);
     };
   }
 
@@ -199,11 +243,39 @@ class Geo extends React.Component {
     };
   }
 
+  zoomIn() {
+    const { ref, zoom } = this;
+
+    const svg = d3.select(ref.current);
+    zoom.scaleBy(svg.transition().duration(750), 2);
+  }
+
+  zoomOut() {
+    const { ref, zoom } = this;
+
+    const svg = d3.select(ref.current);
+    zoom.scaleBy(svg.transition().duration(750), 0.5);
+  }
+
   render() {
     return (
       <div style={{ position: "relative" }}>
         <div ref={this.tooltipRef} />
         <svg ref={this.ref} />
+        <IconButton
+          size="small"
+          variant="outlined"
+          onClick={() => this.zoomOut()}
+        >
+          <RemoveIcon />
+        </IconButton>
+        <IconButton
+          size="small"
+          variant="outlined"
+          onClick={() => this.zoomIn()}
+        >
+          <AddIcon />
+        </IconButton>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as d3 from "d3";
 
-const colorRange = ["#DEEBF7", "#4292C6"];
+const colorRange = ["#C6DBEF", "#4292C6"];
 const labelFormat = ["No Data", "Low", "Medium", "High"];
 
 class Pie extends React.Component {

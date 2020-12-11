@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as d3 from "d3";
 
-const colors = ["#F4D166", "#F7A144", "#EF701B", "#CE4E22", "#9E3A26"];
-const labelFormat = ["Lowest", "Low", "Medium", "High", "Highest"];
+const colors = ["#9E3A26", "#CE4E22", "#EF701B", "#F7A144", "#F4D166"];
+const labelFormat = ["Highest", "High", "Medium", "Low", "Lowest"];
 
 function makeHierarchy(data) {
   const dataGroup = d3.group(data.products, (d) => d.tier);

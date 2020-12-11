@@ -2,6 +2,12 @@ import * as React from "react";
 import * as d3 from "d3";
 
 const barColors = ["#DEEBF7", "#C6DBEF", "#9ECAE1", "#4292C6"];
+const labelFormat = {
+  ms_geographic: "Geographic",
+  ms_industry: "Industry",
+  ms_product: "Product",
+  ms_employment: "Employment",
+};
 
 function getDataHeight(data, margin) {
   const barHeight = 20;
@@ -114,7 +120,7 @@ class StackedBars extends React.Component {
   getLegendData(data) {
     const legend = Object.keys(data.suppliers[0].risks.scores).map((key) => {
       return {
-        name: `${key} Risk`,
+        name: `${labelFormat[key]} Risk`,
         color: this.cScale(key),
       };
     });

@@ -158,6 +158,7 @@ export default function Graphics(props) {
             <Bars
               drawContainer={drawContainer}
               drawLegend={drawLegend}
+              drawTooltip={drawTooltip}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               getColorScale={getOrdinalColorScale}

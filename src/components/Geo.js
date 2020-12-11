@@ -76,8 +76,9 @@ class Geo extends React.Component {
 
   componentDidUpdate() {
     const { data } = this.props;
+    const centroids = this.getCentroids(data);
 
-    this.redraw(data);
+    this.redraw(centroids);
   }
 
   getCentroids(data) {
@@ -132,10 +133,10 @@ class Geo extends React.Component {
       .call(zoom);
   }
 
-  redraw(data) {
+  redraw(centroids) {
     const { ref } = this;
 
-    d3.select(ref.current).call(this.drawCircles(data));
+    d3.select(ref.current).call(this.drawCircles(centroids));
   }
 
   drawCircles(data) {

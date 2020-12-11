@@ -18,15 +18,6 @@ function makeHierarchy(data) {
     .sort((a, b) => b.value - a.value);
 }
 
-function getUniqueProducts(data) {
-  return data.reduce((acc, supplier) => {
-    supplier.products.forEach((product) => {
-      return !acc.includes(product.id) && acc.push(product.id);
-    });
-    return acc;
-  }, []);
-}
-
 class Treemap extends React.Component {
   constructor(props) {
     super(props);
@@ -111,7 +102,28 @@ class Treemap extends React.Component {
         .attr("x", 6)
         .attr("y", 18)
         .attr("fill", "white")
-        .text((d) => `Tier ${d.data[0] + 1} - ${labelFormat[d.data[0]]}`);
+        .text((d) => `Tier ${d.data[0] + 1}`)
+        .text(function (d) {
+          const n = d3.select(this).node();
+          const r = d3.select(this.parentNode).select("rect").node();
+          const textWidth = n.getBBox().width;
+          const rectWidth = r.getBBox().width;
+          return textWidth < rectWidth ? `Tier ${d.data[0] + 1}` : ``;
+        });
+
+      enterLeaf
+        .append("text")
+        .attr("x", 6)
+        .attr("y", 36)
+        .attr("fill", "white")
+        .text((d) => `${labelFormat[d.data[0]]}`)
+        .text(function (d) {
+          const n = d3.select(this).node();
+          const r = d3.select(this.parentNode).select("rect").node();
+          const textWidth = n.getBBox().width;
+          const rectWidth = r.getBBox().width;
+          return textWidth < rectWidth ? `${labelFormat[d.data[0]]}` : ``;
+        });
     };
   }
 
@@ -124,26 +136,56 @@ class Treemap extends React.Component {
         .append("div")
         .attr("class", "container")
         .style("max-width", "200px")
-        .style("max-height", "100px")
+        .style("max-height", "300px")
         .style("overflow", "scroll")
         .style("background", "black")
         .style("padding", "6px");
 
       div
-        .append("span")
+        .append("div")
         .style("font-size", "14px")
         .style("color", "white")
-        .text(`Tier ${d.data[1][0].tier}`);
+        .text(`Tier ${d.data[1][0].tier + 1}`);
 
-      const products = div.selectAll(".product").data(d.data[1], (d) => d.id);
+      div
+        .append("div")
+        .style("font-size", "14px")
+        .style("color", "white")
+        .style("margin-bottom", "10px")
+        .text(`${labelFormat[d.data[0]]}`);
 
-      products
+      const products = div.selectAll(".product").data(d.data[1], (v) => v.id);
+
+      const product = products
         .enter()
         .append("div")
         .attr("class", "product")
+        .style("display", "flex")
+        .style("flex-direction", "row")
+        .style("flex-wrap", "wrap")
+        .style("width", "100%")
+        .style("margin-top", "6px");
+
+      product
+        .append("div")
         .style("font-size", "10px")
         .style("color", "white")
+        .style("display", "flex")
+        .style("flex-direction", "column")
+        .style("flex-basis", "100%")
+        .style("flex", "1")
         .text((v) => v.name);
+
+      product
+        .append("div")
+        .style("font-size", "10px")
+        .style("color", "white")
+        .style("display", "flex")
+        .style("flex-direction", "column")
+        .style("flex-basis", "100%")
+        .style("flex", "1")
+        .style("text-align", "right")
+        .text((v) => v.risk_score);
 
       const node = d3.select(this).select("rect");
       const { width, height } = div.node().getBoundingClientRect();
@@ -155,7 +197,7 @@ class Treemap extends React.Component {
       const nodeY = d.y0 + nodeHeight;
       const isLeft = nodeX + nodeWidth + width > parentWidth;
       const y = nodeY / 2 - height / 2;
-      const x = isLeft ? nodeX - width : nodeX + nodeWidth;
+      const x = isLeft ? nodeX - width - 10 : nodeX + nodeWidth;
 
       tooltip
         .style("left", `${x}px`)

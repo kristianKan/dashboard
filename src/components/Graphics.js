@@ -67,7 +67,7 @@ export default function Graphics(props) {
                 value={selectedItem}
                 onChange={setSelection}
               >
-                <MenuItem value="total">Total Risk</MenuItem>
+                <MenuItem value="total">Net Risk</MenuItem>
                 <MenuItem value="geographic">Geographic Risk</MenuItem>
                 <MenuItem value="industry">Industry Risk</MenuItem>
                 <MenuItem value="product">Product/Service Risk</MenuItem>

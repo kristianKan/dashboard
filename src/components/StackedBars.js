@@ -147,7 +147,7 @@ class StackedBars extends React.Component {
     const { ref, yAxis, xAxis, margin } = this;
     const { duration } = this.props;
 
-    const x = d3.select(".x.axis").transition().duration(duration).call(xAxis);
+    d3.select(".x.axis").transition().duration(duration).call(xAxis);
 
     const y = d3
       .select(".y.axis")

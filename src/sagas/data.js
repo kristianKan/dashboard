@@ -29,6 +29,7 @@ function getUniqueCountries(suppliers, countries, codes) {
 
     return {
       ...country,
+      iso_code_alpha: countryMeta["alpha-3"],
       iso_code_num: countryMeta["country-code"],
       risk,
       suppliers: countrySuppliers,
@@ -36,7 +37,7 @@ function getUniqueCountries(suppliers, countries, codes) {
   });
 }
 
-function getUniqueProducts(suppliers, products) {
+function getUniqueProducts(suppliers, products, countriesIndex) {
   const uniqueProducts = suppliers.reduce((acc, d) => {
     const supplierProducts = d.products.reduce((acc2, product) => {
       const { name } = products.find((v) => v.value === product.id);
@@ -52,12 +53,14 @@ function getUniqueProducts(suppliers, products) {
       return d.products.find((v) => v.id === product.id);
     });
 
-    const countries = productSuppliers.reduce((acc, d) => {
-      const supplierCountries = d.countries.reduce((acc2, country) => {
-        return acc.includes(country) ? acc2 : [...acc2, country];
-      }, []);
-      return [...acc, ...supplierCountries];
-    }, []);
+    const countries = productSuppliers
+      .reduce((acc, d) => {
+        const supplierCountries = d.countries.reduce((acc2, country) => {
+          return acc.includes(country) ? acc2 : [...acc2, country];
+        }, []);
+        return [...acc, ...supplierCountries];
+      }, [])
+      .map((v) => countriesIndex.find((d) => v === d.iso_code_alpha));
 
     return {
       ...product,
@@ -125,7 +128,7 @@ export function* fetchData() {
       isoCodeIndex
     );
 
-    const products = getUniqueProducts(suppliers, productIndex);
+    const products = getUniqueProducts(suppliers, productIndex, countries);
 
     yield put({
       type: types.FETCH_DATA_SUCCESS,

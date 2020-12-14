@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
   popover: {
     padding: theme.spacing(2),
   },
+  list: {
+    fontSize: "12px",
+  },
 }));
 
 export default function TablePopper(props) {
@@ -42,7 +45,13 @@ export default function TablePopper(props) {
         <div>
           <b>Countries</b>
         </div>
-        <Typography>{countries.join()}</Typography>
+        {countries.map((d) => {
+          return (
+            <Typography className={classes.list} key={d.country_code}>
+              {d.country_name}
+            </Typography>
+          );
+        })}
       </div>
     </Popover>
   );

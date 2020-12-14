@@ -8,7 +8,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Link from "@material-ui/core/Link";
 
 import TablePopper from "./TablePopper";
 
@@ -174,21 +173,24 @@ export default function TableComponent(props) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover tabIndex={-1} key={row.name}>
+                  <TableRow
+                    hover
+                    tabIndex={-1}
+                    key={row.name}
+                    aria-describedby={id}
+                    onClick={(e) => handleClickOpen(e, row)}
+                  >
                     <TableCell className={classes.cell} align="left">
                       {row.name}
                     </TableCell>
                     <TableCell align="left">
-                      {row.countries.length > 3 ? (
-                        <Link
-                          aria-describedby={id}
-                          onClick={(e) => handleClickOpen(e, row)}
-                        >
-                          {row.countries.length} countries
-                        </Link>
-                      ) : (
-                        row.countries.join()
-                      )}
+                      {row.countries.length > 2
+                        ? `${row.countries.length} countries...`
+                        : row.countries.map((d, i) =>
+                            i === row.countries.length - 1
+                              ? `${d.iso_code_alpha}`
+                              : `${d.iso_code_alpha}, `
+                          )}
                     </TableCell>
                     <TableCell align="right">{row.suppliers.length}</TableCell>
                   </TableRow>

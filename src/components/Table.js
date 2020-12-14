@@ -10,7 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Link from "@material-ui/core/Link";
 
-import Dialogue from "./Dialogue";
+import TablePopper from "./TablePopper";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -212,7 +212,7 @@ export default function TableComponent(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <Dialogue
+      <TablePopper
         anchorEl={anchorEl}
         selectedValue={selectedValue}
         open={open}

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dialogue(props) {
+export default function TablePopper(props) {
   const classes = useStyles();
   const { onClose, selectedValue, open, anchorEl, id } = props;
 

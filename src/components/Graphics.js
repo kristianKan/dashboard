@@ -25,6 +25,8 @@ import {
   getLinearScale,
 } from "./utils";
 
+import { drawCircleLegend } from "./CircleLegend";
+
 const useStyles = makeStyles(() => ({
   box: {
     margin: "64px 0 0 64px",
@@ -98,6 +100,7 @@ export default function Graphics(props) {
             <Geo
               drawTooltip={drawTooltip}
               drawContainer={drawContainer}
+              drawLegend={drawCircleLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}

@@ -4,6 +4,18 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
+const legendData = [
+  {
+    value: 1,
+  },
+  {
+    value: 5,
+  },
+  {
+    value: 10,
+  },
+];
+
 function getMapHeight({ projection, width, outline }) {
   const [[x0, y0], [x1, y1]] = d3
     .geoPath(projection.fitWidth(width, outline))
@@ -22,7 +34,7 @@ class Geo extends React.Component {
     super(props);
     this.ref = React.createRef();
     this.tooltipRef = React.createRef();
-    this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
+    this.margin = { top: 0, right: 0, bottom: 30, left: 0 };
     this.projection = d3.geoNaturalEarth1();
     this.path = d3.geoPath().projection(this.projection);
     this.outline = { type: "Sphere" };
@@ -122,7 +134,7 @@ class Geo extends React.Component {
 
   draw(data, centroids) {
     const { ref, tooltipRef, margin, width, height, zoom } = this;
-    const { drawContainer, drawTooltip } = this.props;
+    const { drawContainer, drawTooltip, drawLegend } = this.props;
 
     d3.select(tooltipRef.current).call(drawTooltip());
 
@@ -130,6 +142,14 @@ class Geo extends React.Component {
       .call(drawContainer({ width, height, margin }))
       .call(this.drawMap(data.geo))
       .call(this.drawCircles(centroids))
+      .call(
+        drawLegend({
+          data: legendData,
+          height,
+          margin: { left: 0, bottom: 10 },
+          scale: this.rScale,
+        })
+      )
       .call(zoom);
   }
 

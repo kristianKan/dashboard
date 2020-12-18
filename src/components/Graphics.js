@@ -25,7 +25,7 @@ import {
   getLinearScale,
 } from "./utils";
 
-import { drawCircleLegend } from "./CircleLegend";
+import { drawCircleLegend, drawColorLegend } from "./Legend";
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -101,6 +101,7 @@ export default function Graphics(props) {
               drawTooltip={drawTooltip}
               drawContainer={drawContainer}
               drawLegend={drawCircleLegend}
+              drawColorLegend={drawColorLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}
@@ -119,6 +120,7 @@ export default function Graphics(props) {
             <Quadrant
               drawTooltip={drawTooltip}
               drawContainer={drawContainer}
+              drawColorLegend={drawColorLegend}
               getContainerHeight={getContainerHeight}
               getContainerWidth={getContainerWidth}
               getColorScale={getColorScale}

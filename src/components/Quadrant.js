@@ -6,7 +6,7 @@ class Quadrant extends React.Component {
     super(props);
     this.ref = React.createRef();
     this.tooltipRef = React.createRef();
-    this.margin = { top: 20, right: 10, bottom: 30, left: 10 };
+    this.margin = { top: 20, right: 10, bottom: 50, left: 10 };
     this.xAxis = d3.axisBottom().ticks(0).tickSize([0, 0]);
     this.yAxis = d3.axisLeft().ticks(0).tickSize([0, 0]);
     this.xKey = "ms_prevalence_score";
@@ -55,7 +55,7 @@ class Quadrant extends React.Component {
 
   draw(data) {
     const { ref, tooltipRef, margin, width, height } = this;
-    const { drawContainer, drawTooltip } = this.props;
+    const { drawContainer, drawTooltip, drawColorLegend } = this.props;
 
     d3.select(tooltipRef.current).call(drawTooltip());
 
@@ -63,7 +63,8 @@ class Quadrant extends React.Component {
       .call(drawContainer({ width, height, margin }))
       .call(this.drawAxes())
       .call(this.drawQuads())
-      .call(this.drawCircles(data));
+      .call(this.drawCircles(data))
+      .call(drawColorLegend({ height, width, margin }));
   }
 
   redraw(data) {

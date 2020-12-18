@@ -34,7 +34,7 @@ class Geo extends React.Component {
     super(props);
     this.ref = React.createRef();
     this.tooltipRef = React.createRef();
-    this.margin = { top: 0, right: 0, bottom: 30, left: 0 };
+    this.margin = { top: 0, right: 0, bottom: 50, left: 0 };
     this.projection = d3.geoNaturalEarth1();
     this.path = d3.geoPath().projection(this.projection);
     this.outline = { type: "Sphere" };
@@ -134,7 +134,12 @@ class Geo extends React.Component {
 
   draw(data, centroids) {
     const { ref, tooltipRef, margin, width, height, zoom } = this;
-    const { drawContainer, drawTooltip, drawLegend } = this.props;
+    const {
+      drawContainer,
+      drawTooltip,
+      drawLegend,
+      drawColorLegend,
+    } = this.props;
 
     d3.select(tooltipRef.current).call(drawTooltip());
 
@@ -142,6 +147,7 @@ class Geo extends React.Component {
       .call(drawContainer({ width, height, margin }))
       .call(this.drawMap(data.geo))
       .call(this.drawCircles(centroids))
+      .call(drawColorLegend({ height, width, margin: { left: 0, bottom: 25 } }))
       .call(
         drawLegend({
           data: legendData,

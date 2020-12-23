@@ -167,12 +167,17 @@ class Geo extends React.Component {
 
   drawCircles(data) {
     const { rScale, cKey, colorScale } = this;
-    const { duration } = this.props;
+    const { duration, selectedCountry } = this.props;
 
     return (node) => {
       const g = node.select("g.container");
 
-      const circles = g.selectAll(".circle").data(data);
+      const circles = g
+        .selectAll(".circle")
+        .data(data)
+        .attr("stroke", (d) =>
+          d.country_code === selectedCountry ? "black" : "none"
+        );
 
       circles
         .exit()
@@ -188,7 +193,9 @@ class Geo extends React.Component {
         .attr("class", "circle")
         .attr("fill", (d) => colorScale(+d[cKey]))
         .attr("opacity", 0.8)
-        .attr("stroke", "none")
+        .attr("stroke", (d) =>
+          d.country_code === selectedCountry ? "black" : "none"
+        )
         .attr("cx", (d) => d.centroid[0])
         .attr("cy", (d) => d.centroid[1]);
 
@@ -227,9 +234,11 @@ class Geo extends React.Component {
 
   mouseover() {
     const { tooltipRef } = this;
+    const { setSelectedCountry } = this.props;
     const tooltip = d3.select(tooltipRef.current);
 
     return function (event, d) {
+      setSelectedCountry(d.country_code);
       const prevalence = Math.round(d.ms_prevalence_score * 10) / 10;
 
       tooltip.html(`
@@ -261,9 +270,11 @@ class Geo extends React.Component {
 
   mouseleave() {
     const { tooltipRef } = this;
+    const { setSelectedCountry } = this.props;
     const tooltip = d3.select(tooltipRef.current);
 
     return function () {
+      setSelectedCountry(null);
       tooltip.style("opacity", 0).style("z-index", -1);
 
       d3.select(this).style("stroke", "none");

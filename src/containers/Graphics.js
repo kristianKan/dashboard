@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { getSelectedRiskScore } from "../selectors";
-import { fetchDataRequest, setSelection } from "../actions";
+import { fetchDataRequest, setSelection, setSelectedCountry } from "../actions";
 import Graphics from "../components/Graphics";
 
 class Container extends React.Component {
@@ -26,12 +26,14 @@ const mapStateToProps = (state) => ({
   data: state.data,
   means: state.means,
   selectedItem: state.ui.selectedItem,
+  selectedCountry: state.ui.selectedCountry,
   selectedRiskScore: getSelectedRiskScore(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getData: () => dispatch(fetchDataRequest()),
   setSelection: (selection) => dispatch(setSelection(selection.target.value)),
+  setSelectedCountry: (selection) => dispatch(setSelectedCountry(selection)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

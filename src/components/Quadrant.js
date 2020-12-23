@@ -75,12 +75,17 @@ class Quadrant extends React.Component {
 
   drawCircles(data) {
     const { xScale, yScale, xKey, yKey, cKey, colorScale } = this;
-    const { duration } = this.props;
+    const { duration, selectedCountry } = this.props;
 
     return (node) => {
       const g = node.select("g.container");
 
-      const circles = g.selectAll(".circle").data(data).attr("class", "circle");
+      const circles = g
+        .selectAll(".circle")
+        .data(data)
+        .attr("stroke", (d) =>
+          d.country_code === selectedCountry ? "black" : "none"
+        );
 
       circles
         .exit()
@@ -96,7 +101,6 @@ class Quadrant extends React.Component {
         .attr("class", "circle")
         .attr("fill", (d) => colorScale(+d[cKey]))
         .attr("opacity", 0.8)
-        .attr("stroke", "none")
         .attr("cx", (d) => xScale(d[xKey]))
         .attr("cy", (d) => yScale(d[yKey]));
 
@@ -197,9 +201,11 @@ class Quadrant extends React.Component {
 
   mouseover() {
     const { tooltipRef } = this;
+    const { setSelectedCountry } = this.props;
     const tooltip = d3.select(tooltipRef.current);
 
     return function (event, d) {
+      setSelectedCountry(d.country_code);
       const prevalence = Math.round(d.ms_prevalence_score * 10) / 10;
       const governance = Math.round(d.ms_government_response * 10) / 10;
 
@@ -232,9 +238,11 @@ class Quadrant extends React.Component {
 
   mouseleave() {
     const { tooltipRef } = this;
+    const { setSelectedCountry } = this.props;
     const tooltip = d3.select(tooltipRef.current);
 
     return function () {
+      setSelectedCountry(null);
       tooltip.style("opacity", 0).style("z-index", -1);
 
       d3.select(this).style("stroke", "none");
